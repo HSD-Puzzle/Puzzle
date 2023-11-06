@@ -9,6 +9,10 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.burger42.Burger;
+import com.example.burger42.GameObject;
+import com.example.burger42.GameView;
+
 public class GameActivity extends AppCompatActivity {
 
     private GameView gameView;

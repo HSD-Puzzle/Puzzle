@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">burger42</string>
+    <string name="app_name" translatable="false">Burger42</string>
+    <string name="next_level">To the next level</string>
+    <string name="level_bill">Level bill</string>
 </resources>
