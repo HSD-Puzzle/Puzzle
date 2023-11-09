@@ -1,5 +1,6 @@
 package com.example.burger42;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,15 +14,13 @@ public class GameView extends SurfaceView implements Runnable {
 
     private Thread thread;
     private boolean isPlaying;
-    private GameActivity activity;
     private Paint paint;
 
     private List<GameObject> activeGameObjects = new LinkedList<>();
     private Queue<GameObject> newGameObjects = new LinkedList<>();
 
-    public GameView(GameActivity activity, int screenX, int screenY) {
-        super(activity);
-        this.activity = activity;
+    public GameView(Context context) {
+        super(context);
 
         paint = new Paint();
         paint.setTextSize(128);

@@ -1,33 +1,35 @@
-package com.example.burger42;
+package com.example.burger42.Fragments;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.view.WindowManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.burger42.Burger;
 import com.example.burger42.GameObject;
 import com.example.burger42.GameView;
+import com.example.burger42.MainActivity;
+import com.example.burger42.R;
 
-public class GameActivity extends AppCompatActivity {
+public class GameFragment extends ParentFragment {
 
     private GameView gameView;
 
+    public GameFragment(MainActivity mainActivity) {
+        super(mainActivity);
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        Point point = new Point();
-        getWindowManager().getDefaultDisplay().getSize(point);
-
-        gameView = new GameView(this, point.x, point.y);
-
+        gameView = new GameView(mainActivity);
         gameView.instantiate(new GameObject() {
             private Bitmap test = Bitmap.createBitmap(1920, 1200, Bitmap.Config.RGB_565);
             private float x;
@@ -57,17 +59,17 @@ public class GameActivity extends AppCompatActivity {
         });
         gameView.instantiate(new Burger(getResources(), gameView));
 
-        setContentView(gameView);
+        return gameView;
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         gameView.pause();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         gameView.resume();
     }

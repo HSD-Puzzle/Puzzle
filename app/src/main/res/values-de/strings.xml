@@ -2,4 +2,6 @@
 <resources>
     <string name="next_level">Zum nächsten Level</string>
     <string name="level_bill">Level Abrechnung</string>
+    <string name="backToLevelSelection">Zurück zur Levelauswahl</string>
+    <string name="tip">Trinkgeld</string>
 </resources>

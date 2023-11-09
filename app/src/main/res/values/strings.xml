@@ -2,4 +2,6 @@
     <string name="app_name" translatable="false">Burger42</string>
     <string name="next_level">To the next level</string>
     <string name="level_bill">Level bill</string>
+    <string name="backToLevelSelection">Back to level selection</string>
+    <string name="tip">Tip</string>
 </resources>

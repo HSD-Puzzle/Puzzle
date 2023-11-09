@@ -1,11 +1,12 @@
 package com.example.burger42;
 
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.example.burger42.Fragments.StartFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,16 +14,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                startActivity(new Intent(MainActivity.this, LevelSelectionActivity.class));
-            }
-        });
-
+        showFragment(new StartFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
+    public void showFragment(Fragment fragment, int requestedOrientation) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        setRequestedOrientation(requestedOrientation);
+    }
 
 }

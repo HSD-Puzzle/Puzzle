@@ -12,19 +12,7 @@
             android:name=".LevelSelectionActivity"
             android:exported="true" />
         <activity
-            android:name=".GameActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".MainActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".BillActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".PauseActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ActivityTestSelectActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
