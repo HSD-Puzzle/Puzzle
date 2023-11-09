@@ -25,6 +25,14 @@ public class StartFragment extends ParentFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         Button startButton = (Button) view.findViewById(R.id.button);
+        Button settingsButton = (Button) view.findViewById(R.id.start_settings);
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.showFragment(new SettingsFragment(mainActivity),ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            }
+        });
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

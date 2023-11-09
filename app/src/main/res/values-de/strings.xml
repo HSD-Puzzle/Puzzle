@@ -4,4 +4,5 @@
     <string name="level_bill">Level Abrechnung</string>
     <string name="backToLevelSelection">Zurück zur Levelauswahl</string>
     <string name="tip">Trinkgeld</string>
+    <string name="settings">Einstellungen</string>
 </resources>
