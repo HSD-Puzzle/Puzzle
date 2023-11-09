@@ -9,14 +9,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Burger42">
         <activity
-            android:name="com.example.burger42.GameActivity"
-            android:screenOrientation="landscape" />
+            android:name=".LevelSelectionActivity"
+            android:exported="true" />
         <activity
-            android:name="com.example.burger42.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
