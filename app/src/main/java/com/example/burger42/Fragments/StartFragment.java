@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.burger42.LevelSelectionActivity;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -36,7 +37,8 @@ public class StartFragment extends ParentFragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.showFragment(new GameFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                mainActivity.showFragment(new LevelSelectionActivity(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+
             }
         });
         return view;
