@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Burger42">
         <activity
-            android:name=".LevelSelectionActivity"
+            android:name=".Fragments.LevelSelectionFragment"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
