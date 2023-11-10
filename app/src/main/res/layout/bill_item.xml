@@ -4,19 +4,21 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/billItem_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1x" />
 
     <TextView
+        android:id="@+id/billItem_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50sp"
         android:text="Hamburger" />
 
     <TextView
+        android:id="@+id/billItem_totalValue"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"

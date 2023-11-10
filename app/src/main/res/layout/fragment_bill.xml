@@ -21,10 +21,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+
             android:layout_centerInParent="true"
-            android:layout_margin="8dp"
-
-
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/level_bill"
             android:textAlignment="center"
@@ -57,11 +59,11 @@
             android:layout_weight="1">
 
             <ListView
-                android:id="@+id/search_list"
+                android:id="@+id/levelBill_ListOfBillItems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/bill_item"
-                android:layout_above="@id/levelBill_Tip"/>
+                android:layout_above="@id/levelBill_Tip"
+                tools:listitem="@layout/bill_item" />
 
             <RelativeLayout
                 android:id="@+id/levelBill_Tip"
@@ -101,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="20sp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:text="50€"
                 android:textAlignment="viewEnd" />
 
