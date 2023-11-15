@@ -17,6 +17,7 @@ import com.example.burger42.R;
 public class LevelSelectionFragment extends ParentFragment {
 
     View view;
+
     public LevelSelectionFragment(MainActivity mainActivity) {
         super(mainActivity);
     }
@@ -27,18 +28,15 @@ public class LevelSelectionFragment extends ParentFragment {
         view = inflater.inflate(R.layout.fragment_level_selection, container, false);
         //createAndDisplayLevelItems();
         Button backButton = (Button) view.findViewById(R.id.levelSelection_BackButton);
-        backButton.setOnClickListener(new View.OnClickListener(){
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
         //git Test
 
 
-
         return view;
     }
-
-
-    }
+}

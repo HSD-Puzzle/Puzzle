@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.burger42.Game.OnTouchListenerMove;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -37,48 +39,40 @@ public class GameFragment extends ParentFragment {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         root = view.findViewById(R.id.game_root);
         View view1 = new View(mainActivity);
-        view1.setLayoutParams(new FrameLayout.LayoutParams(
-                100,
-                100));
+        view1.setLayoutParams(new FrameLayout.LayoutParams(100, 100));
         view1.setBackgroundColor(R.color.orange700);
 
 
+        view1.setOnTouchListener(new OnTouchListenerMove());
+
+/*
         view1.setOnTouchListener(new View.OnTouchListener() {
-            int _xDelta = 0;
-            int _yDelta = 0;
-
             @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                final int X = (int) event.getRawX();
-                final int Y = (int) event.getRawY();
-
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_DOWN:
-                        FrameLayout.LayoutParams lParams = (FrameLayout.LayoutParams) view.getLayoutParams();
-                        _xDelta = X - lParams.leftMargin;
-                        _yDelta = Y - lParams.topMargin;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        break;
-                    case MotionEvent.ACTION_POINTER_DOWN:
-                        break;
-                    case MotionEvent.ACTION_POINTER_UP:
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
-                        layoutParams.leftMargin = X - _xDelta;
-                        layoutParams.topMargin = Y - _yDelta;
-                        layoutParams.rightMargin = -250;
-                        layoutParams.bottomMargin = -250;
-                        view.setLayoutParams(layoutParams);
-                        break;
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                System.out.println("MotionEvent" + motionEvent.getAction());
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    ClipData data = ClipData.newPlainText("", "");
+                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                    view.startDrag(data, shadowBuilder, view, 0);
+                    view.setVisibility(View.INVISIBLE);
+                    return true;
                 }
-                root.invalidate();
-                return true;
+                return false;
             }
         });
+
+        root.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+                System.out.println("Drag " + dragEvent.getAction());
+                if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED)
+                    view1.setVisibility(View.VISIBLE);
+                return true;
+            }
+        });*/
 
         root.addView(view1);
         return view;
     }
+
 }
