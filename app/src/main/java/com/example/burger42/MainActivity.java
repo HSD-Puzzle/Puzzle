@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.burger42.Fragments.BillFragment;
+import com.example.burger42.Fragments.LevelSelectionFragment;
+import com.example.burger42.Fragments.ParentFragment;
 import com.example.burger42.Fragments.StartFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        showFragment(new StartFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        ParentFragment test = new LevelSelectionFragment(this);
+        showFragment(test, ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
     public void showFragment(Fragment fragment, int requestedOrientation) {
