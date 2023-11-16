@@ -29,7 +29,6 @@ public class LevelSelectionFragment extends ParentFragment {
     private ListView listView;
     private ListView listView2;
     private LevelDisplayItemAdapter levelDisplayItemAdapter;
-    private IngredientAdapter ingredientAdapter;
     public LevelSelectionFragment(MainActivity mainActivity) {
         super(mainActivity);
     }
@@ -48,18 +47,11 @@ public class LevelSelectionFragment extends ParentFragment {
                 mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
-        // Rezeptliste, was ist eine Rezeptliste, Liste aus Ingredients, IngredientAdapter
+        levelDisplayItemAdapter = new LevelDisplayItemAdapter(mainActivity);
 
-        //levelDisplayItemAdapter = new LevelDisplayItemAdapter(mainActivity);
-        ingredientAdapter = new IngredientAdapter(mainActivity);
+        listView.setAdapter(levelDisplayItemAdapter);
+        levelDisplayItemAdapter.add(new LevelDisplayItem(1,200,3));
 
-        //listView.setAdapter(levelDisplayItemAdapter);
-        //levelDisplayItemAdapter.add(new LevelDisplayItem(1,200,3));
-
-        listView2.setAdapter(ingredientAdapter);
-        ingredientAdapter.add(new BottomBurgerBun(1));
-        ingredientAdapter.add(new BurgerPatty(1));
-        ingredientAdapter.add(new TopBurgerBun(1));
 
         return view;
     }
