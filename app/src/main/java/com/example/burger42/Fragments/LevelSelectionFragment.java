@@ -11,17 +11,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.burger42.ArrayAdapter.IngredientAdapter;
 import com.example.burger42.ArrayAdapter.LevelDisplayItemAdapter;
 import com.example.burger42.Fragments.ParentFragment;
+import com.example.burger42.Ingredients.BottomBurgerBun;
+import com.example.burger42.Ingredients.BurgerPatty;
+import com.example.burger42.Ingredients.TopBurgerBun;
 import com.example.burger42.Item.LevelDisplayItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
+
+import java.util.List;
 
 public class LevelSelectionFragment extends ParentFragment {
 
     private View view;
     private ListView listView;
+    private ListView listView2;
     private LevelDisplayItemAdapter levelDisplayItemAdapter;
+    private IngredientAdapter ingredientAdapter;
     public LevelSelectionFragment(MainActivity mainActivity) {
         super(mainActivity);
     }
@@ -32,6 +40,7 @@ public class LevelSelectionFragment extends ParentFragment {
         view = inflater.inflate(R.layout.fragment_level_selection, container, false);
         //createAndDisplayLevelItems();
         listView = view.findViewById(R.id.levelSelection_List);
+        listView2 = view.findViewById(R.id.ingredient_recipe_list);
         Button backButton = (Button) view.findViewById(R.id.levelSelection_BackButton);
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -41,10 +50,16 @@ public class LevelSelectionFragment extends ParentFragment {
         });
         // Rezeptliste, was ist eine Rezeptliste, Liste aus Ingredients, IngredientAdapter
 
-        levelDisplayItemAdapter = new LevelDisplayItemAdapter(mainActivity);
+        //levelDisplayItemAdapter = new LevelDisplayItemAdapter(mainActivity);
+        ingredientAdapter = new IngredientAdapter(mainActivity);
 
-        listView.setAdapter(levelDisplayItemAdapter);
-        levelDisplayItemAdapter.add(new LevelDisplayItem(1,200,3));
+        //listView.setAdapter(levelDisplayItemAdapter);
+        //levelDisplayItemAdapter.add(new LevelDisplayItem(1,200,3));
+
+        listView2.setAdapter(ingredientAdapter);
+        ingredientAdapter.add(new BottomBurgerBun(1));
+        ingredientAdapter.add(new BurgerPatty(1));
+        ingredientAdapter.add(new TopBurgerBun(1));
 
         return view;
     }
