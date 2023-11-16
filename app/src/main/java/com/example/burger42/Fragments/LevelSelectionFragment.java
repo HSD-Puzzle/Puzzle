@@ -27,7 +27,6 @@ public class LevelSelectionFragment extends ParentFragment {
 
     private View view;
     private ListView listView;
-    private ListView listView2;
     private LevelDisplayItemAdapter levelDisplayItemAdapter;
     public LevelSelectionFragment(MainActivity mainActivity) {
         super(mainActivity);
@@ -39,7 +38,6 @@ public class LevelSelectionFragment extends ParentFragment {
         view = inflater.inflate(R.layout.fragment_level_selection, container, false);
         //createAndDisplayLevelItems();
         listView = view.findViewById(R.id.levelSelection_List);
-        listView2 = view.findViewById(R.id.ingredient_recipe_list);
         Button backButton = (Button) view.findViewById(R.id.levelSelection_BackButton);
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
