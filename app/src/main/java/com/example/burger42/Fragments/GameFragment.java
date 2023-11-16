@@ -3,6 +3,9 @@ package com.example.burger42.Fragments;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
@@ -38,41 +41,46 @@ public class GameFragment extends ParentFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         root = view.findViewById(R.id.game_root);
-        View view1 = new View(mainActivity);
-        view1.setLayoutParams(new FrameLayout.LayoutParams(100, 100));
-        view1.setBackgroundColor(R.color.orange700);
 
-
-        view1.setOnTouchListener(new OnTouchListenerMove());
-
-/*
-        view1.setOnTouchListener(new View.OnTouchListener() {
+        View view1 = view.findViewById(R.id.game_move);
+        View view12 = view.findViewById(R.id.game_move2);
+        View view2 = view.findViewById(R.id.game_aim);
+        View view22 = view.findViewById(R.id.game_aim2);
+        View.OnTouchListener onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                System.out.println("MotionEvent" + motionEvent.getAction());
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     ClipData data = ClipData.newPlainText("", "");
                     View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                    view.startDrag(data, shadowBuilder, view, 0);
+                    view.startDrag(data, shadowBuilder, view, 1);
                     view.setVisibility(View.INVISIBLE);
                     return true;
                 }
                 return false;
             }
-        });
+        };
+        view1.setOnTouchListener(onTouchListener);
+        view12.setOnTouchListener(onTouchListener);
 
-        root.setOnDragListener(new View.OnDragListener() {
+        View.OnDragListener onDragListener = new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
-                System.out.println("Drag " + dragEvent.getAction());
-                if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED)
-                    view1.setVisibility(View.VISIBLE);
+                View dragView = (View) dragEvent.getLocalState();
+                if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) {
+                    dragView.setVisibility(View.VISIBLE);
+                    dragView.bringToFront();
+                }
+                if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
+                    dragView.setTranslationX(view.getTranslationX());
+                    dragView.setTranslationY(view.getTranslationY());
+                }
                 return true;
             }
-        });*/
+        };
 
-        root.addView(view1);
+        view2.setOnDragListener(onDragListener);
+        root.setOnDragListener(onDragListener);
+        view22.setOnDragListener(onDragListener);
         return view;
     }
-
 }
