@@ -28,9 +28,9 @@ public class LevelDisplayItemAdapter extends ArrayAdapter<LevelDisplayItem> {
         }
 
         TextView levelIdTextView = (TextView) convertView.findViewById(R.id.levelIdTextView);
-        levelIdTextView.setText("Level: " + currentItem.id() + "");
+        levelIdTextView.setText("Level: " + currentItem.id());
         TextView levelHighscoreTextView = (TextView) convertView.findViewById(R.id.levelHighscoreTextView);
-        levelHighscoreTextView.setText("Highscore: " + currentItem.highscore() + "");
+        levelHighscoreTextView.setText("Highscore: " + currentItem.highscore());
 
         return convertView;
     }
