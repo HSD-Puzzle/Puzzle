@@ -5,15 +5,18 @@ import androidx.annotation.Nullable;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.burger42.ArrayAdapter.IngredientAdapter;
 import com.example.burger42.ArrayAdapter.LevelDisplayItemAdapter;
 import com.example.burger42.Fragments.ParentFragment;
+import com.example.burger42.Game.ClockTimer;
 import com.example.burger42.Game.RecipeGenerator;
 import com.example.burger42.Ingredients.BottomBurgerBun;
 import com.example.burger42.Ingredients.BurgerPatty;
@@ -22,6 +25,7 @@ import com.example.burger42.Item.LevelDisplayItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
+import java.time.Clock;
 import java.util.List;
 
 public class LevelSelectionFragment extends ParentFragment {
@@ -53,12 +57,14 @@ public class LevelSelectionFragment extends ParentFragment {
 
         listView.setAdapter(levelDisplayItemAdapter);
         levelDisplayItemAdapter.add(new LevelDisplayItem(1,200,3));
+        ClockTimer timer = new ClockTimer(12000,1000);
 
+        //ImageView timeView = timer.getClockview();
+        //timer.start();
 
        //RecipeGenerator generator = new RecipeGenerator(mainActivity);
        //listView.setAdapter(generator.giveIngredientadapter());
        //generator.createRecipe(1);
-
 
         return view;
     }

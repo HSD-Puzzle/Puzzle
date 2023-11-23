@@ -20,17 +20,14 @@ public class RecipeGenerator {
     }
     public void createRecipe(int difficultyLevel){
         adapter.clear();
-        int seedGenerator = 1 + (int)(Math.random() * ((1000 - 1) + 1));
-
         adapter.add(new BottomBurgerBun(3));
 
         for (int i = 0;i<difficultyLevel;i++){
-            if((seedGenerator % 2)==0){
+            if(SeedGenerator.isEven()){
                 adapter.add(new BurgerPatty(2));
             }
             else
                 adapter.add(new BurgerSalad(2));
-            seedGenerator = 1 + (int)(Math.random() * ((1000 - 1) + 1));
         }
         adapter.add(new BurgerPatty(2));
         adapter.add(new TopBurgerBun(1));
