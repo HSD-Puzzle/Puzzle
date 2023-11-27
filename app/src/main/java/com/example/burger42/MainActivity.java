@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ParentFragment test = new LevelSelectionFragment(this);
+        ParentFragment test = new StartFragment(this);
         showFragment(test, ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
