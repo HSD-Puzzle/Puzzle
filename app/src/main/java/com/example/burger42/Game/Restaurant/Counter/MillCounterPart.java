@@ -1,4 +1,4 @@
-package com.example.burger42.Game.Restaurant;
+package com.example.burger42.Game.Restaurant.Counter;
 
 import android.content.Context;
 import android.util.AttributeSet;
