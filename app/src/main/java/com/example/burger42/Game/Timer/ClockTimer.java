@@ -1,4 +1,4 @@
-package com.example.burger42.Game;
+package com.example.burger42.Game.Timer;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

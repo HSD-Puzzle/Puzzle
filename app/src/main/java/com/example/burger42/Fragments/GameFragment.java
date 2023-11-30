@@ -13,8 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.burger42.ArrayAdapter.IngredientAdapter;
-import com.example.burger42.Game.RecipeGenerator;
+import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.Restaurant.Restaurant;
 import com.example.burger42.Game.Restaurant.RestaurantLevel1;
 import com.example.burger42.MainActivity;
@@ -45,7 +44,7 @@ public class GameFragment extends ParentFragment {
         RecipeGenerator generator = new RecipeGenerator(mainActivity);
         recipe.setAdapter(generator.giveIngredientadapter());
         generator.createRecipe(1);
-        new CountDownTimer(10000, 1000) {
+        new CountDownTimer(12000, 1000) {
             public void onTick(long millisUntilFinished) {
                 textview.setText("Remaining Time for Order: " + millisUntilFinished / 1000);
             }
@@ -53,7 +52,6 @@ public class GameFragment extends ParentFragment {
                 generator.createRecipe(1);
                 this.start();
             }
-
         }.start();
         /*
         View view1 = view.findViewById(R.id.game_move);

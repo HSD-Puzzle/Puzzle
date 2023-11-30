@@ -1,4 +1,4 @@
-package com.example.burger42.Game;
+package com.example.burger42.Game.Generator;
 
 import com.example.burger42.ArrayAdapter.IngredientAdapter;
 import com.example.burger42.Ingredients.BottomBurgerBun;

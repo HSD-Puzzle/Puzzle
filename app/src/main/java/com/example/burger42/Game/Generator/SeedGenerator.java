@@ -1,4 +1,4 @@
-package com.example.burger42.Game;
+package com.example.burger42.Game.Generator;
 
 public class SeedGenerator {
     public static int integerGenerator(){

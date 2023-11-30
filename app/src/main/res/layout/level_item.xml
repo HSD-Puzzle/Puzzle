@@ -17,6 +17,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Level: " />
+        <TextView
+            android:id="@+id/levelDifficultyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Difficulty: " />
 
         <LinearLayout
             android:layout_width="match_parent"
