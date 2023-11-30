@@ -6,9 +6,11 @@ import androidx.annotation.Nullable;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -57,8 +59,12 @@ public class LevelSelectionFragment extends ParentFragment {
 
         listView.setAdapter(levelDisplayItemAdapter);
         levelDisplayItemAdapter.add(new LevelDisplayItem(1,200,3));
-        //ClockTimer timer = new ClockTimer(12000,1000);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mainActivity.showFragment(new GameFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            }
+        });
         //ImageView timeView = timer.getClockview();
         //timer.start();
 

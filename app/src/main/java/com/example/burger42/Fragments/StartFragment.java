@@ -1,20 +1,22 @@
 package com.example.burger42.Fragments;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
 public class StartFragment extends ParentFragment {
-
     public StartFragment(MainActivity mainActivity) {
         super(mainActivity);
     }

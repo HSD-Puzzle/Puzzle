@@ -19,11 +19,9 @@
             android:layout_height="190dp"
             tools:listitem="@layout/ingredient_item"></ListView>
 
-        <include
-            android:id="@+id/recipe_timer"
-            layout="@layout/clock_timer_item"
-            android:layout_width="match_parent"
-            android:layout_height="87dp" />
+        <include layout="@layout/timer"
+            android:id="@+id/timer_view" />
+
     </LinearLayout>
 
 </RelativeLayout>

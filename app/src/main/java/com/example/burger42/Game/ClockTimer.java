@@ -1,15 +1,19 @@
 package com.example.burger42.Game;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
 public class ClockTimer extends CountDownTimer {
+    private Context context;
     private View view;
     private ImageView clockview;
     private int i = 0;
@@ -27,9 +31,10 @@ public class ClockTimer extends CountDownTimer {
             R.drawable.clock_10_sec,
             R.drawable.clock_11_sec,
     };
-    public ClockTimer(long millisInFuture, long countDownIntervall){
+    public ClockTimer(long millisInFuture, long countDownIntervall, Context context){
         super(millisInFuture,countDownIntervall);
-        view.findViewById(R.layout.clock_timer_item);
+        this.context = context;
+        view = LayoutInflater.from(context).inflate(R.layout.clock_timer_item,null);
         clockview = view.findViewById(R.id.timer_image_view);
     }
 
@@ -38,13 +43,14 @@ public class ClockTimer extends CountDownTimer {
         if(i>11)
             i = 0;
         clockview.setImageResource(images[i++]);
+        System.out.println("lol");
     }
 
     @Override
     public void onFinish() {
         System.out.println("Its joever.");
     }
-    public ImageView getClockview(){
-        return clockview;
+    public View view(){
+        return view;
     }
 }
