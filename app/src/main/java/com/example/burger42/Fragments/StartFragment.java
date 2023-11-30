@@ -25,6 +25,7 @@ public class StartFragment extends ParentFragment {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         Button startButton = (Button) view.findViewById(R.id.button);
         Button settingsButton = (Button) view.findViewById(R.id.start_settings);
+        Button quitButton = (Button) view.findViewById(R.id.start_quit);
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,14 @@ public class StartFragment extends ParentFragment {
 
             }
         });
+
+        quitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.closeApp();
+            }
+        });
+
         return view;
     }
 }

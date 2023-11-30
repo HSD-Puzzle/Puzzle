@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ParentFragment test = new StartFragment(this);
+        ParentFragment test = new LevelSelectionFragment(this);
         showFragment(test, ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
@@ -25,5 +25,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         setRequestedOrientation(requestedOrientation);
     }
+
+    public void closeApp(){
+        MainActivity.this.finish();
+        System.exit(0);
+    }
+
+
 
 }
