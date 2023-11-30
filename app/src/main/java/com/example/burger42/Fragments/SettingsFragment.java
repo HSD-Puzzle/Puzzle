@@ -2,6 +2,7 @@ package com.example.burger42.Fragments;
 
 import static com.example.burger42.R.raw.*;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
@@ -27,14 +28,14 @@ import android.widget.Toast;
 
 public class SettingsFragment extends ParentFragment{
 
-    AudioController audioController = AudioController.getInstance(getActivity());
+    AudioController audioController;
 
-    private static final String PREFERENCE_NAME = "MyPrefs";
-    private static final String AUDIO_PROGRESS_KEY = "audioProgress";
-    private SharedPreferences preferences;
+    private SeekBar audioSeekBar;
 
     public SettingsFragment(MainActivity mainActivity) {
         super(mainActivity);
+        audioController = AudioController.getInstance(mainActivity);
+
     }
 
 
@@ -46,13 +47,9 @@ public class SettingsFragment extends ParentFragment{
         Button backButton = (Button) view.findViewById(R.id.backToMain);
         Button stopMusicButton = (Button) view.findViewById(R.id.stopMusic);
         Button playMusicButton = (Button) view.findViewById(R.id.startMusic);
-        SeekBar audioSeekBar = (SeekBar) view.findViewById(R.id.audioSeekBar);
+        audioSeekBar = (SeekBar) view.findViewById(R.id.audioSeekBar);
 
-        preferences = getActivity().getSharedPreferences(PREFERENCE_NAME, 0);
-        int savedProgress = preferences.getInt(AUDIO_PROGRESS_KEY, 0);
-
-
-        audioSeekBar.setProgress(savedProgress);
+        audioSeekBar.setProgress(audioController.volume());
 
 
         playMusicButton.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +90,7 @@ public class SettingsFragment extends ParentFragment{
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                audioController.leftAndRightVolume(i,i);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(AUDIO_PROGRESS_KEY, i);
-                editor.apply();
+                audioController.leftAndRightVolume(i);
             }
 
             @Override
@@ -112,5 +106,4 @@ public class SettingsFragment extends ParentFragment{
 
         return view;
     }
-
 }

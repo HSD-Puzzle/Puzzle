@@ -27,6 +27,7 @@ public class StartFragment extends ParentFragment {
         Button settingsButton = (Button) view.findViewById(R.id.start_settings);
         Button quitButton = (Button) view.findViewById(R.id.start_quit);
 
+
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
