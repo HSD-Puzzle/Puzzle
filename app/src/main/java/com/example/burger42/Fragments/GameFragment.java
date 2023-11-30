@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.example.burger42.ArrayAdapter.IngredientAdapter;
 import com.example.burger42.Game.RecipeGenerator;
 import com.example.burger42.Game.Restaurant.Restaurant;
+import com.example.burger42.Game.Restaurant.RestaurantLevel1;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -38,7 +39,7 @@ public class GameFragment extends ParentFragment {
         recipeView.setTranslationX(800);
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         root = view.findViewById(R.id.game_root);
-        Restaurant restaurant = new Restaurant(mainActivity);
+        Restaurant restaurant = new RestaurantLevel1(mainActivity);
         root.addView(restaurant.view());
         root.addView(recipeView);
         RecipeGenerator generator = new RecipeGenerator(mainActivity);

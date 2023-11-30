@@ -12,18 +12,23 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/restaurant_corner"
+            android:id="@+id/restaurant_topCounterContainer"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal" />
 
         <LinearLayout
-            android:id="@+id/restaurant_cornerContainer"
+            android:id="@+id/restaurant_bottomCounterContainer"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:orientation="horizontal" />
+            android:orientation="horizontal">
+
+            <com.example.burger42.Game.Restaurant.Counter.BreadCounterPart
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </LinearLayout>
 </HorizontalScrollView>
