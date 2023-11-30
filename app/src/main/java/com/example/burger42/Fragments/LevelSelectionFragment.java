@@ -57,7 +57,7 @@ public class LevelSelectionFragment extends ParentFragment {
 
         listView.setAdapter(levelDisplayItemAdapter);
         levelDisplayItemAdapter.add(new LevelDisplayItem(1,200,3));
-        ClockTimer timer = new ClockTimer(12000,1000);
+        //ClockTimer timer = new ClockTimer(12000,1000);
 
         //ImageView timeView = timer.getClockview();
         //timer.start();
