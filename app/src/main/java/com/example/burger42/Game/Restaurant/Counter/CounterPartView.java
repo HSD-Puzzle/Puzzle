@@ -18,32 +18,19 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.Restaurant.Item.BottomBreadItem;
+import com.example.burger42.Game.Restaurant.Restaurant;
 
 public abstract class CounterPartView extends RelativeLayout {
 
-    CounterPartView(Context context) {
+    protected Restaurant restaurant;
+
+    CounterPartView(Context context, Restaurant restaurant) {
         super(context);
+        this.restaurant = restaurant;
         init(null, context);
     }
 
-    CounterPartView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, context);
-    }
-
-    CounterPartView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(attrs, context);
-    }
-
-    CounterPartView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs, context);
-    }
-
     protected abstract int drawableId();
-
-
 
     @SuppressLint("UseCompatLoadingForDrawables")
     void init(@Nullable AttributeSet attrs, Context context) {

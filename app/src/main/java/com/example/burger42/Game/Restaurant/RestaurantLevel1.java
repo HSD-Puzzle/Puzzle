@@ -15,8 +15,8 @@ public class RestaurantLevel1 extends Restaurant {
     public CounterPartView[] bottomCounterParts(Context context) {
         return new CounterPartView[]
                 {
-                        new BreadCounterPart(context),
-                        new MillCounterPart(context)
+                        new BreadCounterPart(context, this),
+                        new MillCounterPart(context, this)
                 };
     }
 

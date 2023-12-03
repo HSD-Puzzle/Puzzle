@@ -1,6 +1,7 @@
 package com.example.burger42.Game.Restaurant;
 
 import android.content.Context;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,6 +21,18 @@ public abstract class Restaurant {
         bottomCounterContainer = ((LinearLayout) root.findViewById(R.id.restaurant_bottomCounterContainer));
         topCounterContainer = ((LinearLayout) root.findViewById(R.id.restaurant_topCounterContainer));
 
+        root.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+                if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) {
+                    View onTouchListenerDragable = (View) dragEvent.getLocalState();
+                    onTouchListenerDragable.setVisibility(View.VISIBLE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         for (CounterPartView x : bottomCounterParts(root.getContext())) {
             bottomCounterContainer.addView(x);
         }
@@ -37,4 +50,7 @@ public abstract class Restaurant {
         return root;
     }
 
+    public float height() {
+        return bottomCounterContainer.getHeight();
+    }
 }
