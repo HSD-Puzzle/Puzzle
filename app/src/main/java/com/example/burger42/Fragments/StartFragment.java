@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.UI.RestaurantLevel.RestaurantLevel1;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -37,7 +38,7 @@ public class StartFragment extends ParentFragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.showFragment(new GameFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                mainActivity.showFragment(new RestaurantLevel1(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 
             }
         });

@@ -10,7 +10,6 @@ public class ParentFragment extends Fragment {
 
     protected MainActivity mainActivity;
 
-    public ParentFragment (){}
     public ParentFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }

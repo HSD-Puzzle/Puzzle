@@ -6,13 +6,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="sensorLandscape"
         android:supportsRtl="true"
         android:theme="@style/Theme.Burger42">
         <activity
-            android:name=".Fragments.LevelSelectionFragment"
-            android:exported="true" />
-        <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
