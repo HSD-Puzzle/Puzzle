@@ -10,6 +10,8 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.Restaurant.Restaurant;
+import com.example.burger42.Game.Restaurant.RestaurantLevel1;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -26,6 +28,8 @@ public class GameFragment extends ParentFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         root = view.findViewById(R.id.game_root);
+        Restaurant restaurant = new RestaurantLevel1(mainActivity);
+        root.addView(restaurant.view());
 
         /*
         View view1 = view.findViewById(R.id.game_move);
