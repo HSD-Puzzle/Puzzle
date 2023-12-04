@@ -25,11 +25,6 @@ public class BurgerPattyRareView extends ItemView {
     }
 
     @Override
-    protected void onInit(Context context, @Nullable AttributeSet attrs) {
-        setItemAbove(new TopBreadView(context));
-    }
-
-    @Override
     protected int drawableId() {
         return R.drawable.burgerpattyrare;
     }

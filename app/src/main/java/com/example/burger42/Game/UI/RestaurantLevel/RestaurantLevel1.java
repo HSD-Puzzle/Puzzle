@@ -6,7 +6,6 @@ import com.example.burger42.Game.UI.Counter.BreadCounter;
 import com.example.burger42.Game.UI.Counter.CounterView;
 import com.example.burger42.Game.UI.ItemViews.ItemView;
 import com.example.burger42.Game.UI.ItemViews.TabletView;
-import com.example.burger42.Game.UI.RestaurantFragment;
 import com.example.burger42.MainActivity;
 
 public class RestaurantLevel1 extends RestaurantFragment {

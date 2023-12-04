@@ -29,11 +29,6 @@ public class PlateView extends ItemView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override
-    public void onInit(Context context, @Nullable AttributeSet attrs) {
-        setItemAbove(0, new BottomBreadView(context));
-        setItemAbove(1, new BottomBreadView(context));
-    }
 
     @Override
     protected int drawableId() {

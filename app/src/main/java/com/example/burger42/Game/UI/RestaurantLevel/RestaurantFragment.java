@@ -1,7 +1,8 @@
-package com.example.burger42.Game.UI;
+package com.example.burger42.Game.UI.RestaurantLevel;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,19 @@ public abstract class RestaurantFragment extends ParentFragment {
         bottomCounterContainer = ((LinearLayout) view.findViewById(R.id.restaurant_bottomCounterContainer));
         topCounterContainer = ((LinearLayout) view.findViewById(R.id.restaurant_topCounterContainer));
         itemRoot = ((FrameLayout) view.findViewById(R.id.restaurant_root));
+        itemRoot.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+                if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED) {
+                    ((ItemView) dragEvent.getLocalState()).setVisibility(View.INVISIBLE);
+                } else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) {
+                    ((ItemView) dragEvent.getLocalState()).setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+        });
+
+
         itemSize = container.getHeight() / 5;
 
         for (ItemView x : items) {

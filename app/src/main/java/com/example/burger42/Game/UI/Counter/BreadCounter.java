@@ -1,6 +1,8 @@
 package com.example.burger42.Game.UI.Counter;
 
+import android.content.ClipData;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.DragEvent;
@@ -10,9 +12,13 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.OnTouchListenerDragable;
+import com.example.burger42.Game.UI.ItemViews.BottomBreadView;
 import com.example.burger42.Game.UI.ItemViews.ItemView;
+import com.example.burger42.Game.UI.ItemViews.TabletView;
+import com.example.burger42.Game.UI.ItemViews.TopBreadView;
 import com.example.burger42.R;
 
+import java.util.List;
 import java.util.zip.Deflater;
 
 public class BreadCounter extends CounterView {
@@ -37,39 +43,47 @@ public class BreadCounter extends CounterView {
         return R.drawable.burgerbreadcorner;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
-    }
+    private List<TouchArea> touchAreas;
 
     @Override
-    public boolean onDragEvent(DragEvent event) {
-        switch (event.getAction()) {
-            case DragEvent.ACTION_DRAG_STARTED:
-                Log.println(Log.DEBUG, "BreadCounter", "ACTION_DRAG_STARTED");
-                break;
-            case DragEvent.ACTION_DRAG_LOCATION:
-                Log.println(Log.DEBUG, "BreadCounter", "ACTION_DRAG_LOCATION");
-                break;
-            case DragEvent.ACTION_DROP:
-                Log.println(Log.DEBUG, "BreadCounter", "ACTION_DROP");
-                ItemView itemView = (ItemView) event.getLocalState();
-                itemView.setTranslationY(getHeight() / 2.28f);
-                itemView.setTranslationX(Math.max(getX() + event.getX() - itemView.getWidth() / 2, 0));
-                break;
-            case DragEvent.ACTION_DRAG_ENDED:
-                Log.println(Log.DEBUG, "BreadCounter", "ACTION_DRAG_ENDED");
-                break;
-            case DragEvent.ACTION_DRAG_ENTERED:
-                Log.println(Log.DEBUG, "BreadCounter", "ACTION_DRAG_ENTERED");
-                break;
-            case DragEvent.ACTION_DRAG_EXITED:
-                Log.println(Log.DEBUG, "BreadCounter", "ACTION_DRAG_EXITED");
-                break;
-            default:
-                Log.println(Log.DEBUG, "BreadCounter", "OTHER");
-                break;
+    public List<TouchArea> touchAreas() {
+        if (touchAreas == null) {
+            touchAreas = super.touchAreas();
+            touchAreas.add(new TouchArea(0.63f, 0.93f, 0.03f, 0.49f) {
+                @Override
+                boolean onTouchEvent(MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        ItemView itemView = new BottomBreadView(getContext());
+                        drag(itemView);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            touchAreas.add(new TouchArea(0.63f, 0.93f, 0.51f, 0.96f) {
+                @Override
+                boolean onTouchEvent(MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        ItemView itemView = new TopBreadView(getContext());
+                        drag(itemView);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
         }
-        return true;
+        return touchAreas;
+    }
+
+    private void drag(ItemView itemView) {
+        ClipData data = ClipData.newPlainText("", "");
+        DragShadowBuilder shadowBuilder = itemView.dragShadow(200);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            startDragAndDrop(data, shadowBuilder, itemView, DRAG_FLAG_OPAQUE);
+        } else {
+            startDrag(data, shadowBuilder, itemView, 1);
+        }
     }
 }

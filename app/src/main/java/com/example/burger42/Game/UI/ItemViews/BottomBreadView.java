@@ -44,10 +44,6 @@ public class BottomBreadView extends ItemView {
         }};
     }
 
-    @Override
-    protected void onInit(Context context, @Nullable AttributeSet attrs) {
-        setItemAbove(new BurgerPattyRareView(context));
-    }
 
     @Override
     protected float scaling() {

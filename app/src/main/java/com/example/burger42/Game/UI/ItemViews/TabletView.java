@@ -30,12 +30,6 @@ public class TabletView extends ItemView {
     }
 
     @Override
-    protected void onInit(Context context, @Nullable AttributeSet attrs) {
-        setItemAbove(new PlateView(context));
-        setItemAbove(1, new PlateView(context));
-    }
-
-    @Override
     protected int drawableId() {
         return R.drawable.tablet;
     }

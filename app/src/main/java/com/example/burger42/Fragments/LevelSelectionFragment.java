@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.burger42.ArrayAdapter.LevelDisplayItemAdapter;
+import com.example.burger42.Game.UI.RestaurantLevel.RestaurantLevel1;
 import com.example.burger42.Item.LevelDisplayItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
@@ -22,6 +23,7 @@ public class LevelSelectionFragment extends ParentFragment {
     private View view;
     private ListView listView;
     private LevelDisplayItemAdapter levelDisplayItemAdapter;
+
     public LevelSelectionFragment(MainActivity mainActivity) {
         super(mainActivity);
     }
@@ -35,24 +37,24 @@ public class LevelSelectionFragment extends ParentFragment {
         Button backButton = (Button) view.findViewById(R.id.levelSelection_BackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-               mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            public void onClick(View view) {
+                mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
         levelDisplayItemAdapter = new LevelDisplayItemAdapter(mainActivity);
 
         listView.setAdapter(levelDisplayItemAdapter);
-        levelDisplayItemAdapter.add(new LevelDisplayItem(1,"Easy",200,3));
-        levelDisplayItemAdapter.add(new LevelDisplayItem(2,"Medium",300,3));
-        levelDisplayItemAdapter.add(new LevelDisplayItem(3,"Hard",100,3));
+        levelDisplayItemAdapter.add(new LevelDisplayItem(1, "Easy", 200, 3));
+        levelDisplayItemAdapter.add(new LevelDisplayItem(2, "Medium", 300, 3));
+        levelDisplayItemAdapter.add(new LevelDisplayItem(3, "Hard", 100, 3));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mainActivity.showFragment(new GameFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                mainActivity.showFragment(new RestaurantLevel1(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
         return view;
     }
 
 
-    }
+}

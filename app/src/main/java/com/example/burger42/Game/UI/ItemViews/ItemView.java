@@ -13,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -137,7 +138,7 @@ public abstract class ItemView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             ClipData data = ClipData.newPlainText("", "");
-            DragShadowBuilder shadowBuilder = new DragShadow(this);
+            DragShadowBuilder shadowBuilder = dragShadow(referenceHeight);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 startDragAndDrop(data, shadowBuilder, this, DRAG_FLAG_OPAQUE);
             } else {
@@ -148,20 +149,26 @@ public abstract class ItemView extends View {
         return false;
     }
 
-    public class DragShadow extends DragShadowBuilder {
+    public DragShadow dragShadow(int referenceHeight) {
+        return new DragShadow(referenceHeight);
+    }
 
-        DragShadow(View view) {
-            super(view);
+    public class DragShadow extends DragShadowBuilder {
+        private int referenceHeight;
+
+        DragShadow(int referenceHeight) {
+            this.referenceHeight = referenceHeight;
         }
 
         @Override
         public void onDrawShadow(Canvas canvas) {
             drawItemOnCanvas(canvas, 0, 0, referenceHeight, canvas.getWidth(), canvas.getHeight());
-
         }
 
         @Override
         public void onProvideShadowMetrics(Point shadowSize, Point shadowTouchPoint) {
+            shadowSize.set((int) (referenceHeight * ratio * scaling()), calculatedFullHeight(referenceHeight));
+            shadowTouchPoint.set(shadowSize.x / 2, shadowSize.y / 2);
             super.onProvideShadowMetrics(
                     shadowSize,
                     shadowTouchPoint);
