@@ -1,6 +1,7 @@
 package com.example.burger42;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +18,13 @@ public class MainActivity extends AppCompatActivity {
 
     AudioController audioController;
     SettingsFragment settingsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        ParentFragment test = new StartFragment(this);
-        showFragment(new LevelSelectionFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        showFragment(new StartFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         audioController = AudioController.getInstance(this);
         audioController.startMusic();
     }
@@ -32,11 +34,10 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(requestedOrientation);
     }
 
-    public void closeApp(){
+    public void closeApp() {
         MainActivity.this.finish();
         System.exit(0);
     }
-
 
 
 }
