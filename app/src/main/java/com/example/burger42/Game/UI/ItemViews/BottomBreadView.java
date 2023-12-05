@@ -5,23 +5,17 @@ import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.UI.RestaurantLevel.RestaurantFragment;
 import com.example.burger42.R;
 
 public class BottomBreadView extends ItemView {
-    public BottomBreadView(Context context) {
-        super(context);
-    }
 
-    public BottomBreadView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public BottomBreadView(Context context, RestaurantFragment restaurantFragment) {
+        super(context, restaurantFragment);
     }
 
     public BottomBreadView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public BottomBreadView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -43,7 +37,6 @@ public class BottomBreadView extends ItemView {
             }
         }};
     }
-
 
     @Override
     protected float scaling() {

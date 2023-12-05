@@ -5,23 +5,21 @@ import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.UI.RestaurantLevel.RestaurantFragment;
 import com.example.burger42.R;
 
-public class TopBreadView extends ItemView {
-    public TopBreadView(Context context) {
-        super(context);
-    }
+import java.util.LinkedList;
+import java.util.List;
 
-    public TopBreadView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+public class TopBreadView extends ItemView {
+
+
+    public TopBreadView(Context context, RestaurantFragment restaurantFragment) {
+        super(context, restaurantFragment);
     }
 
     public TopBreadView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public TopBreadView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -32,6 +30,17 @@ public class TopBreadView extends ItemView {
     @Override
     protected float scaling() {
         return 127f / 500f;
+    }
+
+
+    @Override
+    public boolean setItemAbove(int index, ItemView itemAbove) {
+        return false;
+    }
+
+    @Override
+    public boolean hasItemAbove(int index) {
+        return false;
     }
 
     @Override

@@ -5,23 +5,17 @@ import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.UI.RestaurantLevel.RestaurantFragment;
 import com.example.burger42.R;
 
 public class BurgerPattyRareView extends ItemView {
-    public BurgerPattyRareView(Context context) {
-        super(context);
-    }
 
-    public BurgerPattyRareView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public BurgerPattyRareView(Context context, RestaurantFragment restaurantFragment) {
+        super(context, restaurantFragment);
     }
 
     public BurgerPattyRareView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public BurgerPattyRareView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

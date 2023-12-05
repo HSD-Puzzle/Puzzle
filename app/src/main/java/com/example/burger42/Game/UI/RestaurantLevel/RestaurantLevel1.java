@@ -11,13 +11,13 @@ import com.example.burger42.MainActivity;
 public class RestaurantLevel1 extends RestaurantFragment {
     public RestaurantLevel1(MainActivity mainActivity) {
         super(mainActivity);
-        ItemView itemView = new TabletView(mainActivity);
+        ItemView itemView = new TabletView(mainActivity, this);
         addItem(itemView);
     }
 
     @Override
     public CounterView[] bottomCounterParts(Context context) {
-        return new CounterView[]{new BreadCounter(context), new BreadCounter(context), new BreadCounter(context), new BreadCounter(context)};
+        return new CounterView[]{new BreadCounter(context, this), new BreadCounter(context, this), new BreadCounter(context, this), new BreadCounter(context, this)};
     }
 
     @Override

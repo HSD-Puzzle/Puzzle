@@ -7,28 +7,21 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.UI.RestaurantLevel.RestaurantFragment;
 import com.example.burger42.R;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class PlateView extends ItemView {
 
-    private ItemView itemAbove2;
-
-    public PlateView(Context context) {
-        super(context);
-    }
-
-    public PlateView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public PlateView(Context context, RestaurantFragment restaurantFragment) {
+        super(context, restaurantFragment);
     }
 
     public PlateView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
-    public PlateView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
 
     @Override
     protected int drawableId() {
@@ -38,7 +31,7 @@ public class PlateView extends ItemView {
     @Override
     protected ItemAbove[] itemAboveSetUp() {
         return new ItemAbove[]{
-                new ItemAbove() {
+                new ItemAbove(0, 1, 0, 0.5f) {
                     @Override
                     protected int xOffset(int reference) {
                         return (int) (reference * -0.2f);
@@ -49,7 +42,7 @@ public class PlateView extends ItemView {
                         return (int) (reference * 0.13f);
                     }
                 },
-                new ItemAbove() {
+                new ItemAbove(0, 1, 0.5f, 1) {
                     @Override
                     protected int xOffset(int reference) {
                         return (int) (reference * 0.2f);

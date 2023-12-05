@@ -4,29 +4,26 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.DragEvent;
 
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.UI.RestaurantLevel.RestaurantFragment;
 import com.example.burger42.R;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class TabletView extends ItemView {
 
-    private ItemView itemAbove2;
+    private List<DragArea> dragAreas;
 
-    public TabletView(Context context) {
-        super(context);
-    }
-
-    public TabletView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public TabletView(Context context, RestaurantFragment restaurantFragment) {
+        super(context, restaurantFragment);
     }
 
     public TabletView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public TabletView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
@@ -42,7 +39,7 @@ public class TabletView extends ItemView {
     @Override
     protected ItemAbove[] itemAboveSetUp() {
         return new ItemAbove[]{
-                new ItemAbove() {
+                new ItemAbove(0, 1, 0, 0.5f) {
                     @Override
                     protected int xOffset(int reference) {
                         return (int) (reference * -0.48f);
@@ -53,7 +50,7 @@ public class TabletView extends ItemView {
                         return (int) (reference * 0.2f);
                     }
                 },
-                new ItemAbove() {
+                new ItemAbove(0, 1, 0.5f, 1) {
                     @Override
                     protected int xOffset(int reference) {
                         return (int) (reference * 0.47f);

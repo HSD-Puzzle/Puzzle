@@ -40,9 +40,11 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     public void addItem(ItemView item) {
-        items.add(item);
-        if (itemRoot != null) {
-            addItemViewToRoot(item);
+        if (!items.contains(item)) {
+            items.add(item);
+            if (itemRoot != null) {
+                addItemViewToRoot(item);
+            }
         }
     }
 
@@ -65,6 +67,7 @@ public abstract class RestaurantFragment extends ParentFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        itemSize = container.getHeight() / 5;
         view = inflater.inflate(R.layout.fragment_restaurant, container, false);
         bottomCounterContainer = ((LinearLayout) view.findViewById(R.id.restaurant_bottomCounterContainer));
         topCounterContainer = ((LinearLayout) view.findViewById(R.id.restaurant_topCounterContainer));
@@ -72,17 +75,15 @@ public abstract class RestaurantFragment extends ParentFragment {
         itemRoot.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
+                ItemView itemView = (ItemView) dragEvent.getLocalState();
                 if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED) {
-                    ((ItemView) dragEvent.getLocalState()).setVisibility(View.INVISIBLE);
+                    itemView.setVisibility(View.INVISIBLE);
                 } else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) {
-                    ((ItemView) dragEvent.getLocalState()).setVisibility(View.VISIBLE);
+                    itemView.setVisibility(View.VISIBLE);
                 }
                 return true;
             }
         });
-
-
-        itemSize = container.getHeight() / 5;
 
         for (ItemView x : items) {
             addItemViewToRoot(x);
@@ -96,6 +97,10 @@ public abstract class RestaurantFragment extends ParentFragment {
             topCounterContainer.addView(x);
         }
         return view;
+    }
+
+    public int itemSize() {
+        return itemSize;
     }
 
     public abstract CounterView[] bottomCounterParts(Context context);
