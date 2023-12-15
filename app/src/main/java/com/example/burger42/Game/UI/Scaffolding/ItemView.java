@@ -222,7 +222,8 @@ public abstract class ItemView extends CustomView implements DragFilter {
                     result = true;
             }
         }
-        result = super.onDragArea(event, xOffset, yOffset, width, height, referenceHeight);
+        if (super.onDragArea(event, xOffset, yOffset, width, height, referenceHeight))
+            result = true;
         return result;
     }
 

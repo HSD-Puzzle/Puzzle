@@ -149,9 +149,7 @@ public abstract class CustomView extends View {
                 result = true;
             }
         }
-        if (result || event.getAction() == DragEvent.ACTION_DRAG_STARTED)
-            return true;
-        return false;
+        return result || event.getAction() == DragEvent.ACTION_DRAG_STARTED;
     }
 
     protected float scaling() {
@@ -189,7 +187,6 @@ public abstract class CustomView extends View {
 
 
     public boolean drag(ItemView itemView) {
-        System.out.println(itemView);
         ClipData data = ClipData.newPlainText("", "");
         DragShadowBuilder shadowBuilder = itemView.dragShadow(referenceHeight);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

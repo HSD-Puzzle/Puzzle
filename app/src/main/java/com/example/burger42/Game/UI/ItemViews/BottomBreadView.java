@@ -41,7 +41,7 @@ public class BottomBreadView extends ItemView {
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
-        addOnDragAreaListener(new DragAreaSetItemAbove(this));
+        addOnDragAreaListener(new DragAreaSetItemAbove(this).setUseFilter(true).addFilterTag(ItemFilterTag.Ingredient));
     }
 
     @Override

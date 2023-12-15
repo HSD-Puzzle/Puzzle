@@ -84,7 +84,7 @@ public class PlateView extends ItemView {
     }
 
 
-    private class DragAreaSetItemAbove extends OnDragAreaListener {
+    private static class DragAreaSetItemAbove extends OnDragAreaListener {
 
         public DragAreaSetItemAbove setIndex(int index) {
             this.index = index;
