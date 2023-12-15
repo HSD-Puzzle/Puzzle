@@ -1,25 +1,12 @@
 package com.example.burger42.Game;
 
-import java.util.List;
 import java.util.TreeSet;
 
-public class DragFilter {
-    private final TreeSet<String> filterTags = new TreeSet<>();
+public interface DragFilter extends Iterable<String> {
 
-    public void addFilterTag(String tag) {
-        filterTags.add(tag);
-    }
+    public void addFilterTag(String tag);
 
-    public void removeFilterTag(String tag) {
-        filterTags.remove(tag);
-    }
+    public void removeFilterTag(String tag);
 
-    public boolean hasAtLeastOneEqualFilterTag(DragFilter other) {
-        for (String x : other.filterTags) {
-            if (filterTags.contains(x)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    public boolean hasAtLeastOneEqualFilterTag(DragFilter other);
 }

@@ -1,6 +1,5 @@
-package com.example.burger42.Game.UI.RestaurantLevel;
+package com.example.burger42.Game.UI.Scaffolding;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -8,15 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Fragments.ParentFragment;
-import com.example.burger42.Game.UI.Counter.CounterView;
-import com.example.burger42.Game.UI.ItemViews.ItemView;
-import com.example.burger42.Game.UI.ItemViews.TabletView;
+import com.example.burger42.Game.UI.ItemViews.PlateView;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -26,22 +22,23 @@ import java.util.List;
 public abstract class RestaurantFragment extends ParentFragment {
 
     private List<ItemView> items = new LinkedList<>();
-
-    private int itemSize;
-
-    private View view;
-
-    private FrameLayout itemRoot;
+    private View rootView;
+    FrameLayout itemRoot;
     private LinearLayout bottomCounterContainer;
     private LinearLayout topCounterContainer;
+    int referenceHeight = 100;
 
     public RestaurantFragment(MainActivity mainActivity) {
         super(mainActivity);
+        ItemView itemView = new PlateView(mainActivity);
+        itemView.setTranslationY(300);
+        addItem(itemView);
     }
 
     public void addItem(ItemView item) {
         if (!items.contains(item)) {
             items.add(item);
+            item.setRestaurantFragment(this);
             if (itemRoot != null) {
                 addItemViewToRoot(item);
             }
@@ -49,14 +46,13 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     public void removeItem(ItemView item) {
-        items.remove(item);
-        if (itemRoot != null) {
+        if (items.remove(item) && itemRoot != null) {
             removeItemViewToRoot(item);
         }
     }
 
     private void addItemViewToRoot(ItemView item) {
-        item.setLayoutParams(new FrameLayout.LayoutParams(itemSize, itemSize));
+        item.setLayoutParams(new FrameLayout.LayoutParams(referenceHeight, referenceHeight));
         itemRoot.addView(item);
     }
 
@@ -67,43 +63,52 @@ public abstract class RestaurantFragment extends ParentFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        itemSize = container.getHeight() / 5;
-        view = inflater.inflate(R.layout.fragment_restaurant, container, false);
-        bottomCounterContainer = ((LinearLayout) view.findViewById(R.id.restaurant_bottomCounterContainer));
-        topCounterContainer = ((LinearLayout) view.findViewById(R.id.restaurant_topCounterContainer));
-        itemRoot = ((FrameLayout) view.findViewById(R.id.restaurant_root));
+        rootView = inflater.inflate(R.layout.fragment_restaurant, container, false);
+        bottomCounterContainer = ((LinearLayout) rootView.findViewById(R.id.restaurant_bottomCounterContainer));
+        topCounterContainer = ((LinearLayout) rootView.findViewById(R.id.restaurant_topCounterContainer));
+        itemRoot = ((FrameLayout) rootView.findViewById(R.id.restaurant_root));
+        referenceHeight = container.getHeight() / 4;
+
         itemRoot.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
                 ItemView itemView = (ItemView) dragEvent.getLocalState();
                 if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED) {
                     itemView.setVisibility(View.INVISIBLE);
+                    return true;
                 } else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) {
                     itemView.setVisibility(View.VISIBLE);
                 }
-                return true;
+                return false;
             }
         });
 
         for (ItemView x : items) {
             addItemViewToRoot(x);
         }
-
-        for (CounterView x : bottomCounterParts(view.getContext())) {
-            bottomCounterContainer.addView(x);
+        for (CounterView x : bottomCounter()) {
+            addBottomCounter(x);
         }
-
-        for (CounterView x : topCounterParts(view.getContext())) {
-            topCounterContainer.addView(x);
+        for (CounterView x : topCounter()) {
+            addTopCounter(x);
         }
-        return view;
+        return rootView;
     }
 
-    public int itemSize() {
-        return itemSize;
+    protected abstract CounterView[] bottomCounter();
+
+    protected abstract CounterView[] topCounter();
+
+
+    private void addBottomCounter(CounterView bottomCounter) {
+        bottomCounter.setRestaurantFragment(this);
+        bottomCounterContainer.addView(bottomCounter);
+        bottomCounter.setLayoutParams(new LinearLayout.LayoutParams(-2, referenceHeight));
     }
 
-    public abstract CounterView[] bottomCounterParts(Context context);
-
-    public abstract CounterView[] topCounterParts(Context context);
+    private void addTopCounter(CounterView topCounter) {
+        topCounter.setRestaurantFragment(this);
+        topCounterContainer.addView(topCounter);
+        topCounter.setLayoutParams(new LinearLayout.LayoutParams(-2, referenceHeight));
+    }
 }
