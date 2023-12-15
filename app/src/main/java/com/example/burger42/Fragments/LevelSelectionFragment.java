@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.burger42.ArrayAdapter.LevelDisplayItemAdapter;
-import com.example.burger42.Game.UI.RestaurantLevel.RestaurantLevel1;
+import com.example.burger42.Game.UI.RestaurantFragmentLevel1;
 import com.example.burger42.Item.LevelDisplayItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
@@ -50,7 +50,7 @@ public class LevelSelectionFragment extends ParentFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mainActivity.showFragment(new RestaurantLevel1(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                mainActivity.showFragment(new RestaurantFragmentLevel1(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
         return view;
