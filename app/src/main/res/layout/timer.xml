@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/test_timer"
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="31dp"
-        android:text="TextView" />
+        android:layout_height="300dp"
+        android:src="@drawable/clock_0_sec" />
 </RelativeLayout>

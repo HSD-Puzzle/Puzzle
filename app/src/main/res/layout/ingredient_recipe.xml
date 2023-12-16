@@ -16,11 +16,14 @@
         <ListView
             android:id="@+id/ingredient_recipe_list"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
             tools:listitem="@layout/ingredient_item"></ListView>
 
-        <include layout="@layout/timer"
-            android:id="@+id/timer_view" />
+        <include
+            android:id="@+id/timer_view"
+            layout="@layout/timer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
