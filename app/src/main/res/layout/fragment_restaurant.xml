@@ -1,30 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black"
-    android:contentDescription=" "
-    android:isScrollContainer="true">
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/restaurant_root"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/restaurant"
+        android:isScrollContainer="true">
 
-
-        <LinearLayout
-            android:id="@+id/restaurant_topCounterContainer"
+        <FrameLayout
+            android:id="@+id/restaurant_root"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/restaurant_bottomCounterContainer"
+
+            <LinearLayout
+                android:id="@+id/restaurant_topCounterContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/restaurant_bottomCounterContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal" />
+
+        </FrameLayout>
+
+    </HorizontalScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/restaurant_pause"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal" />
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/pause_symbol"
+            android:contentDescription="@string/pause"
+            android:icon="@drawable/pause_symbol" />
 
-    </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@id/restaurant_dollarSign"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/orange700"
+            android:textSize="40sp" />
 
-</HorizontalScrollView>
+        <ImageView
+            android:id="@+id/restaurant_dollarSign"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/money_symbol" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

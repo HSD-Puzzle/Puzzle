@@ -26,7 +26,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 
-public class SettingsFragment extends ParentFragment{
+public class SettingsFragment extends ParentFragment {
 
     AudioController audioController;
 
@@ -55,10 +55,9 @@ public class SettingsFragment extends ParentFragment{
         playMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(audioController.musicIsPlaying()){
+                if (audioController.musicIsPlaying()) {
                     Toast.makeText(getActivity(), "Music is already playing", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     audioController.startMusic();
                 }
 
@@ -68,11 +67,10 @@ public class SettingsFragment extends ParentFragment{
         stopMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(audioController.musicIsPlaying() == true){
+                if (audioController.musicIsPlaying() == true) {
                     audioController.stopMusic();
 
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Music is not playing", Toast.LENGTH_SHORT).show();
                 }
 
@@ -105,5 +103,10 @@ public class SettingsFragment extends ParentFragment{
         });
 
         return view;
+    }
+
+    @Override
+    public void onBackPressed() {
+        mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 }

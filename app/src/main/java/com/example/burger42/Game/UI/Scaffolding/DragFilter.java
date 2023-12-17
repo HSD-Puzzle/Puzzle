@@ -1,6 +1,4 @@
-package com.example.burger42.Game;
-
-import java.util.TreeSet;
+package com.example.burger42.Game.UI.Scaffolding;
 
 public interface DragFilter extends Iterable<String> {
 

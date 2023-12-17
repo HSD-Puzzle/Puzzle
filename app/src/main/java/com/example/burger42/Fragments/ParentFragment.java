@@ -13,4 +13,8 @@ public class ParentFragment extends Fragment {
     public ParentFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
+
+    public void onBackPressed() {
+
+    }
 }

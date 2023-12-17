@@ -56,5 +56,8 @@ public class LevelSelectionFragment extends ParentFragment {
         return view;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    }
 }

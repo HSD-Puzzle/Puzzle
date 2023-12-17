@@ -6,4 +6,8 @@
     <string name="tip">Trinkgeld</string>
     <string name="settings">Einstellungen</string>
     <string name="quit">Verlassen</string>
+    <string name="pause">Pause</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="back_to_restaurant">Zurück ins Restaurant</string>
+    <string name="leave_without_success">Ohne Erfolg beenden</string>
 </resources>

@@ -26,7 +26,12 @@ public abstract class CounterView extends CustomView {
 
     public void setRestaurantFragment(RestaurantFragment restaurantFragment) {
         this.restaurantFragment = restaurantFragment;
+        bindOnRestaurant();
     }
+
+    public void bindOnRestaurant() {
+    }
+
 
     @Override
     protected float scaling() {
@@ -43,7 +48,7 @@ public abstract class CounterView extends CustomView {
                     ItemView itemView = (ItemView) event.getLocalState();
                     itemView.removeFromParent();
                     restaurantFragment.addItem(itemView);
-                    itemView.setTranslationY(getHeight() * 0.56f);
+                    itemView.setTranslationY(getHeight() * 0.54f);
                     itemView.setTranslationX(Math.max(getX() + event.getX() - itemView.getCustomWidth() / 2f, 0));
                     return true;
                 }

@@ -1,8 +1,6 @@
-package com.example.burger42.Game;
+package com.example.burger42.Game.UI.Scaffolding;
 
 import androidx.annotation.NonNull;
-
-import com.example.burger42.Game.UI.Scaffolding.ItemView;
 
 import java.util.Iterator;
 import java.util.TreeSet;

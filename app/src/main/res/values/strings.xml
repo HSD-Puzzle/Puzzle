@@ -6,4 +6,8 @@
     <string name="tip">Tip</string>
     <string name="settings">Settings</string>
     <string name="quit">Quit</string>
+    <string name="pause">Pause</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="back_to_restaurant">Back to the restaurant</string>
+    <string name="leave_without_success">Leave without success</string>
 </resources>

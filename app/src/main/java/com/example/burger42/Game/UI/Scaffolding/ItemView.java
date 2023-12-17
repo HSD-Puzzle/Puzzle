@@ -1,6 +1,5 @@
 package com.example.burger42.Game.UI.Scaffolding;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,15 +14,12 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Game.BasicDragFilter;
-import com.example.burger42.Game.DragFilter;
-
 import java.util.Iterator;
 
 public abstract class ItemView extends CustomView implements DragFilter {
 
     public enum ItemFilterTag {
-        Ingredient, CleanBase
+        Ingredient, CleanBase, Tool
     }
 
     protected abstract ItemFilterTag[] itemFilterTags();
@@ -140,10 +136,16 @@ public abstract class ItemView extends CustomView implements DragFilter {
     }
 
     @Override
+    public void setVisibility(int visibility) {
+        super.setVisibility(visibility);
+        redraw();
+    }
+
+    @Override
     protected final void drawItemOnCanvas(Canvas canvas, float xOffset, float yOffset, int referenceHeight, int width, int height) {
         super.drawItemOnCanvas(canvas, xOffset, yOffset, referenceHeight, width, height);
         for (ItemAboveNode x : itemsAboveNode) {
-            if (x.hasItemView())
+            if (x.hasItemView() && x.itemAbove().getVisibility() == VISIBLE)
                 x.itemAbove.drawItemOnCanvas(canvas, x.xOffset(referenceHeight) + xOffset, x.yOffset(referenceHeight) + yOffset, referenceHeight, width, height);
         }
         if (isInEditMode()) {
@@ -188,6 +190,10 @@ public abstract class ItemView extends CustomView implements DragFilter {
 
     public boolean hasItemAbove(int index) {
         return itemsAboveNode[index].hasItemView();
+    }
+
+    public ItemView getItemAbove(int index) {
+        return itemsAboveNode[index].itemAbove();
     }
 
     @Override

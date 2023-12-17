@@ -1,10 +1,12 @@
 package com.example.burger42.Game.UI.Scaffolding;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Fragments.ParentFragment;
+import com.example.burger42.Fragments.PauseFragment;
 import com.example.burger42.Game.UI.ItemViews.PlateView;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
@@ -21,9 +24,9 @@ import java.util.List;
 
 public abstract class RestaurantFragment extends ParentFragment {
 
-    private List<ItemView> items = new LinkedList<>();
+    private final List<ItemView> items = new LinkedList<>();
     private View rootView;
-    FrameLayout itemRoot;
+    private FrameLayout itemRoot;
     private LinearLayout bottomCounterContainer;
     private LinearLayout topCounterContainer;
     int referenceHeight = 100;
@@ -63,7 +66,16 @@ public abstract class RestaurantFragment extends ParentFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (rootView == null) firstSetup(inflater, container);
+        return rootView;
+    }
+
+    private void firstSetup(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.fragment_restaurant, container, false);
+
+        Button pauseButton = (Button) rootView.findViewById(R.id.restaurant_pause);
+        pauseButton.setOnClickListener(view -> pause());
+
         bottomCounterContainer = ((LinearLayout) rootView.findViewById(R.id.restaurant_bottomCounterContainer));
         topCounterContainer = ((LinearLayout) rootView.findViewById(R.id.restaurant_topCounterContainer));
         itemRoot = ((FrameLayout) rootView.findViewById(R.id.restaurant_root));
@@ -82,7 +94,6 @@ public abstract class RestaurantFragment extends ParentFragment {
                 return false;
             }
         });
-
         for (ItemView x : items) {
             addItemViewToRoot(x);
         }
@@ -92,13 +103,11 @@ public abstract class RestaurantFragment extends ParentFragment {
         for (CounterView x : topCounter()) {
             addTopCounter(x);
         }
-        return rootView;
     }
 
     protected abstract CounterView[] bottomCounter();
 
     protected abstract CounterView[] topCounter();
-
 
     private void addBottomCounter(CounterView bottomCounter) {
         bottomCounter.setRestaurantFragment(this);
@@ -110,5 +119,24 @@ public abstract class RestaurantFragment extends ParentFragment {
         topCounter.setRestaurantFragment(this);
         topCounterContainer.addView(topCounter);
         topCounter.setLayoutParams(new LinearLayout.LayoutParams(-2, referenceHeight));
+    }
+
+    public void resume() {
+
+    }
+
+    public void pause() {
+        mainActivity.showFragment(new PauseFragment(mainActivity, this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        pause();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pause();
     }
 }

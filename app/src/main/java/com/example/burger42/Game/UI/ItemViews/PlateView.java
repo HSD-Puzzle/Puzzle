@@ -7,8 +7,6 @@ import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Game.UI.CounterViews.MillCounterView;
-import com.example.burger42.Game.UI.Scaffolding.DragAreaSetItemAbove;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
@@ -65,14 +63,18 @@ public class PlateView extends ItemView {
 
     @Override
     public String name() {
-        return "PlateView";
+        return "Plate";
     }
 
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
-        addOnDragAreaListener(new DragAreaSetItemAbove(this).setIndex(0).setRelativeRight(0.5f));
-        addOnDragAreaListener(new DragAreaSetItemAbove(this).setIndex(1).setRelativeLeft(0.5f));
+        addOnDragAreaListener(new DragAreaSetItemAbove(this)
+                .setIndex(0).setRelativeRight(0.5f)
+                .addFilterTag(ItemFilterTag.Ingredient)
+                .addFilterTagR("Plate")
+                .setUseFilter(true));
+        addOnDragAreaListener(new DragAreaSetItemAbove(this).setIndex(1).setRelativeLeft(0.5f).addFilterTag(ItemFilterTag.Ingredient).addFilterTagR("Plate").setUseFilter(true));
         addOnTouchAreaListener(new OnTouchAreaListener(1, 0, 0, 1) {
 
             @Override
@@ -97,7 +99,7 @@ public class PlateView extends ItemView {
         }
 
         private int index = 0;
-        private ItemView itemView;
+        private final ItemView itemView;
 
         @Override
         protected boolean onDrag(DragEvent event, boolean inArea) {
@@ -134,5 +136,13 @@ public class PlateView extends ItemView {
     @Override
     protected float scaling() {
         return 176f / 500f;
+    }
+
+    public boolean onlyPlateAbove() {
+        if (hasNoItemAbove())
+            return true;
+        if (hasItemAbove(2))
+            return ((PlateView) getItemAbove(2)).onlyPlateAbove();
+        return false;
     }
 }

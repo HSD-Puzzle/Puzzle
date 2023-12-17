@@ -2,9 +2,6 @@ package com.example.burger42.Game.UI.Scaffolding;
 
 import android.view.DragEvent;
 
-import com.example.burger42.Game.BasicDragFilter;
-import com.example.burger42.Game.DragFilter;
-
 public abstract class OnDragAreaListener extends BasicDragFilter {
 
     private boolean useFilter = false;

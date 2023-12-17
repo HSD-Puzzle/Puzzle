@@ -17,6 +17,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -159,6 +160,10 @@ public abstract class CustomView extends View {
     @Override
     protected final void onDraw(Canvas canvas) {
         drawItemOnCanvas(canvas, 0, 0, referenceHeight, MeasureSpec.getSize(getMeasuredWidth()), MeasureSpec.getSize(getMeasuredHeight()));
+        afterDraw();
+    }
+
+    protected void afterDraw() {
     }
 
     protected void drawItemOnCanvas(Canvas canvas, float xOffset, float yOffset, int referenceHeight, int width, int height) {
@@ -187,12 +192,13 @@ public abstract class CustomView extends View {
 
 
     public boolean drag(ItemView itemView) {
+        itemView.setReferenceHeight(referenceHeight);
         ClipData data = ClipData.newPlainText("", "");
         DragShadowBuilder shadowBuilder = itemView.dragShadow(referenceHeight);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return startDragAndDrop(data, shadowBuilder, itemView, DRAG_FLAG_OPAQUE);
         } else {
-            return startDrag(data, shadowBuilder, itemView, 1);
+            return startDrag(data, shadowBuilder, itemView, 512);
         }
     }
 }

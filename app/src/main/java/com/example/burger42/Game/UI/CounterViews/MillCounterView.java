@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.ItemViews.BottomBreadView;
 import com.example.burger42.Game.UI.ItemViews.PlateView;
+import com.example.burger42.Game.UI.ItemViews.SpongeView;
 import com.example.burger42.Game.UI.ItemViews.TopBreadView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.DragAreaSetItemAbove;
@@ -43,6 +44,7 @@ public class MillCounterView extends CounterView {
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
+        spongeView = new SpongeView(getContext());
         addOnTouchAreaListener(new OnTouchAreaListener(0.3f, 0.16f, 0.027f, 0.55f) {
 
             @Override
@@ -56,7 +58,6 @@ public class MillCounterView extends CounterView {
                         newPlate.setCurrentState(PlateView.state.DIRTY);
                         setCurrentState(state.EMPTY);
                     } else if (currentState == state.EMPTY) return false;
-                    newPlate.setReferenceHeight(referenceHeight);
                     if (!drag(newPlate)) {
                         setCurrentState(lastCurrentState);
                         newPlate.removeFromParent();
@@ -68,12 +69,10 @@ public class MillCounterView extends CounterView {
             }
         });
 
+        //Reset state after dropping new Plate
         addOnDragAreaListener(new OnDragAreaListener(1, 0, 0, 1) {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
-                if (event.getAction() == DragEvent.ACTION_DRAG_STARTED) {
-                    return true;
-                }
                 if (event.getAction() == DragEvent.ACTION_DRAG_ENDED && event.getLocalState() == newPlate) {
                     if (!event.getResult()) {
                         setCurrentState(lastCurrentState);
@@ -83,8 +82,9 @@ public class MillCounterView extends CounterView {
                 }
                 return false;
             }
-        });
+        }.setUseFilter(true).addFilterTagR("Plate"));
 
+        //Put plate in mill and clean Table with sponge
         addOnDragAreaListener(new OnDragAreaListener(0.3f, 0.16f, 0.027f, 0.55f) {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
@@ -106,25 +106,32 @@ public class MillCounterView extends CounterView {
                         return false;
                     }
                 }
+                if (event.getLocalState() instanceof SpongeView && inArea) {
+                    if (currentState == state.DIRTY) {
+                        setCurrentState(state.CLEAN);
+                    }
+                }
                 return false;
             }
-        });
+        }.setUseFilter(true).addFilterTagR("Plate").addFilterTagR("Sponge"));
 
-        addOnDragAreaListener(new OnDragAreaListener(0.33f, 0.16f, 0.55f, 1) {
+        //Put plate an sides
+        addOnDragAreaListener(new OnDragAreaListener(0.26f, 0.19f, 0.59f, 0.95f) {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
-                    ItemView itemView = (ItemView) event.getLocalState();
-                    if (itemView.hasNoItemAbove()) {
+                    PlateView itemView = (PlateView) event.getLocalState();
+                    if (itemView.onlyPlateAbove()) {
+                        itemView.removeFromParent();
                         restaurantFragment.addItem(itemView);
-                        itemView.setTranslationY(Math.max(event.getY(), getCustomHeight() - getCustomHeight() * 0.33f + itemView.getCustomHeight()));
-                        itemView.setTranslationX(getX() + getCustomWidth() * 0.55f);
+                        itemView.setTranslationY(getCustomHeight() * 0.81f);
+                        itemView.setTranslationX(getX() + getCustomWidth() * 0.52f);
                         return true;
                     }
                 }
                 return false;
             }
-        }.setUseFilter(true).addFilterTagR("PlateView"));
+        }.setUseFilter(true).addFilterTagR("Plate"));
     }
 
     public void setCurrentState(state currentState) {
@@ -147,5 +154,18 @@ public class MillCounterView extends CounterView {
                 return R.drawable.millcleancorner;
 
         }
+    }
+
+    SpongeView spongeView;
+
+    @Override
+    protected void afterDraw() {
+        spongeView.setTranslationX(getX() + getCustomWidth() * 0.4f);
+        spongeView.setTranslationY(getCustomHeight() * 0.73f);
+    }
+
+    @Override
+    public void bindOnRestaurant() {
+        restaurantFragment.addItem(spongeView);
     }
 }

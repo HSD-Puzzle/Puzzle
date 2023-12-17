@@ -16,8 +16,9 @@ import com.example.burger42.Audio.AudioController;
 
 public class MainActivity extends AppCompatActivity {
 
-    AudioController audioController;
-    SettingsFragment settingsFragment;
+    private AudioController audioController;
+
+    private ParentFragment currentlyShownFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         audioController.startMusic();
     }
 
-    public void showFragment(Fragment fragment, int requestedOrientation) {
+    public void showFragment(ParentFragment fragment, int requestedOrientation) {
+        currentlyShownFragment = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         setRequestedOrientation(requestedOrientation);
     }
@@ -39,5 +41,23 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (currentlyShownFragment != null)
+            currentlyShownFragment.onBackPressed();
+        else
+            super.onBackPressed();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //TODO Pause music
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //TODO play music again
+    }
 }
