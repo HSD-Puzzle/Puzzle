@@ -1,21 +1,12 @@
 package com.example.burger42.Game.Timer;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
-
-import androidx.core.content.res.ResourcesCompat;
-
 import com.example.burger42.Game.Generator.RecipeGenerator;
-import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
 public class ClockTimer extends CountDownTimer {
-    private Context context;
     private View view;
     private ImageView clockview;
     protected RecipeGenerator generator;
@@ -34,15 +25,11 @@ public class ClockTimer extends CountDownTimer {
             R.drawable.clock_10_sec,
             R.drawable.clock_11_sec,
     };
-    public ClockTimer(long millisInFuture, long countDownIntervall, Context context){
+    public ClockTimer(long millisInFuture, long countDownIntervall, RecipeGenerator generator, View view){
         super(millisInFuture,countDownIntervall);
-        this.context = context;
-        view = LayoutInflater.from(context).inflate(R.layout.ingredient_recipe,null);
+        this.view = view;
         clockview = view.findViewById(R.id.timer_item);
-        this.generator = new RecipeGenerator(context);
-        ListView listView = view.findViewById(R.id.ingredient_recipe_list);
-        listView.setAdapter(generator.giveIngredientadapter());
-        generator.createRecipe(1);
+        this.generator = generator;
     }
 
     @Override
@@ -53,7 +40,7 @@ public class ClockTimer extends CountDownTimer {
 
     public void onFinish(){
         i = 0;
-        generator.createRecipe(1);
+        generator.createRecipe();
         this.start();
     }
     public View view(){

@@ -10,11 +10,9 @@ public abstract class Ingredient {
     /**
      * Constructor for creating Ingredients.
      * @param ingredientName a name for the Ingredient.
-     * @param drawPriority a numeric value for Draw Priority.
      */
-    public Ingredient(String ingredientName, int drawPriority){
+    public Ingredient(String ingredientName){
         this.ingredientName = ingredientName;
-        this.drawPriority = drawPriority;
     }
 
     /**
