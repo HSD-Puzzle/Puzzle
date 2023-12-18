@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.burger42.ArrayAdapter.LevelDisplayItemAdapter;
+import com.example.burger42.Game.Timer.ClockTimer;
 import com.example.burger42.Game.UI.RestaurantFragmentLevel1;
 import com.example.burger42.Item.LevelDisplayItem;
 import com.example.burger42.MainActivity;
@@ -53,6 +55,7 @@ public class LevelSelectionFragment extends ParentFragment {
                 mainActivity.showFragment(new RestaurantFragmentLevel1(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
+        //ClockTimer timer = (ClockTimer) new ClockTimer(12000,1000,mainActivity).start();
         return view;
     }
 

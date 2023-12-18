@@ -1,5 +1,7 @@
 package com.example.burger42.Game.Generator;
 
+import android.content.Context;
+
 import com.example.burger42.ArrayAdapter.IngredientAdapter;
 import com.example.burger42.Ingredients.BottomBurgerBun;
 import com.example.burger42.Ingredients.BurgerPatty;
@@ -9,14 +11,14 @@ import com.example.burger42.Ingredients.TopBurgerBun;
 import com.example.burger42.MainActivity;
 
 public class RecipeGenerator {
-    private MainActivity mainActivity;
+    private Context context;
     private IngredientAdapter adapter;
-    public RecipeGenerator(MainActivity mainActivity){
-        this.mainActivity = mainActivity;
+    public RecipeGenerator(Context context){
+        this.context = context;
     }
     public IngredientAdapter giveIngredientadapter(){
         if(adapter == null)
-            adapter = new IngredientAdapter(mainActivity);
+            adapter = new IngredientAdapter(context);
         return adapter;
     }
     public void createRecipe(int difficultyLevel){
