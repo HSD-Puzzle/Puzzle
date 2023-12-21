@@ -1,14 +1,24 @@
 package com.example.burger42.Game.UI.Scaffolding;
 
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,10 +36,11 @@ public abstract class RestaurantFragment extends ParentFragment {
 
     private final List<ItemView> items = new LinkedList<>();
     private View rootView;
+    private VideoView videoView;
     private FrameLayout itemRoot;
     private LinearLayout bottomCounterContainer;
     private LinearLayout topCounterContainer;
-    int referenceHeight = 100;
+    private int referenceHeight = 100;
 
     public RestaurantFragment(MainActivity mainActivity) {
         super(mainActivity);
@@ -103,6 +114,13 @@ public abstract class RestaurantFragment extends ParentFragment {
         for (CounterView x : topCounter()) {
             addTopCounter(x);
         }
+
+        videoView = rootView.findViewById(R.id.restaurant_background);
+        videoView.setLayoutParams(new RelativeLayout.LayoutParams(container.getHeight() * 6, container.getHeight()));
+        String videoPath = "android.resource://" + mainActivity.getPackageName() + "/" + R.raw.background;
+        Uri uri = Uri.parse(videoPath);
+        videoView.setVideoURI(uri);
+        videoView.start();
     }
 
     protected abstract CounterView[] bottomCounter();
@@ -122,10 +140,11 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     public void resume() {
-
+        videoView.resume();
     }
 
     public void pause() {
+        videoView.pause();
         mainActivity.showFragment(new PauseFragment(mainActivity, this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
