@@ -10,4 +10,13 @@
     <string name="restaurant">Restaurant</string>
     <string name="back_to_restaurant">Back to the restaurant</string>
     <string name="leave_without_success">Leave without success</string>
+    <string name="waiting">Waiting...</string>
+    <string name="onsite_or_togo">On site or to go:</string>
+    <string name="togo">to take away</string>
+    <string name="onsite">to eat on site</string>
+    <string name="takenat">taken at:</string>
+    <string name="order">Order</string>
+    <string name="time_extension">h</string>
+    <string name="time_to_deliver">Time to deliver:</string>
+    <string name="minutes">minutes</string>
 </resources>

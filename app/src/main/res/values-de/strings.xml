@@ -10,4 +10,13 @@
     <string name="restaurant">Restaurant</string>
     <string name="back_to_restaurant">Zurück ins Restaurant</string>
     <string name="leave_without_success">Ohne Erfolg beenden</string>
+    <string name="waiting">Warten...</string>
+    <string name="onsite_or_togo">Hier oder ToGo:</string>
+    <string name="togo">zum Mitnehmen</string>
+    <string name="onsite">zum vor Ort essen</string>
+    <string name="takenat">Aufgenommen um:</string>
+    <string name="order">Bestellung</string>
+    <string name="time_extension">Uhr</string>
+    <string name="time_to_deliver">Zeit zur zubereitung:</string>
+    <string name="minutes">Minuten</string>
 </resources>

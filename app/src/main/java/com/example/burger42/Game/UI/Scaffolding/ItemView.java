@@ -89,8 +89,7 @@ public abstract class ItemView extends CustomView implements DragFilter {
         setTouchFallback(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                drag();
-                return true;
+                return drag();
             }
         });
     }
@@ -142,7 +141,7 @@ public abstract class ItemView extends CustomView implements DragFilter {
     }
 
     @Override
-    protected final void drawItemOnCanvas(Canvas canvas, float xOffset, float yOffset, int referenceHeight, int width, int height) {
+    protected void drawItemOnCanvas(Canvas canvas, float xOffset, float yOffset, int referenceHeight, int width, int height) {
         super.drawItemOnCanvas(canvas, xOffset, yOffset, referenceHeight, width, height);
         for (ItemAboveNode x : itemsAboveNode) {
             if (x.hasItemView() && x.itemAbove().getVisibility() == VISIBLE)

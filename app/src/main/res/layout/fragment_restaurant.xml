@@ -46,9 +46,27 @@
     </HorizontalScrollView>
 
     <RelativeLayout
+        android:id="@+id/restaurant_touchBlocker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#77000000">
+
+        <TextView
+            android:id="@+id/restaurant_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/waiting"
+            android:textColor="@color/orange700"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/fragment_restaurant_relative_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="40dp"
+        android:background="#77000000">
 
         <Button
             android:id="@+id/restaurant_pause"
@@ -60,14 +78,17 @@
             android:icon="@drawable/pause_symbol" />
 
         <TextView
+            android:id="@+id/restaurant_money"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@id/restaurant_dollarSign"
             android:gravity="center"
-            android:text="100"
+            android:text="0"
             android:textColor="@color/orange700"
-            android:textSize="40sp" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/restaurant_dollarSign"
@@ -77,5 +98,15 @@
             android:layout_marginEnd="30dp"
             android:scaleType="centerCrop"
             android:src="@drawable/money_symbol" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/orange700" />
     </RelativeLayout>
+
+    <com.example.burger42.Game.UI.ItemViews.Order
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 </RelativeLayout>
