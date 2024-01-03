@@ -6,55 +6,44 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.example.burger42.ArrayAdapter.IngredientAdapter;
+import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Timer.ClockTimer;
 import com.example.burger42.Ingredients.BottomBurgerBun;
 import com.example.burger42.Ingredients.BurgerPatty;
 import com.example.burger42.Ingredients.BurgerSalad;
 import com.example.burger42.Ingredients.Chesse;
+import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.Ingredients.TopBurgerBun;
 import com.example.burger42.R;
 
+import java.util.LinkedList;
+
 public class RecipeGenerator {
-    private Context context;
-    private IngredientAdapter adapter;
-    private ClockTimer timer;
-    private View view;
-    private ListView listView;
+    private Recipe recipe;
+    LinkedList<Ingredient> list;
     private int difficultyLevel;
-    public RecipeGenerator(Context context, int difficultyLevel){
-        this.context = context;
-        view = LayoutInflater.from(context).inflate(R.layout.ingredient_recipe,null);
-        listView = view.findViewById(R.id.ingredient_recipe_list);
-        listView.setAdapter(giveIngredientadapter());
-        timer = new ClockTimer(12000,1000,this, view);
+    public RecipeGenerator(int difficultyLevel){
         this.difficultyLevel = difficultyLevel;
     }
-    public IngredientAdapter giveIngredientadapter(){
-        if(adapter == null)
-            adapter = new IngredientAdapter(context);
-        return adapter;
-    }
-    public void createRecipe(){
-        giveIngredientadapter().clear();
-        adapter.add(new BottomBurgerBun());
-        for (int i = 0;i<difficultyLevel+1;i++){
-            if(SeedGenerator.isEven()){
-                if(SeedGenerator.integerGenerator() < 501)
-                    adapter.add(new BurgerPatty());
+    public Recipe createRecipe(){
+        recipe = new Recipe();
+        for(int i = 0;i<difficultyLevel;i++){
+            list = new LinkedList<>();
+            list.add(new BottomBurgerBun());
+            for (int j = 0;i<difficultyLevel+1;j++){
+                if(SeedGenerator.isEven()){
+                    if(SeedGenerator.integerGenerator() < 501)
+                        list.add(new BurgerPatty());
+                    else
+                        list.add(new Chesse());
+                }
                 else
-                    adapter.add(new Chesse());
+                    list.add(new BurgerSalad());
             }
-            else
-                adapter.add(new BurgerSalad());
+            list.add(new BurgerPatty());
+            list.add(new TopBurgerBun());
+            recipe.list().add(list);
         }
-        adapter.add(new BurgerPatty());
-        adapter.add(new TopBurgerBun());
-    }
-    public void start(){
-        createRecipe();
-        timer.start();
-    }
-    public View view(){
-        return view;
+        return recipe;
     }
 }
