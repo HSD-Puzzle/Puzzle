@@ -32,14 +32,14 @@ public class StoveCounterView extends CounterView {
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
-        addOnTouchAreaListener(new OnTouchAreaListener(0.15f, 0.09f, 0.2f, 0.33f) {
+        addOnTouchAreaListener(new OnTouchAreaListener(0.25f, 0.15f, 0.2f, 0.33f) {
             @Override
             protected boolean onTouch(MotionEvent event) {
                 setLeftOn(!leftOn);
                 return true;
             }
         });
-        addOnTouchAreaListener(new OnTouchAreaListener(0.15f, 0.09f, 0.67f, 0.8f) {
+        addOnTouchAreaListener(new OnTouchAreaListener(0.25f, 0.15f, 0.67f, 0.8f) {
             @Override
             protected boolean onTouch(MotionEvent event) {
                 setRightOn(!rightOn);

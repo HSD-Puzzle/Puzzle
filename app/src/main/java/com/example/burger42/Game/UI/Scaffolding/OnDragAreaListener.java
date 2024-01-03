@@ -40,7 +40,8 @@ public abstract class OnDragAreaListener extends BasicDragFilter {
         return this;
     }
 
-    public OnDragAreaListener addFilterTagR(String tag) {
+    @Override
+    public OnDragAreaListener addFilterTag(String tag) {
         super.addFilterTag(tag);
         return this;
     }

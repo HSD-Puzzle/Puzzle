@@ -8,27 +8,36 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
+import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
-public class Order extends ItemView {
+public class OrderView extends ItemView {
 
     private Bitmap nextPage;
     private float ratioNextPage;
     private Bitmap lastPage;
     private float ratioLastPage;
 
+    private int currentPage = 0;
+
     private Recipe recipeToShow = new Recipe();
 
-    public Order(Context context) {
+    public OrderView(Context context, Recipe recipe) {
+        super(context);
+        this.recipeToShow = recipe;
+    }
+
+    public OrderView(Context context) {
         super(context);
     }
 
-    public Order(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public OrderView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -47,13 +56,38 @@ public class Order extends ItemView {
     }
 
     @Override
+    protected void onInit(Context context, @Nullable AttributeSet attrs) {
+        super.onInit(context, attrs);
+        addOnTouchAreaListener(new OnTouchAreaListener() {
+            @Override
+            protected boolean onTouch(MotionEvent event) {
+                currentPage++;
+                invalidate();
+                return true;
+            }
+        }.setRelativeTop(0.15f).setRelativeLeft(0.8f));
+
+        addOnTouchAreaListener(new OnTouchAreaListener() {
+            @Override
+            protected boolean onTouch(MotionEvent event) {
+                if (currentPage > 0) {
+                    currentPage--;
+                    invalidate();
+                    return true;
+                }
+                return false;
+            }
+        }.setRelativeTop(0.15f).setRelativeRight(0.2f));
+    }
+
+    @Override
     protected int drawableId() {
         return R.drawable.order;
     }
 
     @Override
     protected float scaling() {
-        return 457 / 500f;
+        return 1;//457 / 500f;
     }
 
     @Override
@@ -65,9 +99,8 @@ public class Order extends ItemView {
     @Override
     protected void drawItemOnCanvas(Canvas canvas, float xOffset, float yOffset, int referenceHeight, int width, int height) {
         super.drawItemOnCanvas(canvas, xOffset, yOffset, referenceHeight, width, height);
-        drawFirstPage(canvas, width, height);
+        drawPage(canvas, width, height);
     }
-
 
     private void drawArrowsOnCanvas(Canvas canvas, int width, int height, boolean last, boolean next) {
         float arrowMargin = height / 40f;
@@ -83,52 +116,65 @@ public class Order extends ItemView {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     private void drawFirstPage(Canvas canvas, int width, int height) {
         Paint paint = new Paint();
-        paint.setColor(R.color.black);
+        paint.setColor(0xFF000000);
         paint.setTextSize(height / 10f);
         paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+
+        Paint paintHandWritten = new Paint();
+        paintHandWritten.setColor(0xFF0000FF);
+        paintHandWritten.setTextSize(height / 10f);
+        paintHandWritten.setTextAlign(Paint.Align.CENTER);
+        paintHandWritten.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
+
         if (recipeToShow != null) {
             drawArrowsOnCanvas(canvas, width, height, false, true);
 
             float currentHeight = height / 10f;
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
             canvas.drawText(getContext().getString(R.string.order), width / 2f, currentHeight, paint);
-
-            paint.setTextSize(height / 12f);
 
             currentHeight += height / 7f;
             canvas.drawText(getContext().getString(R.string.onsite_or_togo), width / 2f, currentHeight, paint);
             currentHeight += height / 10f;
 
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
+
             if (recipeToShow.onSite() == Recipe.PlaceToEat.ONSITE) {
-                canvas.drawText(getContext().getString(R.string.onsite), width / 2f, currentHeight, paint);
+                canvas.drawText(getContext().getString(R.string.onsite), width / 2f, currentHeight, paintHandWritten);
                 currentHeight += height / 7f;
             } else if (recipeToShow.onSite() == Recipe.PlaceToEat.TOGO) {
-                canvas.drawText(getContext().getString(R.string.togo), width / 2f, currentHeight, paint);
+                canvas.drawText(getContext().getString(R.string.togo), width / 2f, currentHeight, paintHandWritten);
                 currentHeight += height / 7f;
             }
 
-
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
             canvas.drawText(getContext().getString(R.string.takenat), width / 2f, currentHeight, paint);
             currentHeight += height / 10f;
 
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
-            canvas.drawText(recipeToShow.orderTakenTime().timeAsText() + getContext().getString(R.string.time_extension), width / 2f, currentHeight, paint);
+            canvas.drawText(recipeToShow.orderTakenTime().timeAsText() + getContext().getString(R.string.time_extension), width / 2f, currentHeight, paintHandWritten);
             currentHeight += height / 7f;
 
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
             canvas.drawText(getContext().getString(R.string.time_to_deliver), width / 2f, currentHeight, paint);
             currentHeight += height / 10f;
 
-            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
-            canvas.drawText(recipeToShow.timeToDeliver().minutes() + " " + getContext().getString(R.string.minutes), width / 2f, currentHeight, paint);
+            canvas.drawText(recipeToShow.timeToDeliver().minutes() + " " + getContext().getString(R.string.minutes), width / 2f, currentHeight, paintHandWritten);
 
         } else {
             canvas.drawText("No Recipe", width / 2f, height / 2f, paint);
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void drawPage(Canvas canvas, int width, int height) {
+        if (currentPage == 0)
+            drawFirstPage(canvas, width, height);
+        else {
+            drawArrowsOnCanvas(canvas, width, height, true, true);
+            Paint paint = new Paint();
+            paint.setColor(R.color.black);
+            paint.setTextSize(height / 10f);
+            paint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(currentPage + "", width / 2f, height / 2f, paint);
         }
     }
 

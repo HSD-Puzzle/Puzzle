@@ -8,11 +8,12 @@ public interface DragFilter extends Iterable<String> {
 
     /**
      * addFilterTag adds a tag
+     *
      * @param tag
      */
-    public void addFilterTag(String tag);
+    public DragFilter addFilterTag(String tag);
 
-    public void removeFilterTag(String tag);
+    public DragFilter removeFilterTag(String tag);
 
     public boolean hasAtLeastOneEqualFilterTag(DragFilter other);
 }

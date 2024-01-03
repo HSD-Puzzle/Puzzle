@@ -6,5 +6,6 @@
     <color name="orangeRed700">#E64A19</color>
 
     <color name="black">#FF000000</color>
+    <color name="blue">#FF0000FF</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

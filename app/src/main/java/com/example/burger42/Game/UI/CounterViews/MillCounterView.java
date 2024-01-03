@@ -16,6 +16,7 @@ import com.example.burger42.Game.UI.Scaffolding.DragAreaSetItemAbove;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
+import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.R;
 
 public class MillCounterView extends CounterView {
@@ -45,7 +46,7 @@ public class MillCounterView extends CounterView {
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
         spongeView = new SpongeView(getContext());
-        addOnTouchAreaListener(new OnTouchAreaListener(0.3f, 0.16f, 0.027f, 0.55f) {
+        addOnTouchAreaListener(new OnTouchAreaListener(0.51f, 0.29f, 0.027f, 0.55f) {
 
             @Override
             protected boolean onTouch(MotionEvent event) {
@@ -82,10 +83,10 @@ public class MillCounterView extends CounterView {
                 }
                 return false;
             }
-        }.setUseFilter(true).addFilterTagR("Plate"));
+        }.setUseFilter(true).addFilterTag("Plate"));
 
         //Put plate in mill and clean Table with sponge
-        addOnDragAreaListener(new OnDragAreaListener(0.3f, 0.16f, 0.027f, 0.55f) {
+        addOnDragAreaListener(new OnDragAreaListener(0.51f, 0.29f, 0.027f, 0.55f) {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (event.getLocalState() instanceof PlateView) {
@@ -113,10 +114,10 @@ public class MillCounterView extends CounterView {
                 }
                 return false;
             }
-        }.setUseFilter(true).addFilterTagR("Plate").addFilterTagR("Sponge"));
+        }.setUseFilter(true).addFilterTag("Plate").addFilterTag("Sponge"));
 
         //Put plate an sides
-        addOnDragAreaListener(new OnDragAreaListener(0.26f, 0.19f, 0.59f, 0.95f) {
+        addOnDragAreaListener(new OnDragAreaListener(0.5f, 0.32f, 0.59f, 0.95f) {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
@@ -124,14 +125,14 @@ public class MillCounterView extends CounterView {
                     if (itemView.onlyPlateAbove()) {
                         itemView.removeFromParent();
                         restaurantFragment.addItem(itemView);
-                        itemView.setTranslationY(getCustomHeight() * 0.81f);
+                        itemView.setTranslationY(getCustomHeight() * 1.40f);
                         itemView.setTranslationX(getX() + getCustomWidth() * 0.52f);
                         return true;
                     }
                 }
                 return false;
             }
-        }.setUseFilter(true).addFilterTagR("Plate"));
+        }.setUseFilter(true).addFilterTag("Plate"));
     }
 
     public void setCurrentState(state currentState) {
@@ -156,16 +157,16 @@ public class MillCounterView extends CounterView {
         }
     }
 
-    SpongeView spongeView;
+    private SpongeView spongeView;
 
     @Override
     protected void afterDraw() {
         spongeView.setTranslationX(getX() + getCustomWidth() * 0.4f);
-        spongeView.setTranslationY(getCustomHeight() * 0.73f);
+        spongeView.setTranslationY(getCustomHeight() * 1.26f);
     }
 
     @Override
-    public void bindOnRestaurant() {
+    protected void onRestaurantBound(RestaurantFragment restaurantFragment) {
         restaurantFragment.addItem(spongeView);
     }
 }

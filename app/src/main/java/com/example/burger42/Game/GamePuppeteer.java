@@ -27,6 +27,21 @@ public class GamePuppeteer {
             @Override
             public void onFinish() {
                 restaurantFragment.start();
+                restaurantFragment.addRecipe(new Recipe());
+
+                //TEST Recepie add
+                new CountDownTimer(20000, 5000) {
+                    @Override
+                    public void onTick(long l) {
+                        System.out.println("SPAWWWN");
+                        restaurantFragment.addRecipe(new Recipe());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                }.start();
+
             }
         }.start();
     }

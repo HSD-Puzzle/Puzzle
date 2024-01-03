@@ -25,6 +25,30 @@ public abstract class OnTouchAreaListener {
         return relativeTop;
     }
 
+    public OnTouchAreaListener setRelativeBottom(float relativeBottom) {
+        this.relativeBottom = relativeBottom;
+        return this;
+    }
+
+    public OnTouchAreaListener setRelativeLeft(float relativeLeft) {
+        this.relativeLeft = relativeLeft;
+        return this;
+    }
+
+    public OnTouchAreaListener setRelativeRight(float relativeRight) {
+        this.relativeRight = relativeRight;
+        return this;
+    }
+
+    public OnTouchAreaListener setRelativeTop(float relativeTop) {
+        this.relativeTop = relativeTop;
+        return this;
+    }
+
+    public OnTouchAreaListener() {
+        this(1, 0, 0, 1);
+    }
+
     public OnTouchAreaListener(float relativeTop, float relativeBottom, float relativeLeft, float relativeRight) {
         this.relativeBottom = relativeBottom;
         this.relativeLeft = relativeLeft;

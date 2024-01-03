@@ -24,31 +24,36 @@ public abstract class CounterView extends CustomView {
         super.init(context, attrs);
     }
 
-    public void setRestaurantFragment(RestaurantFragment restaurantFragment) {
+    public final void setRestaurantFragment(RestaurantFragment restaurantFragment) {
         this.restaurantFragment = restaurantFragment;
-        bindOnRestaurant();
+        onRestaurantBound(restaurantFragment);
     }
 
-    public void bindOnRestaurant() {
+    /**
+     * this methode will be triggered after binding RestaurantFragment to counter view.
+     *
+     * @param restaurantFragment the bound restaurant fragment.
+     */
+    protected void onRestaurantBound(RestaurantFragment restaurantFragment) {
     }
 
 
     @Override
     protected float scaling() {
         if (isInEditMode()) return 1;
-        return 4;
+        return 688f / 300;
     }
 
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
-        addOnDragAreaListener(new OnDragAreaListener(0.59f, 0.43f, 0, 1) {
+        addOnDragAreaListener(new OnDragAreaListener(1f, 0.7f, 0, 1) {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
                     ItemView itemView = (ItemView) event.getLocalState();
                     itemView.removeFromParent();
                     restaurantFragment.addItem(itemView);
-                    itemView.setTranslationY(getHeight() * 0.54f);
+                    itemView.setTranslationY(getHeight() * 0.94f);
                     itemView.setTranslationX(Math.max(getX() + event.getX() - itemView.getCustomWidth() / 2f, 0));
                     return true;
                 }

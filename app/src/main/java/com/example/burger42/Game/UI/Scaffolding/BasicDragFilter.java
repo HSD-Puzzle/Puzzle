@@ -8,12 +8,14 @@ import java.util.TreeSet;
 public class BasicDragFilter implements DragFilter {
     private final TreeSet<String> filterTags = new TreeSet<>();
 
-    public void addFilterTag(String tag) {
+    public BasicDragFilter addFilterTag(String tag) {
         filterTags.add(tag);
+        return this;
     }
 
-    public void removeFilterTag(String tag) {
+    public BasicDragFilter removeFilterTag(String tag) {
         filterTags.remove(tag);
+        return this;
     }
 
     public boolean hasAtLeastOneEqualFilterTag(DragFilter other) {

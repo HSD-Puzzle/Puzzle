@@ -26,12 +26,14 @@ public abstract class ItemView extends CustomView implements DragFilter {
 
     protected DragFilter dragFilter;
 
-    public void addFilterTag(String tag) {
+    public ItemView addFilterTag(String tag) {
         dragFilter.addFilterTag(tag);
+        return this;
     }
 
-    public void removeFilterTag(String tag) {
+    public ItemView removeFilterTag(String tag) {
         dragFilter.removeFilterTag(tag);
+        return this;
     }
 
     public boolean hasAtLeastOneEqualFilterTag(DragFilter other) {

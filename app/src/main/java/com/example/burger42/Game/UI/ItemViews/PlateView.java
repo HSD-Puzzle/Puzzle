@@ -72,9 +72,14 @@ public class PlateView extends ItemView {
         addOnDragAreaListener(new DragAreaSetItemAbove(this)
                 .setIndex(0).setRelativeRight(0.5f)
                 .addFilterTag(ItemFilterTag.Ingredient)
-                .addFilterTagR("Plate")
+                .addFilterTag("Plate")
                 .setUseFilter(true));
-        addOnDragAreaListener(new DragAreaSetItemAbove(this).setIndex(1).setRelativeLeft(0.5f).addFilterTag(ItemFilterTag.Ingredient).addFilterTagR("Plate").setUseFilter(true));
+        addOnDragAreaListener(new DragAreaSetItemAbove(this)
+                .setIndex(1)
+                .setRelativeLeft(0.5f)
+                .addFilterTag(ItemFilterTag.Ingredient)
+                .addFilterTag("Plate")
+                .setUseFilter(true));
         addOnTouchAreaListener(new OnTouchAreaListener(1, 0, 0, 1) {
 
             @Override

@@ -28,7 +28,7 @@ public class BreadCounterView extends CounterView {
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
-        addOnTouchAreaListener(new OnTouchAreaListener(0.365f, 0.1f, 0.023f, 0.48f) {
+        addOnTouchAreaListener(new OnTouchAreaListener(0.6f, 0.1f, 0.023f, 0.48f) {
             @Override
             protected boolean onTouch(MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -40,7 +40,7 @@ public class BreadCounterView extends CounterView {
                 return false;
             }
         });
-        addOnTouchAreaListener(new OnTouchAreaListener(0.365f, 0.1f, 0.5f, 0.97f) {
+        addOnTouchAreaListener(new OnTouchAreaListener(0.6f, 0.1f, 0.5f, 0.97f) {
             @Override
             protected boolean onTouch(MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {

@@ -2,24 +2,17 @@ package com.example.burger42.Game.UI.Scaffolding;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -29,18 +22,28 @@ import androidx.annotation.Nullable;
 import com.example.burger42.Fragments.ParentFragment;
 import com.example.burger42.Fragments.PauseFragment;
 import com.example.burger42.Game.GamePuppeteer;
-import com.example.burger42.Game.UI.ItemViews.Order;
-import com.example.burger42.Game.UI.ItemViews.PlateView;
+import com.example.burger42.Game.Recipe;
+import com.example.burger42.Game.UI.ItemViews.OrderView;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * RestaurantFragment is the fragment of the game itself.
  */
 public abstract class RestaurantFragment extends ParentFragment {
+
+    private final List<OrderSpawn> listOfOrderSpawns = new LinkedList<>();
+
+    /**
+     * videoStoppedAt stores the second where the background video is stopped.
+     */
+    private int videoStoppedAt;
+
+    private final Queue<Recipe> notSpawnedRecipes = new LinkedList<>();
 
     private GamePuppeteer gamePuppeteer;
     /**
@@ -87,9 +90,6 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     public RestaurantFragment(MainActivity mainActivity) {
         super(mainActivity);
-        ItemView itemView = new Order(mainActivity);
-        itemView.setTranslationY(500);
-        addItem(itemView);
     }
 
     /**
@@ -197,6 +197,9 @@ public abstract class RestaurantFragment extends ParentFragment {
         for (ItemView x : items) {
             addItemViewToRoot(x);
         }
+        while (!notSpawnedRecipes.isEmpty()) {
+            addRecipe(notSpawnedRecipes.poll());
+        }
     }
 
     private void videoSetup(ViewGroup container) {
@@ -240,8 +243,6 @@ public abstract class RestaurantFragment extends ParentFragment {
         topCounter.setLayoutParams(new LinearLayout.LayoutParams(-2, referenceHeight));
     }
 
-    private int videoStoppedAt;
-
     public void resume() {
         videoView.seekTo(videoStoppedAt);
         videoView.start();
@@ -259,8 +260,12 @@ public abstract class RestaurantFragment extends ParentFragment {
         touchBlocker.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Sets the Countdown text. The Countdown is shown before start.
+     *
+     * @param text the countdown number as String.
+     */
     public void setCountdown(String text) {
-        videoView.start();
         startCountdownView.setText(text);
     }
 
@@ -274,4 +279,25 @@ public abstract class RestaurantFragment extends ParentFragment {
         super.onPause();
         pause();
     }
+
+    /**
+     * @param orderSpawn
+     */
+    public void addOrderSpawn(OrderSpawn orderSpawn) {
+        listOfOrderSpawns.add(orderSpawn);
+    }
+
+    /**
+     * adds a Recipe
+     * @param recipe
+     */
+    public void addRecipe(Recipe recipe) {
+        if (listOfOrderSpawns.isEmpty()) {
+            notSpawnedRecipes.add(recipe);
+        } else {
+            listOfOrderSpawns.get((int) (Math.random() * listOfOrderSpawns.size())).spawnAndPlaceRecipe(recipe);
+        }
+    }
+
+
 }

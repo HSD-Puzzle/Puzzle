@@ -24,6 +24,12 @@ public class TopStartCounterView extends CounterView {
     }
 
     @Override
+    protected float scaling() {
+        if (isInEditMode()) return 1;
+        return 4;
+    }
+
+    @Override
     protected int drawableId() {
         return R.drawable.cornertopl;
     }
