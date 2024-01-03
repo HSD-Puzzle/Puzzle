@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
+import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
 public class OrderView extends ItemView {
@@ -124,13 +125,13 @@ public class OrderView extends ItemView {
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
         Paint paintHandWritten = new Paint();
-        paintHandWritten.setColor(0xFF0000FF);
+        paintHandWritten.setColor(0xFF000055);
         paintHandWritten.setTextSize(height / 10f);
         paintHandWritten.setTextAlign(Paint.Align.CENTER);
         paintHandWritten.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
 
         if (recipeToShow != null) {
-            drawArrowsOnCanvas(canvas, width, height, false, true);
+            drawArrowsOnCanvas(canvas, width, height, false, recipeToShow.list().size() > 0);
 
             float currentHeight = height / 10f;
             canvas.drawText(getContext().getString(R.string.order), width / 2f, currentHeight, paint);
@@ -164,17 +165,37 @@ public class OrderView extends ItemView {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     private void drawPage(Canvas canvas, int width, int height) {
         if (currentPage == 0)
             drawFirstPage(canvas, width, height);
         else {
-            drawArrowsOnCanvas(canvas, width, height, true, true);
-            Paint paint = new Paint();
-            paint.setColor(R.color.black);
-            paint.setTextSize(height / 10f);
-            paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(currentPage + "", width / 2f, height / 2f, paint);
+
+            if (recipeToShow != null) {
+
+                drawArrowsOnCanvas(canvas, width, height, true, recipeToShow.list().size() > currentPage);
+
+                Paint pageNumber = new Paint();
+                pageNumber.setColor(0x88000000);
+                pageNumber.setTextSize(height / 12f);
+                pageNumber.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText(currentPage + "", width / 2f, height - height / 20f, pageNumber);
+
+                Paint paintHandWritten = new Paint();
+                paintHandWritten.setColor(0xFF000055);
+                paintHandWritten.setTextSize(height / 10f);
+                paintHandWritten.setTextAlign(Paint.Align.CENTER);
+                paintHandWritten.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
+                float currentHeight = height / 10f;
+                for (Ingredient x : recipeToShow.list().get(currentPage)) {
+                    canvas.drawText(x.name(), width / 2f, currentHeight, paintHandWritten);
+                    currentHeight += height / 7f;
+                }
+            } else {
+                Paint paint = new Paint();
+                paint.setColor(0xFF000000);
+                canvas.drawText("No Recipe", width / 2f, height / 2f, paint);
+            }
+
         }
     }
 
