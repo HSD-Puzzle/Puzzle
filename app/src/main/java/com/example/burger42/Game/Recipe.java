@@ -13,6 +13,9 @@ public class Recipe {
         ONSITE, TOGO
     }
 
+    public List<List<Ingredient>> list(){
+        return ingredients;
+    }
     private PlaceToEat onSite = PlaceToEat.ONSITE;
 
     private Time orderTakenTime = new Time(12, 33);
