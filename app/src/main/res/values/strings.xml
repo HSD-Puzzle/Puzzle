@@ -19,4 +19,10 @@
     <string name="time_extension">h</string>
     <string name="time_to_deliver">Time to deliver:</string>
     <string name="minutes">minutes</string>
+    <string name="bottomburgerbun">Bottom Burger Bun</string>
+    <string name="topburgerbun">Top Burger Bun</string>
+    <string name="burgerpatty">Burger Patty</string>
+    <string name="salad">Salad</string>
+    <string name="cheese">Cheese</string>
+    <string name="backToMainMenu">Back to Main Menu</string>
 </resources>

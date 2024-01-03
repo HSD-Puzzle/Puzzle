@@ -1,17 +1,19 @@
 package com.example.burger42.Ingredients;
 
+import android.content.Context;
+
 /**
  * Class for generating different kinds of Burger Ingredients.
  */
 public abstract class Ingredient {
-    private String ingredientName;
+    private int ingredientName;
     private int drawPriority;
 
     /**
      * Constructor for creating Ingredients.
      * @param ingredientName a name for the Ingredient.
      */
-    public Ingredient(String ingredientName){
+    public Ingredient(int ingredientName){
         this.ingredientName = ingredientName;
     }
 
@@ -19,7 +21,7 @@ public abstract class Ingredient {
      * Method to access the Ingredient Name.
      * @return the Ingredient Name.
      */
-    public String name(){
-        return ingredientName;
+    public String name(Context context){
+        return context.getString(ingredientName);
     }
 }

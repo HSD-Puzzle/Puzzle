@@ -19,4 +19,10 @@
     <string name="time_extension">Uhr</string>
     <string name="time_to_deliver">Zeit zur zubereitung:</string>
     <string name="minutes">Minuten</string>
+    <string name="bottomburgerbun">Unteres Burgerbrot</string>
+    <string name="topburgerbun">Oberes Burgerbrot</string>
+    <string name="burgerpatty">Buletten</string>
+    <string name="salad">Salat</string>
+    <string name="cheese">Käse</string>
+    <string name="backToMainMenu">Zurück zum Hauptmenü</string>
 </resources>
