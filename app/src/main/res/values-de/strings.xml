@@ -14,10 +14,10 @@
     <string name="onsite_or_togo">Hier oder ToGo:</string>
     <string name="togo">zum Mitnehmen</string>
     <string name="onsite">zum vor Ort essen</string>
-    <string name="takenat">Aufgenommen um:</string>
+    <string name="takenat">Aufgegeben um:</string>
     <string name="order">Bestellung</string>
     <string name="time_extension">Uhr</string>
-    <string name="time_to_deliver">Zeit zur zubereitung:</string>
+    <string name="time_to_deliver">Zubereitungszeit:</string>
     <string name="minutes">Minuten</string>
     <string name="bottomburgerbun">Unteres Burgerbrot</string>
     <string name="topburgerbun">Oberes Burgerbrot</string>
@@ -25,4 +25,5 @@
     <string name="salad">Salat</string>
     <string name="cheese">Käse</string>
     <string name="backToMainMenu">Zurück zum Hauptmenü</string>
+    <string name="item">Teilbestellung</string>
 </resources>

@@ -14,12 +14,14 @@ import com.example.burger42.Item.BillItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
+import java.util.List;
+
 public class BillFragment extends ParentFragment {
 
     private ListView listView;
     private BillItemAdapter billItemAdapter;
 
-    public BillFragment(MainActivity mainActivity) {
+    public BillFragment(MainActivity mainActivity, List<BillItem> billItems) {
         super(mainActivity);
     }
 

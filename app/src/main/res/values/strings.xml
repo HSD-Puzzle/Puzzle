@@ -25,4 +25,5 @@
     <string name="salad">Salad</string>
     <string name="cheese">Cheese</string>
     <string name="backToMainMenu">Back to Main Menu</string>
+    <string name="item">Item</string>
 </resources>

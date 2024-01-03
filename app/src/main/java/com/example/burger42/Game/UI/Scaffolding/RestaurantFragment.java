@@ -23,6 +23,7 @@ import com.example.burger42.Fragments.ParentFragment;
 import com.example.burger42.Fragments.PauseFragment;
 import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
+import com.example.burger42.Game.Time;
 import com.example.burger42.Game.UI.ItemViews.OrderView;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
@@ -289,6 +290,7 @@ public abstract class RestaurantFragment extends ParentFragment {
 
     /**
      * adds a Recipe
+     *
      * @param recipe
      */
     public void addRecipe(Recipe recipe) {
@@ -299,5 +301,13 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
     }
 
+    public void dirtyPlateBack() {
+
+    }
+
+    public void setTimeText(Time time) {
+
+    }
+    //serve aufrufen
 
 }

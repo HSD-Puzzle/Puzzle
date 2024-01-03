@@ -1,18 +1,29 @@
 package com.example.burger42.Item;
 
+import com.example.burger42.Ingredients.Ingredient;
+
+import java.util.List;
+
 public class BillItem {
-    private int amount;
-    private String title;
+    private int orderNumber;
+    private String title; // TODO Order String
     private int totalValue;
 
+    private List<BillIngredientItem> ingredientList;
+
+    private int tip;
+
+    private int streakMultiplier;
+
+
     public BillItem(int amount, String title, int totalValue) {
-        this.amount = amount;
+        this.orderNumber = amount;
         this.totalValue = totalValue;
         this.title = title;
     }
 
     public int amount() {
-        return amount;
+        return orderNumber;
     }
 
     public int totalValue() {

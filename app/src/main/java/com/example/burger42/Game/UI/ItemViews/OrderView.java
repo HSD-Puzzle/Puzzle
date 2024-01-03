@@ -18,6 +18,8 @@ import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
+import java.util.List;
+
 public class OrderView extends ItemView {
 
     private Bitmap nextPage;
@@ -62,9 +64,12 @@ public class OrderView extends ItemView {
         addOnTouchAreaListener(new OnTouchAreaListener() {
             @Override
             protected boolean onTouch(MotionEvent event) {
-                currentPage++;
-                invalidate();
-                return true;
+                if (recipeToShow.list().size() > currentPage) {
+                    currentPage++;
+                    invalidate();
+                    return true;
+                }
+                return false;
             }
         }.setRelativeTop(0.15f).setRelativeLeft(0.8f));
 
@@ -171,6 +176,7 @@ public class OrderView extends ItemView {
         else {
 
             if (recipeToShow != null) {
+                float currentHeight = height / 10f;
 
                 drawArrowsOnCanvas(canvas, width, height, true, recipeToShow.list().size() > currentPage);
 
@@ -178,17 +184,27 @@ public class OrderView extends ItemView {
                 pageNumber.setColor(0x88000000);
                 pageNumber.setTextSize(height / 12f);
                 pageNumber.setTextAlign(Paint.Align.CENTER);
-                canvas.drawText(currentPage + "", width / 2f, height - height / 20f, pageNumber);
+                canvas.drawText(currentPage + "/" + (recipeToShow.list().size()), width / 2f, height - height / 20f, pageNumber);
 
+                //Headline
+                Paint paint = new Paint();
+                paint.setColor(0xFF000000);
+                paint.setTextSize(height / 10f);
+                paint.setTextAlign(Paint.Align.CENTER);
+                paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+                canvas.drawText(getContext().getString(R.string.item) + currentPage, width / 2f, currentHeight, paint);
+                currentHeight += height / 11f;
+
+                //DrawIngredients
                 Paint paintHandWritten = new Paint();
                 paintHandWritten.setColor(0xFF000055);
                 paintHandWritten.setTextSize(height / 10f);
                 paintHandWritten.setTextAlign(Paint.Align.CENTER);
                 paintHandWritten.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
-                float currentHeight = height / 10f;
-                for (Ingredient x : recipeToShow.list().get(currentPage)) {
-                    canvas.drawText(x.name(), width / 2f, currentHeight, paintHandWritten);
-                    currentHeight += height / 7f;
+                List<Ingredient> currentRecipe = recipeToShow.list().get(currentPage - 1);
+                for (int i = currentRecipe.size() - 1; i >= 0; i--) {
+                    canvas.drawText(currentRecipe.get(i).name(getContext()), width / 2f, currentHeight, paintHandWritten);
+                    currentHeight += height / 10f;
                 }
             } else {
                 Paint paint = new Paint();

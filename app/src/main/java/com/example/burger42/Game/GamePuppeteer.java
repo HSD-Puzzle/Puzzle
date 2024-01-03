@@ -52,4 +52,18 @@ public class GamePuppeteer {
     public void serve(Recipe order, Recipe item) {
 
     }
+
+    /**
+     * onPause will be called, when the RestaurantFragment is paused.
+     */
+    public void onPause() {
+
+    }
+
+    /**
+     * onResume will be called,
+     */
+    public void onResume() {
+
+    }
 }
