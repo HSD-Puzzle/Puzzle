@@ -7,4 +7,10 @@ public class SeedGenerator {
     public static boolean isEven(){
         return (integerGenerator() % 2) == 0;
     }
+    public static int zeroOrOne(){
+        if(isEven())
+            return 0;
+        else
+            return 1;
+    }
 }

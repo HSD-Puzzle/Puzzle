@@ -27,10 +27,10 @@ public class RecipeGenerator {
     }
     public Recipe createRecipe(){
         recipe = new Recipe();
-        for(int i = 0;i<difficultyLevel;i++){
+        for(int i = 0;i<difficultyLevel+SeedGenerator.zeroOrOne();i++){
             list = new LinkedList<>();
             list.add(new BottomBurgerBun());
-            for (int j = 0;i<difficultyLevel+1;j++){
+            for (int j = 0;j<difficultyLevel+1;j++){
                 if(SeedGenerator.isEven()){
                     if(SeedGenerator.integerGenerator() < 501)
                         list.add(new BurgerPatty());
