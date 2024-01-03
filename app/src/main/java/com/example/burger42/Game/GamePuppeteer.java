@@ -2,15 +2,18 @@ package com.example.burger42.Game;
 
 import android.os.CountDownTimer;
 
+import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 
 public class GamePuppeteer {
     private RestaurantFragment restaurantFragment;
     private CountDownTimer startCountdown;
+    private RecipeGenerator generator;
 
     public GamePuppeteer(RestaurantFragment restaurantFragment) {
         this.restaurantFragment = restaurantFragment;
+        generator = new RecipeGenerator(2);
         startCountdown = new CountDownTimer(3300, 1000) {
             @Override
             public void onTick(long l) {
@@ -27,14 +30,14 @@ public class GamePuppeteer {
             @Override
             public void onFinish() {
                 restaurantFragment.start();
-                restaurantFragment.addRecipe(new Recipe());
+                restaurantFragment.addRecipe(generator.createRecipe());
 
                 //TEST Recepie add
                 new CountDownTimer(20000, 5000) {
                     @Override
                     public void onTick(long l) {
                         System.out.println("SPAWWWN");
-                        restaurantFragment.addRecipe(new Recipe());
+                        restaurantFragment.addRecipe(generator.createRecipe());
                     }
 
                     @Override
