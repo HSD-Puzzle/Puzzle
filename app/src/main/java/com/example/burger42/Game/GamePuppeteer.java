@@ -49,6 +49,7 @@ public class GamePuppeteer {
                     @Override
                     public void onTick(long l) {
                         restaurantFragment.addRecipe(generator.createRecipe());
+                        restaurantFragment.setMoneyText(150, 100, 50);
                     }
 
                     @Override
@@ -115,6 +116,7 @@ public class GamePuppeteer {
      * onPause will be called, when the RestaurantFragment is paused.
      */
     public void onPause() {
+
     }
 
     /**

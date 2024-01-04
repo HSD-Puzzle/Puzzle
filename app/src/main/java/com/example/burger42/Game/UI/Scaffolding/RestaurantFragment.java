@@ -253,14 +253,14 @@ public abstract class RestaurantFragment extends ParentFragment {
      * @param newTip       the tip earned with the last serving.Displayed a short time as effect in blue.
      */
     public void setMoneyText(int money, int newMainMoney, int newTip) {
-        moneyText.setText(money);
+        moneyText.setText(money + "");
 
-        tipTextView.setText(newTip + "$");
+        tipTextView.setText("+" + newTip + "$");
         Animation tipDownAnim = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.tipdown_animation);
         tipTextView.startAnimation(tipDownAnim);
         tipTextView.setVisibility(View.VISIBLE);
 
-        moneyEarnedTextView.setText(newMainMoney + "$");
+        moneyEarnedTextView.setText("+" + newMainMoney + "$");
         Animation moneyDownAnim = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.moneydown_animation);
         moneyEarnedTextView.startAnimation(moneyDownAnim);
         moneyEarnedTextView.setVisibility(View.VISIBLE);
