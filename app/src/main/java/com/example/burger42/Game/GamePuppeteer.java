@@ -5,14 +5,26 @@ import android.os.CountDownTimer;
 import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
+import com.example.burger42.Ingredients.Ingredient;
+import com.example.burger42.Item.BillIngredientItem;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GamePuppeteer {
     private RestaurantFragment restaurantFragment;
     private CountDownTimer startCountdown;
     private RecipeGenerator generator;
+    private List<BillIngredientItem> list;
+    private int money;
+    public static Time currentime;
+
 
     public GamePuppeteer(RestaurantFragment restaurantFragment) {
+        list = new LinkedList<>();
         this.restaurantFragment = restaurantFragment;
+        currentime = new Time(8,0);
         generator = new RecipeGenerator(2);
         startCountdown = new CountDownTimer(3300, 1000) {
             @Override
@@ -44,19 +56,49 @@ public class GamePuppeteer {
                     }
                 }.start();
 
+                //TEST GameTime add
+                new CountDownTimer(240000,1000){
+
+                    @Override
+                    public void onTick(long l) {
+                        currentime.addSeconds(120);
+                        restaurantFragment.setTimeText(currentime);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        restaurantFragment.timesUp(list);
+                    }
+                }.start();
+
             }
         }.start();
     }
 
     public void serve(Recipe order, Recipe item) {
-        System.out.println(item);
+        //System.out.println(item);
+        Iterator<List<Ingredient>> orderIterator = order.list().iterator();
+        Iterator<List<Ingredient>> itemIterator = item.list().iterator();
+        while (orderIterator.hasNext() && itemIterator.hasNext()){
+            List<Ingredient> orderList = orderIterator.next();
+            List<Ingredient> itemList = itemIterator.next();
+            for(int i = 0;i<orderList.size()-1;i++){
+                if(orderList.get(i).equals(itemList.get(i))) {
+                    money += 10;
+                    list.add(new BillIngredientItem(orderList.get(i),true,10));
+                }
+                else {
+                    list.add(new BillIngredientItem(orderList.get(i),false,0));
+                }
+            }
+        }
+        restaurantFragment.setMoneyText(money,money,money);
     }
 
     /**
      * onPause will be called, when the RestaurantFragment is paused.
      */
     public void onPause() {
-
     }
 
     /**

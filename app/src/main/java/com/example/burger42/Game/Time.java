@@ -49,6 +49,9 @@ public class Time {
     }
 
     public String timeAsText() {
-        return hour() + ":" + minute();
+        if(minute()<10)
+            return hour()+":0"+minute();
+        else
+            return hour() + ":" + minute();
     }
 }

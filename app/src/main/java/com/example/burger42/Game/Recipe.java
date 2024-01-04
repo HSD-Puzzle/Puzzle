@@ -10,6 +10,11 @@ import java.util.List;
 public class Recipe {
 
     private List<List<Ingredient>> ingredients = new LinkedList<>();
+    private Time time;
+    public Recipe(){
+        System.out.println("Test: " + GamePuppeteer.currentime.hour());
+        time = new Time(GamePuppeteer.currentime.hour(),GamePuppeteer.currentime.minutes());
+    }
 
 
     public enum PlaceToEat {
@@ -22,9 +27,9 @@ public class Recipe {
 
     private PlaceToEat onSite = PlaceToEat.ONSITE;
 
-    private Time orderTakenTime = new Time(12, 33);
+    private Time orderTakenTime = new Time(8,0);
 
-    private Time timeToDeliver = new Time(0, 15);
+    private Time timeToDeliver = new Time(orderTakenTime.hour(), orderTakenTime.minute()+30);
 
 
     public PlaceToEat onSite() {

@@ -21,11 +21,15 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Fragments.BillFragment;
 import com.example.burger42.Fragments.ParentFragment;
 import com.example.burger42.Fragments.PauseFragment;
 import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
+import com.example.burger42.Game.UI.ItemViews.OrderView;
+import com.example.burger42.Item.BillIngredientItem;
+import com.example.burger42.Item.BillItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -37,35 +41,26 @@ import java.util.Queue;
  * RestaurantFragment is the fragment of the game itself.
  */
 public abstract class RestaurantFragment extends ParentFragment {
-
     private TextView tipTextView;
 
     private TextView moneyEarnedTextView;
 
-    /**
-     * listOfOrderSpawns are all possible spawns for a recipe as order.
-     */
     private final List<OrderSpawn> listOfOrderSpawns = new LinkedList<>();
+    /**
+     * The view that blocks all vies above to be touched on.
+     * This view contains the start countdown as well.
+     */
+    private RelativeLayout touchBlocker;
 
     /**
      * videoStoppedAt stores the second where the background video is stopped.
      */
     private int videoStoppedAt;
 
-    /**
-     * All recipes, that are added before firstSetup. This items will be shown as order after the firstSetup.
-     */
     private final Queue<Recipe> notSpawnedRecipes = new LinkedList<>();
 
-    /**
-     * The gamePuppeteer that controls this game.
-     */
     private GamePuppeteer gamePuppeteer;
-    /**
-     * The view that blocks all vies above to be touched on.
-     * This view contains the start countdown as well.
-     */
-    private RelativeLayout touchBlocker;
+
     /**
      * This TextView is the view with the big countdown at the beginning.
      * It will be disabled at start with the touchBlocker
@@ -75,10 +70,7 @@ public abstract class RestaurantFragment extends ParentFragment {
      * The displayed amount of money.
      */
     private TextView moneyText;
-    /**
-     * The current time at this date.
-     */
-    private TextView timeText;
+    private TextView clockText;
     /**
      * True after the View is created and first setup.
      */
@@ -190,9 +182,7 @@ public abstract class RestaurantFragment extends ParentFragment {
         Button pauseButton = (Button) rootView.findViewById(R.id.restaurant_pause);
         pauseButton.setOnClickListener(view -> pause());
         moneyText = rootView.findViewById(R.id.restaurant_money);
-        timeText = rootView.findViewById(R.id.restaurant_clock);
-        tipTextView = rootView.findViewById(R.id.restaurant_earnedtip);
-        moneyEarnedTextView = rootView.findViewById(R.id.restaurant_earnedmoney);
+        clockText = rootView.findViewById(R.id.restaurant_clock);
     }
 
     private void counterSetup() {
@@ -380,7 +370,11 @@ public abstract class RestaurantFragment extends ParentFragment {
      * @param time the time to show
      */
     public void setTimeText(Time time) {
-        timeText.setText(time.timeAsText());
+        clockText.setText(time.timeAsText());
+    }
+    //serve aufrufen
+    public void timesUp(List<BillIngredientItem> list){
+        mainActivity.showFragment(new BillFragment(mainActivity, list), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
     /**

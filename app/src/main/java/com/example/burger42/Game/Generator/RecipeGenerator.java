@@ -1,6 +1,8 @@
 package com.example.burger42.Game.Generator;
 
+import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
+import com.example.burger42.Game.Time;
 import com.example.burger42.Ingredients.BottomBurgerBun;
 import com.example.burger42.Ingredients.BurgerPatty;
 import com.example.burger42.Ingredients.BurgerSalad;
@@ -14,6 +16,7 @@ public class RecipeGenerator {
     private Recipe recipe;
     LinkedList<Ingredient> list;
     private int difficultyLevel;
+    private Time currentTime;
     public RecipeGenerator(int difficultyLevel){
         this.difficultyLevel = difficultyLevel;
     }
