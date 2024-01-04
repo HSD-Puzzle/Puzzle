@@ -6,28 +6,24 @@ import java.util.List;
 
 public class BillItem {
     private int orderNumber;
-    private String title; // TODO Order String
-    private int totalValue;
+    private float totalValue;
 
-    private List<BillOrderItem> ingredientList;
-
+    private List<BillOrderItem> billOrderItems;
 
 
-    public BillItem(int amount, String title, int totalValue) {
-        this.orderNumber = amount;
+
+    public BillItem(int orderNumber, float totalValue, List<BillOrderItem> billOrderItems) {
+        this.orderNumber = orderNumber;
         this.totalValue = totalValue;
-        this.title = title;
+        this.billOrderItems = billOrderItems;
     }
 
     public int amount() {
         return orderNumber;
     }
 
-    public int totalValue() {
+    public float totalValue() {
         return totalValue;
     }
 
-    public String title() {
-        return title;
-    }
 }

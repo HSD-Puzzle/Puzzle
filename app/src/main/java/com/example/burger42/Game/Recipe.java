@@ -48,6 +48,9 @@ public class Recipe {
         deliverytime.subTime(orderTakenTime);
         return deliverytime.minutes();
     }
+    public int calculateTip(){
+        return deliveredOnTime()*10;
+    }
 
     public void addRecipe(Recipe recipe) {
         ingredients.addAll(recipe.ingredients);
