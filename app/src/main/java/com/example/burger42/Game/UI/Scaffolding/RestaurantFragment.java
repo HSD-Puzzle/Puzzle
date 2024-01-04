@@ -183,6 +183,8 @@ public abstract class RestaurantFragment extends ParentFragment {
         pauseButton.setOnClickListener(view -> pause());
         moneyText = rootView.findViewById(R.id.restaurant_money);
         clockText = rootView.findViewById(R.id.restaurant_clock);
+        tipTextView = rootView.findViewById(R.id.restaurant_earnedtip);
+        moneyEarnedTextView = rootView.findViewById(R.id.restaurant_earnedmoney);
     }
 
     private void counterSetup() {
@@ -372,8 +374,9 @@ public abstract class RestaurantFragment extends ParentFragment {
     public void setTimeText(Time time) {
         clockText.setText(time.timeAsText());
     }
+
     //serve aufrufen
-    public void timesUp(List<BillIngredientItem> list){
+    public void timesUp(List<BillIngredientItem> list) {
         mainActivity.showFragment(new BillFragment(mainActivity, list), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 

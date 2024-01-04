@@ -24,7 +24,7 @@ public class GamePuppeteer {
     public GamePuppeteer(RestaurantFragment restaurantFragment) {
         list = new LinkedList<>();
         this.restaurantFragment = restaurantFragment;
-        currentime = new Time(8,0);
+        currentime = new Time(8, 0);
         generator = new RecipeGenerator(2);
         startCountdown = new CountDownTimer(3300, 1000) {
             @Override
@@ -57,11 +57,15 @@ public class GamePuppeteer {
                 }.start();
 
                 //TEST GameTime add
-                new CountDownTimer(240000,1000){
+                new CountDownTimer(240000, 500) {
+
+
+                    long lastL = 240000;
 
                     @Override
                     public void onTick(long l) {
-                        currentime.addSeconds(120);
+                        currentime.addTimeInMilliSeconds((lastL - l) * 120);
+                        lastL = l;
                         restaurantFragment.setTimeText(currentime);
                     }
 
@@ -79,20 +83,32 @@ public class GamePuppeteer {
         //System.out.println(item);
         Iterator<List<Ingredient>> orderIterator = order.list().iterator();
         Iterator<List<Ingredient>> itemIterator = item.list().iterator();
-        while (orderIterator.hasNext() && itemIterator.hasNext()){
+        while (orderIterator.hasNext() && itemIterator.hasNext()) {
             List<Ingredient> orderList = orderIterator.next();
             List<Ingredient> itemList = itemIterator.next();
-            for(int i = 0;i<orderList.size()-1;i++){
-                if(orderList.get(i).equals(itemList.get(i))) {
+            for (int i = 0; i < orderList.size() - 1; i++) {
+                if (orderList.get(i).equals(itemList.get(i))) {
                     money += 10;
-                    list.add(new BillIngredientItem(orderList.get(i),true,10));
-                }
-                else {
-                    list.add(new BillIngredientItem(orderList.get(i),false,0));
+                    list.add(new BillIngredientItem(orderList.get(i), true, 10));
+                } else {
+                    list.add(new BillIngredientItem(orderList.get(i), false, 0));
                 }
             }
         }
-        restaurantFragment.setMoneyText(money,money,money);
+        /*
+         * TODO
+         *  jeder order mit jedem item vergleichen,
+         *  da die Reihenfolge der Burger in der Bestellung nicht zu den auf den Tellern passen muss.
+         * TODO
+         *  die größt mögliche Summe als Gewinn ermitteln wichtig kein Item darf doppelt berechnet werden.
+         * TODO
+         *  Geld abziehen für zu viel gelieferte burger
+         *
+         * Einfacher
+         * wir akzeptieren nur in gänze richtige Burger, dann brauchen wir nur order prüfen ob sie in item sind.
+         * Und den Wert der Zutaten aufaddieren.
+         */
+        restaurantFragment.setMoneyText(money, money, 0);
     }
 
     /**
