@@ -3,9 +3,11 @@ package com.example.burger42.Game;
 import android.os.CountDownTimer;
 
 import com.example.burger42.Game.Generator.RecipeGenerator;
+import com.example.burger42.Game.Timer.Timer;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Ingredients.Ingredient;
+import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.BillOrderItem;
 
 import java.util.Iterator;
@@ -15,29 +17,47 @@ import java.util.List;
 public class GamePuppeteer {
     private RestaurantFragment restaurantFragment;
     private CountDownTimer startCountdown;
+    private CountDownTimer recipeCountdown;
+    private CountDownTimer gameCountdown;
+    private List<CountDownTimer> burgerCountdown;
+    private CountDownTimer plateCountdown;
+    private List<CountDownTimer> allCountdowns;
+    //private long[] timers = {3300,20000,240000,10000};
+    //private long[] intervalls = {1000,5000,500,1000};
     private RecipeGenerator generator;
-    private List<BillOrderItem> list;
-    private int money;
+    private int index = 0;
+    private int money = 150;
+    private int newMoney;
+    private int tip;
     private float streak = 1.0f;
     public static Time currentime;
+    private static Time pausetime;
+    private static boolean isPaused = false;
+    private List<BillItem> billItemList;
 
 
     public GamePuppeteer(RestaurantFragment restaurantFragment) {
-        list = new LinkedList<>();
+        billItemList = new LinkedList<>();
         this.restaurantFragment = restaurantFragment;
         currentime = new Time(8, 0);
         generator = new RecipeGenerator(2);
         startCountdown = new CountDownTimer(3300, 1000) {
+            long lastL = 3300;
             @Override
             public void onTick(long l) {
-                if (l < 300)
-                    restaurantFragment.setCountdown("Start");
-                else if (l < 1300)
-                    restaurantFragment.setCountdown("1");
-                else if (l < 2300)
-                    restaurantFragment.setCountdown("2");
-                else if (l < 3300)
-                    restaurantFragment.setCountdown("3");
+                if(isPaused)
+                    l = lastL;
+                else{
+                    lastL = l;
+                    if (l < 300)
+                        restaurantFragment.setCountdown("Start");
+                    else if (l < 1300)
+                        restaurantFragment.setCountdown("1");
+                    else if (l < 2300)
+                        restaurantFragment.setCountdown("2");
+                    else if (l < 3300)
+                        restaurantFragment.setCountdown("3");
+                }
             }
 
             @Override
@@ -46,24 +66,25 @@ public class GamePuppeteer {
                 restaurantFragment.addRecipe(generator.createRecipe());
 
                 //TEST Recepie add
-                new CountDownTimer(20000, 5000) {
+                recipeCountdown = new CountDownTimer(20000, 5000) {
+                    public long lastL = 20000;
                     @Override
                     public void onTick(long l) {
-                        restaurantFragment.addRecipe(generator.createRecipe());
-                        restaurantFragment.setMoneyText(150, 100, 50);
+                        if(isPaused)
+                            l = lastL;
+                        else{
+                            lastL = l;
+                            restaurantFragment.addRecipe(generator.createRecipe());
+                        }
                     }
 
                     @Override
                     public void onFinish() {
                     }
                 }.start();
-
                 //TEST GameTime add
-                new CountDownTimer(240000, 500) {
-
-
+                gameCountdown = new CountDownTimer(240000, 500) {
                     long lastL = 240000;
-
                     @Override
                     public void onTick(long l) {
                         currentime.addTimeInMilliSeconds((lastL - l) * 120);
@@ -73,7 +94,7 @@ public class GamePuppeteer {
 
                     @Override
                     public void onFinish() {
-                        restaurantFragment.timesUp(list);
+                        restaurantFragment.timesUp(billItemList);
                     }
                 }.start();
 
@@ -82,47 +103,41 @@ public class GamePuppeteer {
     }
 
     public void serve(Recipe order, Recipe item) {
+        List<BillOrderItem> list = new LinkedList<>();
+        newMoney = 0;
         Iterator<List<Ingredient>> orderIterator = order.list().iterator();
         while (orderIterator.hasNext()) {
             List<Ingredient> orderList = orderIterator.next();
             if(item.list().contains(orderList)) {
                 item.list().remove(orderList);
                 money+=orderList.size()*10*streak;
-                list.add(new BillOrderItem("Burger",orderList.size()*10,streak,true));
+                newMoney+=orderList.size()*10*streak;
+                list.add(new BillOrderItem("Burger",newMoney,streak,true));
                 streak+=0.1;
+                tip = order.calculateTip();
             }
             else{
                 list.add(new BillOrderItem("Burger",0,streak,false));
                 streak=1.0f;
+                tip = 0;
             }
         }
-        /*
-         * TODO
-         *  jeder order mit jedem item vergleichen,
-         *  da die Reihenfolge der Burger in der Bestellung nicht zu den auf den Tellern passen muss.
-         * TODO
-         *  die größt mögliche Summe als Gewinn ermitteln wichtig kein Item darf doppelt berechnet werden.
-         * TODO
-         *  Geld abziehen für zu viel gelieferte burger
-         *
-         * Einfacher
-         * wir akzeptieren nur in gänze richtige Burger, dann brauchen wir nur order prüfen ob sie in item sind.
-         * Und den Wert der Zutaten aufaddieren.
-         */
-        restaurantFragment.setMoneyText(money, money, 0);
+        billItemList.add(new BillItem(index++,(newMoney+tip)*streak,list));
+        restaurantFragment.setMoneyText(money, newMoney, tip);
     }
 
     /**
      * onPause will be called, when the RestaurantFragment is paused.
      */
     public void onPause() {
-
-    }
-
+        pausetime = new Time(currentime);
+        isPaused = true;
+        }
     /**
      * onResume will be called,
      */
     public void onResume() {
-
+        currentime = pausetime;
+        isPaused = false;
     }
 }

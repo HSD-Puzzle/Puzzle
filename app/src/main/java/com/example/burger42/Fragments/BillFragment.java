@@ -22,7 +22,7 @@ public class BillFragment extends ParentFragment {
     private ListView listView;
     private BillItemAdapter billItemAdapter;
 
-    public BillFragment(MainActivity mainActivity, List<BillOrderItem> billItems) {
+    public BillFragment(MainActivity mainActivity, List<BillItem> billItems) {
         super(mainActivity);
     }
 
