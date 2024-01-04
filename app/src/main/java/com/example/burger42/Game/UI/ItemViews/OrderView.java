@@ -1,6 +1,5 @@
 package com.example.burger42.Game.UI.ItemViews;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,13 +7,17 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
+import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
+import com.example.burger42.Game.UI.Scaffolding.PayableView;
+import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
@@ -31,9 +34,12 @@ public class OrderView extends ItemView {
 
     private Recipe recipeToShow = new Recipe();
 
-    public OrderView(Context context, Recipe recipe) {
+    private RestaurantFragment restaurantFragment;
+
+    public OrderView(Context context, Recipe recipe, RestaurantFragment restaurantFragment) {
         super(context);
         this.recipeToShow = recipe;
+        this.restaurantFragment = restaurantFragment;
     }
 
     public OrderView(Context context) {
@@ -45,8 +51,8 @@ public class OrderView extends ItemView {
     }
 
     @Override
-    protected ItemFilterTag[] itemFilterTags() {
-        return new ItemFilterTag[0];
+    protected List<ItemFilterTag> itemFilterTags() {
+        return super.itemFilterTags();
     }
 
     @Override
@@ -84,7 +90,25 @@ public class OrderView extends ItemView {
                 return false;
             }
         }.setRelativeTop(0.15f).setRelativeRight(0.2f));
+
+        addOnDragAreaListener(new OnDragAreaListener() {
+            @Override
+            protected boolean onDrag(DragEvent event, boolean inArea) {
+                if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
+                    serve((PayableView) event.getLocalState());
+                    return true;
+                }
+                return false;
+            }
+        }.addFilterTag(ItemFilterTag.Payable).setUseFilter(true));
     }
+
+    public void serve(PayableView payableView) {
+        restaurantFragment.serve(recipeToShow, payableView.createRecipe());
+        payableView.removeFromParent();
+        removeFromParent();
+    }
+
 
     @Override
     protected int drawableId() {
@@ -101,7 +125,6 @@ public class OrderView extends ItemView {
         return "Order";
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     protected void drawItemOnCanvas(Canvas canvas, float xOffset, float yOffset, int referenceHeight, int width, int height) {
         super.drawItemOnCanvas(canvas, xOffset, yOffset, referenceHeight, width, height);

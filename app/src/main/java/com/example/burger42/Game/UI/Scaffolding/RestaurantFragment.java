@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -24,7 +26,6 @@ import com.example.burger42.Fragments.PauseFragment;
 import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
-import com.example.burger42.Game.UI.ItemViews.OrderView;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -37,6 +38,13 @@ import java.util.Queue;
  */
 public abstract class RestaurantFragment extends ParentFragment {
 
+    private TextView tipTextView;
+
+    private TextView moneyEarnedTextView;
+
+    /**
+     * listOfOrderSpawns are all possible spawns for a recipe as order.
+     */
     private final List<OrderSpawn> listOfOrderSpawns = new LinkedList<>();
 
     /**
@@ -44,8 +52,14 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     private int videoStoppedAt;
 
+    /**
+     * All recipes, that are added before firstSetup. This items will be shown as order after the firstSetup.
+     */
     private final Queue<Recipe> notSpawnedRecipes = new LinkedList<>();
 
+    /**
+     * The gamePuppeteer that controls this game.
+     */
     private GamePuppeteer gamePuppeteer;
     /**
      * The view that blocks all vies above to be touched on.
@@ -61,8 +75,17 @@ public abstract class RestaurantFragment extends ParentFragment {
      * The displayed amount of money.
      */
     private TextView moneyText;
+    /**
+     * The current time at this date.
+     */
+    private TextView timeText;
+    /**
+     * True after the View is created and first setup.
+     */
     private boolean hadFirstSetup = false;
-
+    /**
+     * all shown items with RestaurantFragment as root.
+     */
     private final List<ItemView> items = new LinkedList<>();
     /**
      * the rootView is the view from the fragment itself.
@@ -155,7 +178,7 @@ public abstract class RestaurantFragment extends ParentFragment {
         referenceHeight = container.getHeight() / 4;
 
         topNavigationSetup();
-        touchBLockerSetup();
+        touchBlockerSetup();
         counterSetup();
         itemSetup();
         videoSetup(container);
@@ -167,6 +190,9 @@ public abstract class RestaurantFragment extends ParentFragment {
         Button pauseButton = (Button) rootView.findViewById(R.id.restaurant_pause);
         pauseButton.setOnClickListener(view -> pause());
         moneyText = rootView.findViewById(R.id.restaurant_money);
+        timeText = rootView.findViewById(R.id.restaurant_clock);
+        tipTextView = rootView.findViewById(R.id.restaurant_earnedtip);
+        moneyEarnedTextView = rootView.findViewById(R.id.restaurant_earnedmoney);
     }
 
     private void counterSetup() {
@@ -212,7 +238,10 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void touchBLockerSetup() {
+    /**
+     * the touch blocker blocks all touch events during the countdown
+     */
+    private void touchBlockerSetup() {
         touchBlocker = rootView.findViewById(R.id.restaurant_touchBlocker);
         touchBlocker.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -224,8 +253,25 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
     //endregion
 
-    public void setMoneyText(int money) {
+    /**
+     * setMoneyText sets the text of earned money and should be called after serving.
+     *
+     * @param money        the money in total, that will be displayed in constantly in the right top corner.
+     * @param newMainMoney the money earned with the last serving. Displayed a short time as effect in yellow.
+     * @param newTip       the tip earned with the last serving.Displayed a short time as effect in blue.
+     */
+    public void setMoneyText(int money, int newMainMoney, int newTip) {
         moneyText.setText(money);
+
+        tipTextView.setText(newTip + "$");
+        Animation tipDownAnim = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.tipdown_animation);
+        tipTextView.startAnimation(tipDownAnim);
+        tipTextView.setVisibility(View.VISIBLE);
+
+        moneyEarnedTextView.setText(newMainMoney + "$");
+        Animation moneyDownAnim = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.moneydown_animation);
+        moneyEarnedTextView.startAnimation(moneyDownAnim);
+        moneyEarnedTextView.setVisibility(View.VISIBLE);
     }
 
     protected abstract CounterView[] bottomCounter();
@@ -244,17 +290,28 @@ public abstract class RestaurantFragment extends ParentFragment {
         topCounter.setLayoutParams(new LinearLayout.LayoutParams(-2, referenceHeight));
     }
 
+    /**
+     * resume resumes the game in total. The gamePuppeteer as controller and the background video.
+     */
     public void resume() {
+        gamePuppeteer.onResume();
         videoView.seekTo(videoStoppedAt);
         videoView.start();
     }
 
+    /**
+     * pause pauses the game in total
+     */
     public void pause() {
+        gamePuppeteer.onPause();
         videoStoppedAt = videoView.getCurrentPosition();
         videoView.pause();
         mainActivity.showFragment(new PauseFragment(mainActivity, this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
+    /**
+     *
+     */
     public void start() {
         videoView.start();
         touchBlocker.setEnabled(false);
@@ -270,11 +327,17 @@ public abstract class RestaurantFragment extends ParentFragment {
         startCountdownView.setText(text);
     }
 
+    /**
+     * onBackPressed will be called when the hardware back button is pressed
+     */
     @Override
     public void onBackPressed() {
         pause();
     }
 
+    /**
+     * onPause will be called from the system when the app is paused.
+     */
     @Override
     public void onPause() {
         super.onPause();
@@ -282,18 +345,21 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     /**
-     * @param orderSpawn
+     * addOrderSpawn adds a potential spawn for orders to the list of all spawns. The methode addRecipe will spawn at one of these spawns.
+     *
+     * @param orderSpawn the spawn to add to the list.
      */
     public void addOrderSpawn(OrderSpawn orderSpawn) {
         listOfOrderSpawns.add(orderSpawn);
     }
 
     /**
-     * adds a Recipe
+     * adds a recipe as order on a random spawn
      *
-     * @param recipe
+     * @param recipe to spawn as order
      */
     public void addRecipe(Recipe recipe) {
+
         if (listOfOrderSpawns.isEmpty()) {
             notSpawnedRecipes.add(recipe);
         } else {
@@ -301,13 +367,29 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
     }
 
+    /**
+     * puts a new dirty plate on the counter
+     */
     public void dirtyPlateBack() {
-
+        //TODO add dirtyplate
     }
 
+    /**
+     * shows the given time in the fragment
+     *
+     * @param time the time to show
+     */
     public void setTimeText(Time time) {
-
+        timeText.setText(time.timeAsText());
     }
-    //serve aufrufen
 
+    /**
+     * tells the gamePuppeteer to serve an Item
+     *
+     * @param order the order that was ordered.
+     * @param item  the item that will be delivered.
+     */
+    public void serve(Recipe order, Recipe item) {
+        gamePuppeteer.serve(order, item);
+    }
 }

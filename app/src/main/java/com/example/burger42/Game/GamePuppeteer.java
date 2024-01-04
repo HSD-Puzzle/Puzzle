@@ -36,7 +36,6 @@ public class GamePuppeteer {
                 new CountDownTimer(20000, 5000) {
                     @Override
                     public void onTick(long l) {
-                        System.out.println("SPAWWWN");
                         restaurantFragment.addRecipe(generator.createRecipe());
                     }
 
@@ -50,7 +49,7 @@ public class GamePuppeteer {
     }
 
     public void serve(Recipe order, Recipe item) {
-
+        System.out.println(item);
     }
 
     /**

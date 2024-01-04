@@ -7,13 +7,9 @@ import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Game.UI.ItemViews.BottomBreadView;
 import com.example.burger42.Game.UI.ItemViews.PlateView;
 import com.example.burger42.Game.UI.ItemViews.SpongeView;
-import com.example.burger42.Game.UI.ItemViews.TopBreadView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
-import com.example.burger42.Game.UI.Scaffolding.DragAreaSetItemAbove;
-import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
@@ -122,7 +118,7 @@ public class MillCounterView extends CounterView {
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
                     PlateView itemView = (PlateView) event.getLocalState();
-                    if (itemView.onlyPlateAbove()) {
+                    if (itemView.onlyPlatesAbove()) {
                         itemView.removeFromParent();
                         restaurantFragment.addItem(itemView);
                         itemView.setTranslationY(getCustomHeight() * 1.40f);

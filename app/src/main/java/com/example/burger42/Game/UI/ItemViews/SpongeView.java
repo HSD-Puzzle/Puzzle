@@ -9,11 +9,15 @@ import com.example.burger42.Game.UI.Scaffolding.DragAreaSetItemAbove;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.R;
 
+import java.util.List;
+
 public class SpongeView extends ItemView {
 
     @Override
-    protected ItemFilterTag[] itemFilterTags() {
-        return new ItemFilterTag[]{ItemFilterTag.Tool};
+    protected List<ItemFilterTag> itemFilterTags() {
+        List<ItemFilterTag> list = super.itemFilterTags();
+        list.add(ItemFilterTag.Tool);
+        return list;
     }
 
     public SpongeView(Context context) {

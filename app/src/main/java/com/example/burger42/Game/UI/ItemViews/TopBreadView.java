@@ -5,15 +5,12 @@ import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Game.UI.Scaffolding.ItemView;
+import com.example.burger42.Game.UI.Scaffolding.IngredientView;
+import com.example.burger42.Ingredients.Ingredient;
+import com.example.burger42.Ingredients.TopBurgerBun;
 import com.example.burger42.R;
 
-public class TopBreadView extends ItemView {
-
-    @Override
-    protected ItemFilterTag[] itemFilterTags() {
-        return new ItemFilterTag[]{ItemFilterTag.Ingredient};
-    }
+public class TopBreadView extends IngredientView {
 
     public TopBreadView(Context context) {
         super(context);
@@ -21,6 +18,11 @@ public class TopBreadView extends ItemView {
 
     public TopBreadView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public Ingredient toIngredientWrapper() {
+        return new TopBurgerBun();
     }
 
     @Override

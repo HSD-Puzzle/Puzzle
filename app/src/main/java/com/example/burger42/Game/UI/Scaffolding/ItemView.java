@@ -14,15 +14,22 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.burger42.Game.Recipe;
+import com.example.burger42.Ingredients.Ingredient;
+
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class ItemView extends CustomView implements DragFilter {
 
     public enum ItemFilterTag {
-        Ingredient, CleanBase, Tool
+        Ingredient, CleanBase, Tool, Payable
     }
 
-    protected abstract ItemFilterTag[] itemFilterTags();
+    protected List<ItemFilterTag> itemFilterTags() {
+        return new LinkedList<>();
+    }
 
     protected DragFilter dragFilter;
 
@@ -190,7 +197,9 @@ public abstract class ItemView extends CustomView implements DragFilter {
     }
 
     public boolean hasItemAbove(int index) {
-        return itemsAboveNode[index].hasItemView();
+        if (index < itemsAboveNode.length)
+            return itemsAboveNode[index].hasItemView();
+        return false;
     }
 
     public ItemView getItemAbove(int index) {
@@ -312,6 +321,7 @@ public abstract class ItemView extends CustomView implements DragFilter {
 
     public abstract String name();
 
+    @NonNull
     @Override
     public String toString() {
         String result = name() + "(";

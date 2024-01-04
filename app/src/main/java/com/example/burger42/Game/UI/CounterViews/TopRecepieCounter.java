@@ -79,7 +79,7 @@ public class TopRecepieCounter extends CounterView implements OrderSpawn {
 
     @Override
     public void spawnAndPlaceRecipe(Recipe recipe) {
-        OrderView newOrder = new OrderView(getContext(), recipe);
+        OrderView newOrder = new OrderView(getContext(), recipe, restaurantFragment);
         restaurantFragment.addItem(newOrder);
         if (drawed) {
             newOrder.setTranslationY(getHeight() * 0.37f);
