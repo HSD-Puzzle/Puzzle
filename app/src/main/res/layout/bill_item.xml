@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/billItem_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1x" />
-
-    <TextView
-        android:id="@+id/billItem_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50sp"
-        android:text="Hamburger" />
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="1. Bestellung" />
 
     <TextView
         android:id="@+id/billItem_totalValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="20€" />
+        android:layout_margin="5dp"
+        android:text="200$" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/billItem_totalValue"
+        tools:listitem="@layout/detailsbill_item" />
 
 </RelativeLayout>

@@ -33,7 +33,6 @@ public class BillFragment extends ParentFragment {
         listView = view.findViewById(R.id.levelBill_ListOfBillItems);
         billItemAdapter = new BillItemAdapter(mainActivity);
         listView.setAdapter(billItemAdapter);
-        billItemAdapter.add(new BillItem(10, "Pommes", 100));
         return view;
     }
 }

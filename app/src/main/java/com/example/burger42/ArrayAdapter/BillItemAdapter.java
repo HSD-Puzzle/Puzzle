@@ -34,8 +34,6 @@ public class BillItemAdapter extends ArrayAdapter<BillItem> {
         TextView amountTextView = (TextView) convertView.findViewById(R.id.billItem_amount);
         amountTextView.setText(currentItem.amount() + "x");
 
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.billItem_title);
-        titleTextView.setText(currentItem.title());
 
         TextView totalValueTextView = (TextView) convertView.findViewById(R.id.billItem_totalValue);
         totalValueTextView.setText(currentItem.totalValue() + "€");

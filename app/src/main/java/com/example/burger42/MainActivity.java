@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        showFragment(new StartFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        //showFragment(new StartFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        showFragment(new BillFragment(this, null), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         audioController = AudioController.getInstance(this);
         audioController.startMusic();
     }

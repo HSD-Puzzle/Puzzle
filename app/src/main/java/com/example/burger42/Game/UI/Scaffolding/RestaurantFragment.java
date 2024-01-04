@@ -267,8 +267,18 @@ public abstract class RestaurantFragment extends ParentFragment {
         moneyEarnedTextView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * bottomCounter returns all counter elements, that will bie displayed at the bottom of the restaurant.
+     *
+     * @return a array of bottom counters
+     */
     protected abstract CounterView[] bottomCounter();
 
+    /**
+     * topCounter returns all counter elements, that will bie displayed at the top of the restaurant.
+     *
+     * @return a array of top counters
+     */
     protected abstract CounterView[] topCounter();
 
     private void addBottomCounter(CounterView bottomCounter) {
@@ -303,7 +313,7 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     /**
-     *
+     * starts the game by disabling the countdown and allow touches.
      */
     public void start() {
         videoView.start();
@@ -364,7 +374,7 @@ public abstract class RestaurantFragment extends ParentFragment {
      * puts a new dirty plate on the counter
      */
     public void dirtyPlateBack() {
-        //TODO add dirtyplate
+        //TODO add dirty-plate
     }
 
     /**
