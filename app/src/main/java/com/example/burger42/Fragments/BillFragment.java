@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.ArrayAdapter.BillItemAdapter;
-import com.example.burger42.Item.BillIngredientItem;
 import com.example.burger42.Item.BillItem;
+import com.example.burger42.Item.BillOrderItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -22,7 +22,7 @@ public class BillFragment extends ParentFragment {
     private ListView listView;
     private BillItemAdapter billItemAdapter;
 
-    public BillFragment(MainActivity mainActivity, List<BillIngredientItem> billItems) {
+    public BillFragment(MainActivity mainActivity, List<BillOrderItem> billItems) {
         super(mainActivity);
     }
 

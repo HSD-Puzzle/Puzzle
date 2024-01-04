@@ -12,6 +12,9 @@ public class BottomBurgerBun extends Ingredient {
         super(R.string.bottomburgerbun);
     }
 
+    public boolean equals(Object obj){
+        return obj instanceof BottomBurgerBun;
+    }
     @NonNull
     @Override
     public String toString() {

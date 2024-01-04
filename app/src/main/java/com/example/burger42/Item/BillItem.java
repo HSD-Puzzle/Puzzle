@@ -9,11 +9,8 @@ public class BillItem {
     private String title; // TODO Order String
     private int totalValue;
 
-    private List<BillIngredientItem> ingredientList;
+    private List<BillOrderItem> ingredientList;
 
-    private int tip;
-
-    private int streakMultiplier;
 
 
     public BillItem(int amount, String title, int totalValue) {

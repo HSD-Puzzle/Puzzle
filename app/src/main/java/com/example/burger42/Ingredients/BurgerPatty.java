@@ -9,4 +9,7 @@ public class BurgerPatty extends Ingredient{
     public BurgerPatty(){
         super(R.string.burgerpatty);
     }
+    public boolean equals(Object obj){
+        return obj instanceof BurgerPatty;
+    }
 }

@@ -28,8 +28,9 @@ import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
 import com.example.burger42.Game.UI.ItemViews.OrderView;
-import com.example.burger42.Item.BillIngredientItem;
+
 import com.example.burger42.Item.BillItem;
+import com.example.burger42.Item.BillOrderItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -376,7 +377,7 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     //serve aufrufen
-    public void timesUp(List<BillIngredientItem> list) {
+    public void timesUp(List<BillOrderItem> list) {
         mainActivity.showFragment(new BillFragment(mainActivity, list), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 

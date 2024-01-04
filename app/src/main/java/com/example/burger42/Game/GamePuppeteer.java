@@ -6,7 +6,7 @@ import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Ingredients.Ingredient;
-import com.example.burger42.Item.BillIngredientItem;
+import com.example.burger42.Item.BillOrderItem;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,8 +16,9 @@ public class GamePuppeteer {
     private RestaurantFragment restaurantFragment;
     private CountDownTimer startCountdown;
     private RecipeGenerator generator;
-    private List<BillIngredientItem> list;
+    private List<BillOrderItem> list;
     private int money;
+    private float streak = 1.0f;
     public static Time currentime;
 
 
@@ -81,19 +82,18 @@ public class GamePuppeteer {
     }
 
     public void serve(Recipe order, Recipe item) {
-        //System.out.println(item);
         Iterator<List<Ingredient>> orderIterator = order.list().iterator();
-        Iterator<List<Ingredient>> itemIterator = item.list().iterator();
-        while (orderIterator.hasNext() && itemIterator.hasNext()) {
+        while (orderIterator.hasNext()) {
             List<Ingredient> orderList = orderIterator.next();
-            List<Ingredient> itemList = itemIterator.next();
-            for (int i = 0; i < orderList.size() - 1; i++) {
-                if (orderList.get(i).equals(itemList.get(i))) {
-                    money += 10;
-                    list.add(new BillIngredientItem(orderList.get(i), true, 10));
-                } else {
-                    list.add(new BillIngredientItem(orderList.get(i), false, 0));
-                }
+            if(item.list().contains(orderList)) {
+                item.list().remove(orderList);
+                money+=orderList.size()*10*streak;
+                list.add(new BillOrderItem("Burger",orderList.size()*10,streak,true));
+                streak+=0.1;
+            }
+            else{
+                list.add(new BillOrderItem("Burger",0,streak,false));
+                streak=1.0f;
             }
         }
         /*

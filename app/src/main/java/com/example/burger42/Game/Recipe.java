@@ -12,8 +12,8 @@ public class Recipe {
     private List<List<Ingredient>> ingredients = new LinkedList<>();
     private Time time;
     public Recipe(){
-        System.out.println("Test: " + GamePuppeteer.currentime.hour());
-        time = new Time(GamePuppeteer.currentime.hour(),GamePuppeteer.currentime.minutes());
+        //System.out.println("Test: " + GamePuppeteer.currentime.hour());
+        //time = new Time(GamePuppeteer.currentime.hour(),GamePuppeteer.currentime.minutes());
     }
 
 
@@ -27,9 +27,9 @@ public class Recipe {
 
     private PlaceToEat onSite = PlaceToEat.ONSITE;
 
-    private Time orderTakenTime = new Time(8,0);
+    private Time orderTakenTime = new Time(GamePuppeteer.currentime);
 
-    private Time timeToDeliver = new Time(orderTakenTime.hour(), orderTakenTime.minute()+30);
+    private Time timeToDeliver = new Time(15000);
 
 
     public PlaceToEat onSite() {
@@ -42,6 +42,11 @@ public class Recipe {
 
     public Time timeToDeliver() {
         return timeToDeliver;
+    }
+    public int deliveredOnTime(){
+        Time deliverytime = new Time(GamePuppeteer.currentime);
+        deliverytime.subTime(orderTakenTime);
+        return deliverytime.minutes();
     }
 
     public void addRecipe(Recipe recipe) {
