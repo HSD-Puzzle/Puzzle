@@ -44,6 +44,8 @@ import java.util.Queue;
 public abstract class RestaurantFragment extends ParentFragment {
     private TextView tipTextView;
 
+    private boolean timeIsUp = false;
+
     private TextView moneyEarnedTextView;
 
     private final List<OrderSpawn> listOfOrderSpawns = new LinkedList<>();
@@ -344,7 +346,8 @@ public abstract class RestaurantFragment extends ParentFragment {
     @Override
     public void onPause() {
         super.onPause();
-        pause();
+        if (!timeIsUp)
+            pause();
     }
 
     /**
@@ -386,8 +389,10 @@ public abstract class RestaurantFragment extends ParentFragment {
         clockText.setText(time.timeAsText());
     }
 
+
     //serve aufrufen
-    public void timesUp(List<BillOrderItem> list) {
+    public void timesUp(List<BillItem> list) {
+        timeIsUp = true;
         mainActivity.showFragment(new BillFragment(mainActivity, list), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 

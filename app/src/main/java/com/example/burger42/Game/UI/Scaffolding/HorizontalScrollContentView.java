@@ -5,6 +5,10 @@ import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
 
+/**
+ * a RelativeLayout that should be used inside a {@link HorizontalScrollView}
+ * it scrolls the parent to the center by resizing the content.
+ */
 public class HorizontalScrollContentView extends RelativeLayout {
 
     public HorizontalScrollContentView(Context context) {

@@ -10,19 +10,15 @@ import android.view.MotionEvent;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.Recipe;
-import com.example.burger42.Game.UI.Scaffolding.BasicDragFilter;
-import com.example.burger42.Game.UI.Scaffolding.IngredientView;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
-import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
-import com.example.burger42.Game.UI.Scaffolding.PayableView;
+import com.example.burger42.Game.UI.Scaffolding.PayableItemView;
 import com.example.burger42.R;
 
-import java.util.LinkedList;
 import java.util.List;
 
-public class PlateView extends PayableView {
+public class PlateView extends PayableItemView {
 
     public enum state {
         CLEAN, DIRTY

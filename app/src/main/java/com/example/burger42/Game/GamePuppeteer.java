@@ -26,7 +26,7 @@ public class GamePuppeteer {
     //private long[] intervalls = {1000,5000,500,1000};
     private RecipeGenerator generator;
     private int index = 0;
-    private int money = 150;
+    private int money = 0;
     private int newMoney;
     private int tip;
     private float streak = 1.0f;
@@ -43,11 +43,12 @@ public class GamePuppeteer {
         generator = new RecipeGenerator(2);
         startCountdown = new CountDownTimer(3300, 1000) {
             long lastL = 3300;
+
             @Override
             public void onTick(long l) {
-                if(isPaused)
+                if (isPaused)
                     l = lastL;
-                else{
+                else {
                     lastL = l;
                     if (l < 300)
                         restaurantFragment.setCountdown("Start");
@@ -68,11 +69,12 @@ public class GamePuppeteer {
                 //TEST Recepie add
                 recipeCountdown = new CountDownTimer(20000, 5000) {
                     public long lastL = 20000;
+
                     @Override
                     public void onTick(long l) {
-                        if(isPaused)
+                        if (isPaused)
                             l = lastL;
-                        else{
+                        else {
                             lastL = l;
                             restaurantFragment.addRecipe(generator.createRecipe());
                         }
@@ -85,6 +87,7 @@ public class GamePuppeteer {
                 //TEST GameTime add
                 gameCountdown = new CountDownTimer(240000, 500) {
                     long lastL = 240000;
+
                     @Override
                     public void onTick(long l) {
                         currentime.addTimeInMilliSeconds((lastL - l) * 120);
@@ -108,21 +111,20 @@ public class GamePuppeteer {
         Iterator<List<Ingredient>> orderIterator = order.list().iterator();
         while (orderIterator.hasNext()) {
             List<Ingredient> orderList = orderIterator.next();
-            if(item.list().contains(orderList)) {
+            if (item.list().contains(orderList)) {
                 item.list().remove(orderList);
-                money+=orderList.size()*10*streak;
-                newMoney+=orderList.size()*10*streak;
-                list.add(new BillOrderItem("Burger",newMoney,streak,true));
-                streak+=0.1;
+                money += orderList.size() * 10 * streak;
+                newMoney += orderList.size() * 10 * streak;
+                list.add(new BillOrderItem("Burger", newMoney, streak, true));
+                streak += 0.1;
                 tip = order.calculateTip();
-            }
-            else{
-                list.add(new BillOrderItem("Burger",0,streak,false));
-                streak=1.0f;
+            } else {
+                list.add(new BillOrderItem("Burger", 0, streak, false));
+                streak = 1.0f;
                 tip = 0;
             }
         }
-        billItemList.add(new BillItem(index++,(newMoney+tip)*streak,list));
+        billItemList.add(new BillItem(index++, (newMoney + tip) * streak, list));
         restaurantFragment.setMoneyText(money, newMoney, tip);
     }
 
@@ -132,7 +134,8 @@ public class GamePuppeteer {
     public void onPause() {
         pausetime = new Time(currentime);
         isPaused = true;
-        }
+    }
+
     /**
      * onResume will be called,
      */

@@ -16,7 +16,7 @@ import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
-import com.example.burger42.Game.UI.Scaffolding.PayableView;
+import com.example.burger42.Game.UI.Scaffolding.PayableItemView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
@@ -95,7 +95,7 @@ public class OrderView extends ItemView {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
-                    serve((PayableView) event.getLocalState());
+                    serve((PayableItemView) event.getLocalState());
                     return true;
                 }
                 return false;
@@ -103,7 +103,7 @@ public class OrderView extends ItemView {
         }.addFilterTag(ItemFilterTag.Payable).setUseFilter(true));
     }
 
-    public void serve(PayableView payableView) {
+    public void serve(PayableItemView payableView) {
         restaurantFragment.serve(recipeToShow, payableView.createRecipe());
         payableView.removeFromParent();
         removeFromParent();

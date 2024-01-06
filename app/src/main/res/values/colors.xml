@@ -6,7 +6,7 @@
     <color name="orangeRed700">#E64A19</color>
 
     <color name="black">#FF000000</color>
-    <color name="tipColor">#FF0000FF</color>
-    <color name="moneyColor">#FFFFCC00</color>
+    <color name="tipColor">#85E7FF</color>
+    <color name="moneyColor">#FFC800</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

@@ -3,7 +3,6 @@ package com.example.burger42.Game.UI.Scaffolding;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.DragEvent;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 
@@ -14,15 +13,22 @@ import com.example.burger42.Ingredients.Ingredient;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class PayableView extends ItemView {
-    public PayableView(Context context) {
+/**
+ * PayableItemView is a specific ItemView, that allows items to be payed.
+ * It has methods to create a recipe from the itemviews.
+ */
+public abstract class PayableItemView extends ItemView {
+    public PayableItemView(Context context) {
         super(context);
     }
 
-    public PayableView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public PayableItemView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * adds a OnDragAreaListener, that serves if an orderView will be dragged on the payableView
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
@@ -38,10 +44,18 @@ public abstract class PayableView extends ItemView {
         }.setUseFilter(true).addFilterTag("Order"));
     }
 
-    private PayableView self() {
+    /**
+     * self returns the item self to use it inside an anonymous class.
+     *
+     * @return this
+     */
+    private PayableItemView self() {
         return this;
     }
 
+    /**
+     * adds Payable to the itemFilter list
+     */
     @Override
     protected List<ItemFilterTag> itemFilterTags() {
         List<ItemFilterTag> list = super.itemFilterTags();
@@ -49,6 +63,13 @@ public abstract class PayableView extends ItemView {
         return list;
     }
 
+    /**
+     * createRecipe creates a {@link Recipe} based on the itemAbove at the given itemAboveIndex.
+     * if there is no ItemAbove it will return an empty recipe.
+     *
+     * @param itemAboveIndex the index of the itemAbove that should be used as root for the created recipe
+     * @return the created recipe
+     */
     public Recipe createRecipe(int itemAboveIndex) {
         Recipe recipe = new Recipe();
         if (hasItemAbove(itemAboveIndex)) {
@@ -59,12 +80,18 @@ public abstract class PayableView extends ItemView {
                 item.addToList(list);
                 recipe.list().add(list);
             } else if (itemView.hasAtLeastOneEqualFilterTag(new BasicDragFilter().addFilterTag(ItemFilterTag.Payable.name()))) {
-                PayableView item = (PayableView) itemView;
+                PayableItemView item = (PayableItemView) itemView;
                 recipe.addRecipe(item.createRecipe());
             }
         }
         return recipe;
     }
 
+    /**
+     * createRecipe creates a {@link Recipe} based on this ItemView as root.
+     * The methode combines the recipes from the items above based on the structure of this item.
+     *
+     * @return the created recipe
+     */
     public abstract Recipe createRecipe();
 }

@@ -7,10 +7,8 @@ import java.util.List;
 public class BillItem {
     private int orderNumber;
     private float totalValue;
-
     private List<BillOrderItem> billOrderItems;
-
-
+    private boolean detailView = false;
 
     public BillItem(int orderNumber, float totalValue, List<BillOrderItem> billOrderItems) {
         this.orderNumber = orderNumber;
@@ -18,12 +16,23 @@ public class BillItem {
         this.billOrderItems = billOrderItems;
     }
 
-    public int amount() {
-        return orderNumber;
-    }
-
     public float totalValue() {
         return totalValue;
     }
 
+    public int orderNumber() {
+        return orderNumber;
+    }
+
+    public List<BillOrderItem> billOrderItems() {
+        return billOrderItems;
+    }
+
+    public boolean isDetailView() {
+        return detailView;
+    }
+
+    public void setDetailView(boolean detailView) {
+        this.detailView = detailView;
+    }
 }

@@ -55,40 +55,76 @@ public class Time {
     }
 
     /**
-     * @param timeToAddInSeconds
+     * addSeconds adds a amount of seconds to the time.
+     *
+     * @param timeToAddInSeconds the amount of seconds to add.
      */
     public void addSeconds(int timeToAddInSeconds) {
         addTimeInMilliSeconds(timeToAddInSeconds * 1000L);
     }
 
+    /**
+     * addTimeInMilliSeconds add a amount of milliseconds to the time
+     *
+     * @param timeToAddInMilliSeconds the amount of milliseconds
+     */
     public void addTimeInMilliSeconds(long timeToAddInMilliSeconds) {
         timeInMilliSeconds += timeToAddInMilliSeconds;
     }
 
+    /**
+     * subTime subtracts the from this the amount of time done from the other.
+     *
+     * @param timeToSub the Time that will be subtract from this.
+     */
     public void subTime(Time timeToSub) {
         subMilliSeconds(timeToSub.timeInMilliSeconds);
     }
 
+    /**
+     * subMilliSeconds subtracts a amount of milliseconds.
+     *
+     * @param timeToSubInMilliSeconds is the amount of milliseconds to subtract.
+     */
     public void subMilliSeconds(long timeToSubInMilliSeconds) {
         timeInMilliSeconds -= timeToSubInMilliSeconds;
     }
 
+    /**
+     * minute returns the number of minutes within the current hour.
+     *
+     * @return the current minute. The result is between 0-59
+     */
     public int minute() {
         return (int) ((timeInMilliSeconds / 60000) % 60);
     }
 
+    /**
+     * minutes returns the current time in minutes.
+     *
+     * @return the current time in minutes. 2:22 am = 142 minutes
+     */
     public int minutes() {
         return (int) (timeInMilliSeconds / 60000);
     }
 
+    /**
+     * hour returns the number of hours within the current day.
+     *
+     * @return the current hour. The result is between 0-23
+     */
     public int hour() {
         return (int) ((timeInMilliSeconds / 3600000) % 24);
     }
 
+    /**
+     * timeAsText returns the time as String with the following notation hh:mm
+     *
+     * @return the time as String hh:mm
+     */
     public String timeAsText() {
-        if (minute() < 10)
-            return hour() + ":0" + minute();
-        else
-            return hour() + ":" + minute();
+        return ((hour() < 10) ? ("0" + hour()) : "" + hour()) +
+                ":" +
+                ((minute() < 10) ? ("0" + minute()) : "" + minute());
     }
 }

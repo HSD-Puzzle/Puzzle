@@ -22,10 +22,11 @@
         android:layout_margin="5dp"
         android:text="200$" />
 
-    <ListView
+    <LinearLayout
+        android:id="@+id/billItem_detaillist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/billItem_totalValue"
-        tools:listitem="@layout/detailsbill_item" />
+        android:orientation="vertical" />
 
 </RelativeLayout>

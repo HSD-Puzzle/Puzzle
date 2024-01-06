@@ -4,6 +4,8 @@ import com.example.burger42.Game.UI.CounterViews.BottomEndCounterView;
 import com.example.burger42.Game.UI.CounterViews.BottomStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.BreadCounterView;
 import com.example.burger42.Game.UI.CounterViews.MillCounterView;
+import com.example.burger42.Game.UI.CounterViews.RawPattyCounterView;
+import com.example.burger42.Game.UI.CounterViews.SaladCounterView;
 import com.example.burger42.Game.UI.CounterViews.StoveCounterView;
 import com.example.burger42.Game.UI.CounterViews.TopEndCounterView;
 import com.example.burger42.Game.UI.CounterViews.TopRecepieCounter;
@@ -19,7 +21,7 @@ public class RestaurantFragmentLevel1 extends RestaurantFragment {
 
     @Override
     protected CounterView[] bottomCounter() {
-        return new CounterView[]{new BottomStartCounterView(mainActivity), new BreadCounterView(mainActivity), new MillCounterView(mainActivity), new StoveCounterView(mainActivity), new BottomEndCounterView(mainActivity)};
+        return new CounterView[]{new BottomStartCounterView(mainActivity), new MillCounterView(mainActivity), new BreadCounterView(mainActivity), new SaladCounterView(mainActivity), new StoveCounterView(mainActivity), new RawPattyCounterView(mainActivity), new BottomEndCounterView(mainActivity)};
     }
 
     @Override
