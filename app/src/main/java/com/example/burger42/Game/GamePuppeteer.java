@@ -15,6 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GamePuppeteer {
+
+    private GameThread gameThread;
+
     private RestaurantFragment restaurantFragment;
     private CountDownTimer startCountdown;
     private CountDownTimer recipeCountdown;
@@ -41,69 +44,51 @@ public class GamePuppeteer {
         this.restaurantFragment = restaurantFragment;
         currentime = new Time(8, 0);
         generator = new RecipeGenerator(2);
-        startCountdown = new CountDownTimer(3300, 1000) {
-            long lastL = 3300;
 
-            @Override
-            public void onTick(long l) {
-                if (isPaused)
-                    l = lastL;
-                else {
-                    lastL = l;
-                    if (l < 300)
-                        restaurantFragment.setCountdown("Start");
-                    else if (l < 1300)
-                        restaurantFragment.setCountdown("1");
-                    else if (l < 2300)
-                        restaurantFragment.setCountdown("2");
-                    else if (l < 3300)
-                        restaurantFragment.setCountdown("3");
-                }
+        gameThread = new GameThread(restaurantFragment.getActivity());
+        gameThread.start();
+
+        gameThread.addGameTimer(new GameTimer() {
+            {
+                restaurantFragment.setCountdown("3");
             }
 
             @Override
-            public void onFinish() {
+            public void tick(long timeSinceRegistration) {
+                if (timeSinceRegistration < 1000)
+                    restaurantFragment.setCountdown("3");
+                else if (timeSinceRegistration < 2000)
+                    restaurantFragment.setCountdown("2");
+                else if (timeSinceRegistration < 3000)
+                    restaurantFragment.setCountdown("1");
+                else
+                    restaurantFragment.setCountdown("Start");
+            }
+
+            @Override
+            public void finish() {
                 restaurantFragment.start();
                 restaurantFragment.addRecipe(generator.createRecipe());
 
-                //TEST Recepie add
-                recipeCountdown = new CountDownTimer(20000, 5000) {
-                    public long lastL = 20000;
+                gameThread.addGameTimer(new GameTimer() {
 
                     @Override
-                    public void onTick(long l) {
-                        if (isPaused)
-                            l = lastL;
-                        else {
-                            lastL = l;
-                            restaurantFragment.addRecipe(generator.createRecipe());
-                        }
-                    }
-
-                    @Override
-                    public void onFinish() {
-                    }
-                }.start();
-                //TEST GameTime add
-                gameCountdown = new CountDownTimer(240000, 500) {
-                    long lastL = 240000;
-
-                    @Override
-                    public void onTick(long l) {
-                        currentime.addTimeInMilliSeconds((lastL - l) * 120);
-                        lastL = l;
+                    public void tick(long timeSinceRegistration) {
+                        currentime.setTimeInMilliSeconds(timeSinceRegistration * 120 + 28800000);
                         restaurantFragment.setTimeText(currentime);
                     }
 
                     @Override
-                    public void onFinish() {
+                    public void finish() {
                         restaurantFragment.timesUp(billItemList);
                     }
-                }.start();
+                }, 240000, 500);
+
 
             }
-        }.start();
+        }, 3300, 1000);
     }
+
 
     public void serve(Recipe order, Recipe item) {
         List<BillOrderItem> list = new LinkedList<>();
@@ -132,6 +117,7 @@ public class GamePuppeteer {
      * onPause will be called, when the RestaurantFragment is paused.
      */
     public void onPause() {
+        gameThread.pause();
         pausetime = new Time(currentime);
         isPaused = true;
     }
@@ -140,6 +126,7 @@ public class GamePuppeteer {
      * onResume will be called,
      */
     public void onResume() {
+        gameThread.resume();
         currentime = pausetime;
         isPaused = false;
     }

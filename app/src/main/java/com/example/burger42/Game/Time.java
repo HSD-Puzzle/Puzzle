@@ -64,6 +64,15 @@ public class Time {
     }
 
     /**
+     * sets the time in millis.
+     *
+     * @param timeInMilliSeconds the time to set
+     */
+    public void setTimeInMilliSeconds(long timeInMilliSeconds) {
+        this.timeInMilliSeconds = timeInMilliSeconds;
+    }
+
+    /**
      * addTimeInMilliSeconds add a amount of milliseconds to the time
      *
      * @param timeToAddInMilliSeconds the amount of milliseconds
