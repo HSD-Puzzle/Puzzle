@@ -391,9 +391,9 @@ public abstract class RestaurantFragment extends ParentFragment {
 
 
     //serve aufrufen
-    public void timesUp(List<BillItem> list) {
+    public void timesUp(List<BillItem> list, int totalValue) {
         timeIsUp = true;
-        mainActivity.showFragment(new BillFragment(mainActivity, list), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
     /**

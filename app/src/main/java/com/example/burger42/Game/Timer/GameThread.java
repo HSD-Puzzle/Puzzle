@@ -70,7 +70,8 @@ public class GameThread implements Runnable {
      */
     public void resume() {
         if (started && !thread.isAlive()) {
-            start();
+            thread = new Thread(this);
+            thread.start();
         }
     }
 

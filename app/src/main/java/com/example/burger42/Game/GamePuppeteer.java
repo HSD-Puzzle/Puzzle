@@ -71,11 +71,9 @@ public class GamePuppeteer {
 
                     @Override
                     public void finish() {
-                        restaurantFragment.timesUp(billItemList);
+                        restaurantFragment.timesUp(billItemList, money);
                     }
                 }, 240000, 500);
-
-
             }
         }, 3300, 1000);
     }

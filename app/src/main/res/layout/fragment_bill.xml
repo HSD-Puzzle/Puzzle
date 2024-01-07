@@ -9,24 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/levelBill_BackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="@string/backToLevelSelection" />
-
         <TextView
             android:id="@+id/FragmentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
             android:layout_centerInParent="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="5dp"
             android:gravity="center"
             android:text="@string/level_bill"
             android:textAlignment="center"
@@ -46,7 +34,7 @@
         android:id="@+id/levelBill_Container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/levelBill_NextLevelButton"
+        android:layout_above="@id/levelBill_BackToLevelSelection"
         android:layout_below="@id/levelBill_Separator"
         android:layout_margin="10dp"
         android:baselineAligned="false"
@@ -62,15 +50,9 @@
                 android:id="@+id/levelBill_ListOfBillItems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/levelBill_Tip"
+                android:layout_above="@id/levelBill_MoneyResult"
                 tools:listitem="@layout/bill_item" />
 
-            <RelativeLayout
-                android:id="@+id/levelBill_Tip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/levelBill_BillSeparator">
-            </RelativeLayout>
 
             <View
                 android:id="@+id/levelBill_BillSeparator"
@@ -102,7 +84,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/levelBill_NextLevelButton"
+        android:id="@+id/levelBill_BackToLevelSelection"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:layout_alignParentEnd="true"
@@ -112,6 +94,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:text="@string/next_level" />
+        android:text="@string/backToLevelSelection" />
 
 </RelativeLayout>

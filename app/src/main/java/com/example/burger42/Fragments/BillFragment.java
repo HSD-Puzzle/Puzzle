@@ -1,10 +1,12 @@
 package com.example.burger42.Fragments;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,12 +25,14 @@ import java.util.List;
 public class BillFragment extends ParentFragment {
 
     private BillItemAdapter billItemAdapter;
+    private int totalValue;
 
     public List<BillItem> billItems;
 
-    public BillFragment(MainActivity mainActivity, List<BillItem> billItems) {
+    public BillFragment(MainActivity mainActivity, List<BillItem> billItems, int totalValue) {
         super(mainActivity);
         this.billItems = billItems;
+        this.totalValue = totalValue;
     }
 
     @Nullable
@@ -46,6 +50,15 @@ public class BillFragment extends ParentFragment {
                 System.out.println("Click" + i);
                 billItems.get(i).setDetailView(!billItems.get(i).isDetailView());
                 billItemAdapter.addAll(billItems);
+            }
+        });
+        TextView textView = view.findViewById(R.id.levelBill_MoneyResult);
+        textView.setText(totalValue + "$");
+        Button button = view.findViewById(R.id.levelBill_BackToLevelSelection);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.showFragment(new LevelSelectionFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
         return view;
