@@ -82,7 +82,7 @@ public class GameThread implements Runnable {
         long lastTimeMillis = System.currentTimeMillis();
         while (!Thread.interrupted()) {
             synchronized (this) {
-                milliseconds += System.currentTimeMillis() - lastTimeMillis;
+                milliseconds += (System.currentTimeMillis() - lastTimeMillis);
                 lastTimeMillis = System.currentTimeMillis();
                 Queue<Map.Entry<Long, List<GameTimerContainer>>> queue = new LinkedList<>();
                 //Find all GameTimer that has to trigger in this round
