@@ -1,10 +1,8 @@
 package com.example.burger42.Game;
 
-import android.os.CountDownTimer;
-
 import com.example.burger42.Game.Generator.RecipeGenerator;
-import com.example.burger42.Game.Timer.Timer;
-import com.example.burger42.Game.UI.Scaffolding.ItemView;
+import com.example.burger42.Game.Timer.GameThread;
+import com.example.burger42.Game.Timer.GameTimer;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.Item.BillItem;
@@ -19,14 +17,6 @@ public class GamePuppeteer {
     private GameThread gameThread;
 
     private RestaurantFragment restaurantFragment;
-    private CountDownTimer startCountdown;
-    private CountDownTimer recipeCountdown;
-    private CountDownTimer gameCountdown;
-    private List<CountDownTimer> burgerCountdown;
-    private CountDownTimer plateCountdown;
-    private List<CountDownTimer> allCountdowns;
-    //private long[] timers = {3300,20000,240000,10000};
-    //private long[] intervalls = {1000,5000,500,1000};
     private RecipeGenerator generator;
     private int index = 0;
     private int money = 0;
@@ -74,7 +64,7 @@ public class GamePuppeteer {
 
                     @Override
                     public void tick(long timeSinceRegistration) {
-                        currentime.setTimeInMilliSeconds(timeSinceRegistration * 120 + 28800000);
+                        currentime.setTimeInMilliSeconds(timeSinceRegistration * 120 + 28800);
                         restaurantFragment.setTimeText(currentime);
                     }
 

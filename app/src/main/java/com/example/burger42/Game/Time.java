@@ -1,7 +1,7 @@
 package com.example.burger42.Game;
 
 /**
- * A class for the ingame time
+ * A class for the in-game time
  */
 public class Time {
 
