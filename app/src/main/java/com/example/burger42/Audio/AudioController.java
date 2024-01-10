@@ -10,50 +10,83 @@ public class AudioController {
 
     private static final String PREFERENCE_NAME = "MyPrefs";
     private static final String AUDIO_PROGRESS_KEY = "audioProgress";
-
     private SharedPreferences preferences;
-
     private int volume;
-
+    private int musicId;
     MediaPlayer mediaPlayer;
     Context context;
     boolean musicIsPlaying;
     private static AudioController INSTANCE;
 
+
+
     /**
+     * Constructs an AudioController with the provided Android application context.
      *
-     * @param context
+     * This controller manages audio-related functionalities such as preferences, media player initialization,
+     * and volume adjustment based on stored preferences.
+     *
+     * @param context The Android application context to be used for accessing preferences and creating the MediaPlayer.
      */
-    public AudioController(Context context){
+    public AudioController(Context context, int soundId){
         this.context = context;
+        playThisTrack(soundId);
         preferences = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
-        mediaPlayer = MediaPlayer.create(context, R.raw.morningfunnybeat);
         volume = preferences.getInt(AUDIO_PROGRESS_KEY, 0);
         leftAndRightVolume(volume);
     }
 
     /**
+     * Retrieves the singleton instance of the AudioController, creating it if it doesn't exist.
      *
-     * @param context
-     * @return
+     * This method follows the singleton pattern, ensuring that only one instance of the AudioController
+     * is created and reused throughout the application's lifecycle.
+     *
+     * @param context The Android application context to be used for initializing the AudioController.
+     * @return The singleton instance of the AudioController.
      */
-    public static AudioController getInstance(Context context){
+    public static AudioController getInstance(Context context, int soundId){
         if (INSTANCE == null){
-            INSTANCE = new AudioController(context);
+            INSTANCE = new AudioController(context, soundId);
+        }else {
+            INSTANCE.playThisTrack(soundId);
         }
+        INSTANCE.musicId = soundId;
+        System.out.println("SoundId: "+ soundId);
         return INSTANCE;
     }
 
+
+    public void playThisTrack(int musicId){
+        if (mediaPlayer != null && this.musicId != musicId) {
+            mediaPlayer.stop();
+        }
+        if (mediaPlayer == null) {
+            switch (musicId){
+                case 0:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.morningfunnybeat);
+                    break;
+                case 1:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.restaurantsound);
+                    break;
+                default:
+                    mediaPlayer = MediaPlayer.create(context, R.raw.morningfunnybeat);
+                    break;
+            }
+        }
+    }
+
     /**
+     * Checks if music is currently playing.
      *
-     * @return
+     * @return {@code true} if music is playing, {@code false} otherwise.
      */
     public boolean musicIsPlaying(){
         return musicIsPlaying;
     }
 
     /**
-     *
+     * Method to start the Music
      */
     public void startMusic(){
         mediaPlayer.start();
@@ -62,18 +95,25 @@ public class AudioController {
     }
 
     /**
-     *
+     * Method to stop the Music if its playing. Releases die Mediaplayer and sets
+     * the boolean musicIsPlaying to false
      */
     public void stopMusic() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
             musicIsPlaying = false;
+            mediaPlayer = null;
         }
     }
 
+    public void onPause() {
+        mediaPlayer.pause();
+    }
     /**
-     * @param volume
+     * Adjusts the left and right volume of the MediaPlayer and updates the stored preferences.
+     *
+     * @param volume The volume level as a percentage (0 to 100), where 0 is muted and 100 is maximum volume.
      */
     public void leftAndRightVolume(int volume){
         this.volume = volume;
@@ -83,10 +123,22 @@ public class AudioController {
         editor.apply();
     }
 
+    /**
+     * Method to return the volume
+     *
+     * @return volume The volume level as a percentage (0 to 100), where 0 is muted and 100 is maximum volume.
+     */
     public int volume(){
         return volume;
     }
 
+    public int getSoundId() {
+        return musicId;
+    }
+
+    public void setSoundId(int soundId){
+        this.musicId = soundId;
+    }
 
 
 }

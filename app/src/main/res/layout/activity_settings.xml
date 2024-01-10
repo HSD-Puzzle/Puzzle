@@ -23,36 +23,46 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="Back"
-           android:layout_below="@id/textViewSettings"
+           android:layout_below="@id/audioSeekBar"
            android:layout_centerHorizontal="true"
            android:layout_marginTop="20dp"
            />
 
 
+       <SeekBar
+           android:id="@+id/audioSeekBar"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/textViewSettings"
+           android:layout_marginTop="18dp" />
+
        <Button
-           android:id="@+id/stopMusic"
+           android:id="@+id/playSound_0"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="stopMusic"
+           android:text="playSound_0"
            android:layout_below="@id/backToMain"
            android:layout_centerHorizontal="true"
            android:layout_marginTop="20dp" />
 
        <Button
-           android:id="@+id/startMusic"
+           android:id="@+id/playSound_1"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="startMusic"
-           android:layout_below="@id/stopMusic"
+           android:text="playSound_1"
+           android:layout_below="@id/playSound_0"
            android:layout_centerHorizontal="true"
            android:layout_marginTop="20dp" />
 
-       <SeekBar
-           android:id="@+id/audioSeekBar"
-           android:layout_width="match_parent"
+       <Button
+           android:id="@+id/notification"
+           android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_below="@id/startMusic"
-           android:layout_marginTop="18dp" />
+           android:text="notification"
+           android:layout_below="@id/playSound_1"
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="20dp" />
+
    </RelativeLayout>
 
 </RelativeLayout>

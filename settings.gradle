@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
 rootProject.name = "burger42"
 include(":app")
+
  
