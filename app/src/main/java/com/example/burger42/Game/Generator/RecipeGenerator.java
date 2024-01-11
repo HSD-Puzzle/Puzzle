@@ -12,6 +12,9 @@ import com.example.burger42.Ingredients.TopBurgerBun;
 
 import java.util.LinkedList;
 
+/**
+ * A class that generates Random Recipes, via a Seedgenerator.
+ */
 public class RecipeGenerator {
     private Recipe recipe;
     LinkedList<Ingredient> list;
@@ -22,6 +25,12 @@ public class RecipeGenerator {
         this.difficultyLevel = difficultyLevel;
     }
 
+    /**
+     * A Method that is called from the outside to provide a new, random Recipe.
+     * @param currentTime the current ingame Time to create a Recipe which suggests the ideal
+     *                    time.
+     * @return a new, random Recipe.
+     */
     public Recipe createRecipe(Time currentTime) {
         recipe = new Recipe(currentTime);
         for (int i = 0; i < difficultyLevel + SeedGenerator.zeroOrOne(); i++) {

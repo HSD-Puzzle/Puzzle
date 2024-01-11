@@ -19,6 +19,10 @@ import com.example.burger42.Item.LevelDisplayItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
+/**
+ * A Fragment to represent the Level Selection Menu.
+ */
+
 public class LevelSelectionFragment extends ParentFragment {
 
     private View view;
@@ -29,6 +33,18 @@ public class LevelSelectionFragment extends ParentFragment {
         super(mainActivity);
     }
 
+    /**
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     * from a previous saved state as given here.
+     *
+     * @return created View of the Level Selection Menu.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

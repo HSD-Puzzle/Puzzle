@@ -12,6 +12,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * A Class which manages the Gameflow (Timers, Points) and generation of Orders.
+ */
 public class GamePuppeteer {
 
     private final GameThread gameThread;
@@ -31,6 +34,10 @@ public class GamePuppeteer {
         generator = recipeGenerator;
         gameThread = new GameThread(restaurantFragment.getActivity());
     }
+
+    /**
+     * A Method to start the GamePuppeteer, it initializes and starts all the Timers the Game needs.
+     */
 
     public void start() {
         gameThread.start();
@@ -74,6 +81,14 @@ public class GamePuppeteer {
             }
         }, 3300, 1000);
     }
+
+    /**
+     * Method that will be called, when an finished Burger is dragged on to the order or
+     * the other way round. It calculates the Points per correct Burger
+     * and adds or corrects the Streak.
+     * @param order Recipe of the order
+     * @param item Recipe of the item or finished Burger
+     */
 
     public void serve(Recipe order, Recipe item) {
         List<BillOrderItem> list = new LinkedList<>();
