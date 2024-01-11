@@ -100,19 +100,19 @@ public abstract class OnDragAreaListener extends BasicDragFilter {
         return useFilter;
     }
 
-    float relativeBottom() {
+    protected float relativeBottom() {
         return relativeBottom;
     }
 
-    float relativeLeft() {
+    protected float relativeLeft() {
         return relativeLeft;
     }
 
-    float relativeRight() {
+    protected float relativeRight() {
         return relativeRight;
     }
 
-    float relativeTop() {
+    protected float relativeTop() {
         return relativeTop;
     }
 

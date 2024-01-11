@@ -4,37 +4,23 @@ import android.app.Activity;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.TreeMap;
 
 /**
  * GameThread is a thread, where operations happen that appear after a fix time interval.
  * the GameThread can be paused and resumed.
  * The action that should be happen will be coded inside a {@link GameTimer} interface and has to be registered here.
  */
-public class GameThread implements Runnable {
+public class GameThread {
+    private Activity activity;
     /**
-     * milliseconds are the total milliseconds this GameThread is running.
+     * The List GameTimerContainer.
      */
-    private long milliseconds = 0;
-    /**
-     * the Thread that is currently used.
-     */
-    private Thread thread;
-    /**
-     * the activity the ui is inside.
-     */
-    private final Activity activity;
-    /**
-     * The Map contains all action to handle with the time in which it will happen.
-     */
-    private final TreeMap<Long, List<GameTimerContainer>> gameTimerContainers = new TreeMap<>();
+    private final List<GameTimerContainer> gameTimerContainers = new LinkedList<>();
 
     /**
      * true if started was called ones
      */
-    private boolean started;
+    private boolean running;
 
     /**
      * @param activity the activity the ui is inside.
@@ -48,64 +34,22 @@ public class GameThread implements Runnable {
      * if the GameThread was already started a AlreadyStartedException will be thrown
      */
     public void start() {
-        if (started) {
-            throw new AlreadyStartedException();
-        } else {
-            thread = new Thread(this);
-            thread.start();
-            started = true;
-        }
+        if (!running)
+            for (GameTimerContainer x : gameTimerContainers) {
+                x.start();
+            }
+        running = true;
     }
 
     /**
      * pauses the GameThread
      */
     public void pause() {
-        if (started)
-            thread.interrupt();
-    }
-
-    /**
-     * resume the GameThread
-     */
-    public void resume() {
-        if (started && !thread.isAlive()) {
-            thread = new Thread(this);
-            thread.start();
-        }
-    }
-
-    /**
-     * The loop, that finds and triggers the GameTimer
-     */
-    @Override
-    public void run() {
-        long lastTimeMillis = System.currentTimeMillis();
-        while (!Thread.interrupted()) {
-            synchronized (this) {
-                milliseconds += (System.currentTimeMillis() - lastTimeMillis);
-                lastTimeMillis = System.currentTimeMillis();
-                Queue<Map.Entry<Long, List<GameTimerContainer>>> queue = new LinkedList<>();
-                //Find all GameTimer that has to trigger in this round
-                for (Map.Entry<Long, List<GameTimerContainer>> entry : gameTimerContainers.entrySet()) {
-                    if (entry.getKey() < milliseconds) {
-                        queue.add(entry);
-                    } else {
-                        break;
-                    }
-                }
-                //Tick and recalculate all GameTimer
-                while (!queue.isEmpty()) {
-                    Map.Entry<Long, List<GameTimerContainer>> entry = queue.poll();
-                    gameTimerContainers.remove(entry.getKey());
-                    for (GameTimerContainer x : entry.getValue()) {
-                        x.tick(milliseconds);
-                        x.register();
-                    }
-                }
+        if (running)
+            for (GameTimerContainer x : gameTimerContainers) {
+                x.pause();
             }
-            Thread.yield();
-        }
+        running = false;
     }
 
     /**
@@ -115,7 +59,10 @@ public class GameThread implements Runnable {
      * @param gameTimer the timer to add, that will be triggered
      */
     public void addGameTimer(GameTimer gameTimer) {
-        new GameTimerContainer(gameTimer, milliseconds, -1, 0).register();
+        GameTimerContainer gameTimerContainer = new GameTimerContainer(gameTimer, -1, -1);
+        gameTimerContainers.add(gameTimerContainer);
+        if (running)
+            gameTimerContainer.start();
     }
 
     /**
@@ -126,7 +73,10 @@ public class GameThread implements Runnable {
      * @param interval  the interval in ms the GameTimer will be triggered
      */
     public void addGameTimer(GameTimer gameTimer, long interval) {
-        new GameTimerContainer(gameTimer, milliseconds, 0, interval).register();
+        GameTimerContainer gameTimerContainer = new GameTimerContainer(gameTimer, -1, interval);
+        gameTimerContainers.add(gameTimerContainer);
+        if (running)
+            gameTimerContainer.start();
     }
 
     /**
@@ -138,17 +88,20 @@ public class GameThread implements Runnable {
      *                  If the interval is bigger than the duration the tick methode will never called.
      */
     public void addGameTimer(GameTimer gameTimer, long duration, long interval) {
-        new GameTimerContainer(gameTimer, milliseconds, duration, interval).register();
+        GameTimerContainer gameTimerContainer = new GameTimerContainer(gameTimer, duration, interval);
+        gameTimerContainers.add(gameTimerContainer);
+        if (running)
+            gameTimerContainer.start();
     }
 
     /**
      * The Container for the GameTimer managed the timer.
      */
-    private class GameTimerContainer {
+    private class GameTimerContainer implements Runnable {
         /**
          * the startTime is the time in milli seconds (based on GameThread.milliseconds), where this GameTimer is started.
          */
-        private final long startTime;
+        private long startTime;
         /**
          * the amount of time this GameTimer has done
          */
@@ -165,67 +118,71 @@ public class GameThread implements Runnable {
          * the {@link GameTimer}, that will be triggered
          */
         private final GameTimer gameTimer;
-        /**
-         * if the gameTimer is finished this is set to true.
-         */
-        private boolean finished = false;
+
+        private Thread thread;
+
+        private long pausedAt;
 
         /**
          * @param gameTimer that will be triggered
-         * @param startTime the time that has passed since the start of the GameThread
          * @param duration  the duration this GameTimer exists
          * @param interval  the length that an interval lasts.
          */
-        private GameTimerContainer(GameTimer gameTimer, long startTime, long duration, long interval) {
-            this.startTime = startTime;
+        private GameTimerContainer(GameTimer gameTimer, long duration, long interval) {
+            this.startTime = System.currentTimeMillis();
+            this.pausedAt = startTime;
             this.gameTimer = gameTimer;
             this.duration = duration;
-            if (interval <= 0)
-                interval = 0;
             this.interval = interval;
         }
 
-        /**
-         * triggers the tick or finish methode from the {@link GameTimer}
-         *
-         * @param gameThreadTime the time that has passed since the start of the GameThread
-         */
-        private void tick(long gameThreadTime) {
-            if (duration >= 0 && milliseconds >= startTime + duration) {
-                finished = true;
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameTimer.finish();
-                    }
-                });
-            } else {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameTimer.tick(gameThreadTime - startTime);
-                    }
-                });
-            }
+        private void start() {
+            startTime += System.currentTimeMillis() - pausedAt;
+            thread = new Thread(this);
+            thread.start();
         }
 
-        /**
-         * calculates the next time when this method must be triggered and adds it to the trigger list.
-         */
-        private void register() {
-            if (!finished) {
-                if (duration >= 0 && duration < timeDone + interval) {
-                    //finish time
+        private void pause() {
+            pausedAt = System.currentTimeMillis();
+            thread.interrupt();
+        }
+
+        @Override
+        public void run() {
+            boolean finished = false;
+            while (!Thread.interrupted() && !finished) {
+                if (interval < 0) {
                     timeDone = duration;
                 } else {
-                    //next tick time
                     timeDone += interval;
+                    if (!(duration < 0) && timeDone > duration) {
+                        timeDone = duration;
+                    }
                 }
-                long timeToRegister = timeDone + startTime;
-                if (!gameTimerContainers.containsKey(timeToRegister)) {
-                    gameTimerContainers.put(timeToRegister, new LinkedList<>());
+                long nextTimeInterval = startTime + timeDone - System.currentTimeMillis();
+                try {
+                    if (nextTimeInterval > 0)
+                        Thread.sleep(nextTimeInterval);
+                } catch (InterruptedException e) {
+                    break;
                 }
-                gameTimerContainers.get(timeToRegister).add(this);
+                if (duration > 0 && timeDone >= duration) {
+                    finished = true;
+                    gameTimerContainers.remove(this);
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameTimer.finish();
+                        }
+                    });
+                } else {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameTimer.tick(System.currentTimeMillis() - startTime);
+                        }
+                    });
+                }
             }
         }
     }

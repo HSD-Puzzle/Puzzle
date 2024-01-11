@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/iconneu"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/iconneu"
         android:screenOrientation="sensorLandscape"
         android:supportsRtl="true"
         android:theme="@style/Theme.Burger42">
@@ -24,11 +24,12 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Alarm.AlarmReceiver"
+        <receiver
+            android:name=".Alarm.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 

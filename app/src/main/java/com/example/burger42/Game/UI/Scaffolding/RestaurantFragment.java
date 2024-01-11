@@ -2,6 +2,7 @@ package com.example.burger42.Game.UI.Scaffolding;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -27,6 +28,7 @@ import com.example.burger42.Fragments.PauseFragment;
 import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
+import com.example.burger42.Game.Timer.GameThread;
 import com.example.burger42.Game.UI.ItemViews.OrderView;
 
 import com.example.burger42.Item.BillItem;
@@ -43,6 +45,8 @@ import java.util.Queue;
  */
 public abstract class RestaurantFragment extends ParentFragment {
     private TextView tipTextView;
+
+    private TextView streakTextView;
 
     private boolean timeIsUp = false;
 
@@ -171,14 +175,14 @@ public abstract class RestaurantFragment extends ParentFragment {
     private void firstSetup(LayoutInflater inflater, ViewGroup container) {
         rootView = inflater.inflate(R.layout.fragment_restaurant, container, false);
         referenceHeight = container.getHeight() / 4;
+        gamePuppeteer = gamePuppeteer();
 
         topNavigationSetup();
         touchBlockerSetup();
         counterSetup();
         itemSetup();
         videoSetup(container);
-
-        gamePuppeteer = new GamePuppeteer(this);
+        gamePuppeteer.start();
     }
 
     private void topNavigationSetup() {
@@ -187,6 +191,7 @@ public abstract class RestaurantFragment extends ParentFragment {
         moneyText = rootView.findViewById(R.id.restaurant_money);
         clockText = rootView.findViewById(R.id.restaurant_clock);
         tipTextView = rootView.findViewById(R.id.restaurant_earnedtip);
+        streakTextView = rootView.findViewById(R.id.restaurant_streak);
         moneyEarnedTextView = rootView.findViewById(R.id.restaurant_earnedmoney);
     }
 
@@ -254,23 +259,31 @@ public abstract class RestaurantFragment extends ParentFragment {
      * @param money        the money in total, that will be displayed in constantly in the right top corner.
      * @param newMainMoney the money earned with the last serving. Displayed a short time as effect in yellow.
      * @param newTip       the tip earned with the last serving.Displayed a short time as effect in blue.
+     * @param streak       the streak value to display. If it is zero it will be invisible.
      */
-    public void setMoneyText(int money, int newMainMoney, int newTip) {
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
+    public void setMoneyText(int money, int newMainMoney, int newTip, float streak) {
         moneyText.setText(money + "");
 
         tipTextView.setText("+" + newTip + "$");
         Animation tipDownAnim = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.tipdown_animation);
         tipTextView.startAnimation(tipDownAnim);
-        tipTextView.setVisibility(View.VISIBLE);
 
         moneyEarnedTextView.setText("+" + newMainMoney + "$");
         Animation moneyDownAnim = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.moneydown_animation);
         moneyEarnedTextView.startAnimation(moneyDownAnim);
-        moneyEarnedTextView.setVisibility(View.VISIBLE);
+
+        streakTextView.setVisibility(streak <= 1f ? View.INVISIBLE : View.VISIBLE);
+        streakTextView.setText("x" + String.format("%.2f", streak));
+        float size = Math.min(streak - 1, 1);
+        streakTextView.setRotation(size * 15);
+        streakTextView.setTextSize(15 + size * 7);
+        streakTextView.setTextColor((255 << 24) + ((int) (Math.min(size * 2, 1) * 255) << 16) + ((int) (Math.min((2f - size * 2), 1) * 255) << 8));
     }
 
     /**
      * bottomCounter returns all counter elements, that will bie displayed at the bottom of the restaurant.
+     * s
      *
      * @return a array of bottom counters
      */
@@ -405,4 +418,16 @@ public abstract class RestaurantFragment extends ParentFragment {
     public void serve(Recipe order, Recipe item) {
         gamePuppeteer.serve(order, item);
     }
+
+    /**
+     * @return the gameThread from the GamePuppeteer
+     */
+    public GameThread currentlyUsedGameThread() {
+        return gamePuppeteer.currentlyUsedGameThread();
+    }
+
+    /**
+     * @return an instance of the used GamePuppeteer
+     */
+    public abstract GamePuppeteer gamePuppeteer();
 }

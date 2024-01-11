@@ -22,8 +22,9 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    AudioController audioController;
-    SettingsFragment settingsFragment;
+    private AudioController audioController;
+
+    private ParentFragment currentlyShownFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +32,18 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         showFragment(new StartFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        audioController = AudioController.getInstance(this,0);
+        audioController = AudioController.getInstance(this, 0);
         audioController.startMusic();
     }
 
-    public void showFragment(Fragment fragment, int requestedOrientation) {
+    public void showFragment(ParentFragment fragment, int requestedOrientation) {
+        currentlyShownFragment = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         setRequestedOrientation(requestedOrientation);
     }
 
     public void closeApp() {
-        if(audioController.musicIsPlaying()){
+        if (audioController.musicIsPlaying()) {
             audioController.stopMusic();
         }
         MainActivity.this.finish();
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         else
             super.onBackPressed();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -71,17 +74,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void alarmInTenSeconds(){
+    public void alarmInTenSeconds() {
         System.out.println("alarm");
         Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 /**
-        long time = System.currentTimeMillis();
-        long triggerTime = System.currentTimeMillis() + (30 * 60 * 1000);
-        System.out.println("Millisekunden:" + triggerTime);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+ long time = System.currentTimeMillis();
+ long triggerTime = System.currentTimeMillis() + (30 * 60 * 1000);
+ System.out.println("Millisekunden:" + triggerTime);
+ alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
  */
 
 // Setzen Sie die Alarmzeit auf 09:00 Uhr

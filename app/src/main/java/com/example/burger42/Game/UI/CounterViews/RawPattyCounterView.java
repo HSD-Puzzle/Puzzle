@@ -6,9 +6,7 @@ import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Game.UI.ItemViews.BottomBreadView;
-import com.example.burger42.Game.UI.ItemViews.PattyView;
-import com.example.burger42.Game.UI.ItemViews.TopBreadView;
+import com.example.burger42.Game.UI.ItemViews.BurgerPattyView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
@@ -31,7 +29,7 @@ public class RawPattyCounterView extends CounterView {
             @Override
             protected boolean onTouch(MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    ItemView itemView = new PattyView(getContext());
+                    ItemView itemView = new BurgerPattyView(getContext());
                     itemView.setReferenceHeight(referenceHeight);
                     drag(itemView);
                     return true;

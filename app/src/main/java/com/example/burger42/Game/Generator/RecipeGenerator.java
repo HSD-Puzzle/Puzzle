@@ -17,22 +17,23 @@ public class RecipeGenerator {
     LinkedList<Ingredient> list;
     private int difficultyLevel;
     private Time currentTime;
-    public RecipeGenerator(int difficultyLevel){
+
+    public RecipeGenerator(int difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
-    public Recipe createRecipe(){
-        recipe = new Recipe();
-        for(int i = 0;i<difficultyLevel+SeedGenerator.zeroOrOne();i++){
+
+    public Recipe createRecipe(Time currentTime) {
+        recipe = new Recipe(currentTime);
+        for (int i = 0; i < difficultyLevel + SeedGenerator.zeroOrOne(); i++) {
             list = new LinkedList<>();
             list.add(new BottomBurgerBun());
-            for (int j = 0;j<difficultyLevel+1;j++){
-                if(SeedGenerator.isEven()){
-                    if(SeedGenerator.integerGenerator() < 501)
+            for (int j = 0; j < difficultyLevel + 1; j++) {
+                if (SeedGenerator.isEven()) {
+                    if (SeedGenerator.integerGenerator() < 501)
                         list.add(new BurgerPatty());
                     else
                         list.add(new Chesse());
-                }
-                else
+                } else
                     list.add(new BurgerSalad());
             }
             list.add(new BurgerPatty());

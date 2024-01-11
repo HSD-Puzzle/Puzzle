@@ -7,16 +7,21 @@ import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Game.UI.ItemViews.PlateView;
-import com.example.burger42.Game.UI.ItemViews.SpongeView;
+import com.example.burger42.Game.Timer.GameTimer;
+import com.example.burger42.Game.UI.ItemViews.BurgerPattyView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
-import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
+import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.R;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class StoveCounterView extends CounterView {
 
+    private List<BurgerPattyView> leftHeadPlate;
+    private List<BurgerPattyView> rightHeadPlate;
     private boolean rightOn = false;
     private boolean leftOn = false;
 
@@ -32,6 +37,8 @@ public class StoveCounterView extends CounterView {
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
+        leftHeadPlate = new LinkedList<>();
+        rightHeadPlate = new LinkedList<>();
         addOnTouchAreaListener(new OnTouchAreaListener(0.25f, 0.15f, 0.2f, 0.33f) {
             @Override
             protected boolean onTouch(MotionEvent event) {
@@ -47,6 +54,58 @@ public class StoveCounterView extends CounterView {
             }
         });
 
+        addOnDragAreaListener(new StoveTopDragListener(leftHeadPlate).setRelativeRight(0.5f).setRelativeLeft(0.05f));
+        addOnDragAreaListener(new StoveTopDragListener(rightHeadPlate).setRelativeLeft(0.51f).setRelativeRight(0.95f));
+    }
+
+    @Override
+    protected void onRestaurantBound(RestaurantFragment restaurantFragment) {
+        restaurantFragment.currentlyUsedGameThread().addGameTimer(new GameTimer() {
+            @Override
+            public void tick(long timeSinceRegistration) {
+                if (rightOn) {
+                    for (BurgerPattyView x : rightHeadPlate) {
+                        x.roast();
+                    }
+                }
+                if (leftOn) {
+                    for (BurgerPattyView x : leftHeadPlate) {
+                        x.roast();
+                    }
+                }
+                System.out.println("HeadPlates" + rightHeadPlate + leftHeadPlate);
+
+            }
+        }, 250);
+    }
+
+    private class StoveTopDragListener extends OnDragAreaListener {
+        private final List<BurgerPattyView> burgerOnHeadPlate;
+
+        private StoveTopDragListener(List<BurgerPattyView> burgerOnHeadPlate) {
+            setRelativeBottom(0.31f);
+            setRelativeTop(0.56f);
+            setUseFilter(true);
+            addFilterTag("BurgerPatty");
+            this.burgerOnHeadPlate = burgerOnHeadPlate;
+        }
+
+        @Override
+        protected boolean onDrag(DragEvent event, boolean inArea) {
+            if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
+                BurgerPattyView itemView = (BurgerPattyView) event.getLocalState();
+                if (itemView.hasNoItemAbove()) {
+                    itemView.removeFromParent();
+                    restaurantFragment.addItem(itemView);
+                    itemView.setTranslationY(getCustomHeight() * 0.8f + Math.min(Math.max(event.getY(), getCustomHeight() * 0.5f), getCustomHeight() * 0.69f - itemView.getCustomHeight()));
+                    itemView.setTranslationX(getX() + Math.min(Math.max(event.getX() - itemView.getCustomWidth() / 2f, getCustomWidth() * relativeLeft()), getCustomWidth() * relativeRight() - itemView.getCustomWidth()));
+                    itemView.putOnHeadPlate(burgerOnHeadPlate);
+                    burgerOnHeadPlate.add(itemView);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public void setRightOn(boolean on) {

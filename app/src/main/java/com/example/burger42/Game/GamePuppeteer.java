@@ -14,28 +14,25 @@ import java.util.List;
 
 public class GamePuppeteer {
 
-    private GameThread gameThread;
+    private final GameThread gameThread;
 
     private RestaurantFragment restaurantFragment;
     private RecipeGenerator generator;
-    private int index = 0;
+    private int amountOfRecipesServed = 0;
     private int money = 0;
-    private int newMoney;
-    private int tip;
     private float streak = 1.0f;
-    public static Time currentime;
-    private static Time pausetime;
-    private static boolean isPaused = false;
-    private List<BillItem> billItemList;
+    public Time currentime;
+    private final List<BillItem> billItemList;
 
-
-    public GamePuppeteer(RestaurantFragment restaurantFragment) {
+    public GamePuppeteer(RestaurantFragment restaurantFragment, RecipeGenerator recipeGenerator) {
         billItemList = new LinkedList<>();
         this.restaurantFragment = restaurantFragment;
         currentime = new Time(8, 0);
-        generator = new RecipeGenerator(2);
-
+        generator = recipeGenerator;
         gameThread = new GameThread(restaurantFragment.getActivity());
+    }
+
+    public void start() {
         gameThread.start();
 
         gameThread.addGameTimer(new GameTimer() {
@@ -58,7 +55,7 @@ public class GamePuppeteer {
             @Override
             public void finish() {
                 restaurantFragment.start();
-                restaurantFragment.addRecipe(generator.createRecipe());
+                restaurantFragment.addRecipe(generator.createRecipe(currentime));
 
                 gameThread.addGameTimer(new GameTimer() {
 
@@ -78,28 +75,33 @@ public class GamePuppeteer {
         }, 3300, 1000);
     }
 
-
     public void serve(Recipe order, Recipe item) {
         List<BillOrderItem> list = new LinkedList<>();
-        newMoney = 0;
-        Iterator<List<Ingredient>> orderIterator = order.list().iterator();
-        while (orderIterator.hasNext()) {
-            List<Ingredient> orderList = orderIterator.next();
+        int newMoney = 0;
+        int restOfTheTime = order.restOfTheTime(currentime);
+        int tip = Math.max(restOfTheTime * (order.list().size() * 2 + 2), 0);
+        for (List<Ingredient> orderList : order.list()) {
             if (item.list().contains(orderList)) {
                 item.list().remove(orderList);
-                money += orderList.size() * 10 * streak;
-                newMoney += orderList.size() * 10 * streak;
-                list.add(new BillOrderItem("Burger", newMoney, streak, true));
-                streak += 0.1;
-                tip = order.calculateTip();
+                int singleBurgerMoney = orderList.size() * 10;
+                list.add(new BillOrderItem("Burger", singleBurgerMoney, streak, true));
+                newMoney += singleBurgerMoney * streak;
+                if (restOfTheTime > 0) {
+                    streak = streak * 1.06f;
+                } else {
+                    streak = streak * 1.02f;
+                }
             } else {
                 list.add(new BillOrderItem("Burger", 0, streak, false));
                 streak = 1.0f;
                 tip = 0;
             }
         }
-        billItemList.add(new BillItem(index++, (newMoney + tip) * streak, list));
-        restaurantFragment.setMoneyText(money, newMoney, tip);
+        list.add(new BillOrderItem("Tip", 0, streak, true));
+        money += tip * streak;
+        money += newMoney;
+        billItemList.add(new BillItem(++amountOfRecipesServed, (newMoney + tip) * streak, list));
+        restaurantFragment.setMoneyText(money, newMoney, tip, streak);
     }
 
     /**
@@ -107,16 +109,19 @@ public class GamePuppeteer {
      */
     public void onPause() {
         gameThread.pause();
-        pausetime = new Time(currentime);
-        isPaused = true;
     }
 
     /**
      * onResume will be called,
      */
     public void onResume() {
-        gameThread.resume();
-        currentime = pausetime;
-        isPaused = false;
+        gameThread.start();
+    }
+
+    /**
+     * @return the gameThread from the GamePuppeteer
+     */
+    public GameThread currentlyUsedGameThread() {
+        return gameThread;
     }
 }

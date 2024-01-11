@@ -1,5 +1,7 @@
 package com.example.burger42.Item;
 
+import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
+
 /**
  * Class to generate and display Level Display Items.
  */
@@ -11,12 +13,13 @@ public class LevelDisplayItem {
 
     /**
      * Constructor to Create a Level Display Items.
-     * @param levelId a numeric ID for an Level.
+     *
+     * @param levelId    a numeric ID for an Level.
      * @param difficulty the Difficulty of an Level, regulates the Recipe Generation.
-     * @param highscore the achieved Highscore.
-     * @param stars the number of reached Objectives.
+     * @param highscore  the achieved Highscore.
+     * @param stars      the number of reached Objectives.
      */
-    public LevelDisplayItem(int levelId, String difficulty, int highscore, int stars){
+    public LevelDisplayItem(int levelId, String difficulty, int highscore, int stars) {
         this.levelId = levelId;
         this.difficulty = difficulty;
         this.highscore = highscore;
@@ -25,32 +28,37 @@ public class LevelDisplayItem {
 
     /**
      * Method to access the ID.
+     *
      * @return a numeric ID Number.
      */
-    public int id(){
+    public int id() {
         return levelId;
     }
 
     /**
      * Method to access the Highscore.
+     *
      * @return a numeric Highscore Number.
      */
-    public int highscore(){
+    public int highscore() {
         return highscore;
     }
 
     /**
      * Method to access the Difficulty.
+     *
      * @return a Difficulty String.
      */
-    public String difficulty(){
+    public String difficulty() {
         return difficulty;
     }
+
     /**
      * Method to access the Star Count.
+     *
      * @return a numeric Star Count Number.
      */
-    public int stars(){
+    public int stars() {
         return stars;
     }
 }

@@ -22,10 +22,12 @@ public class DragAreaSetItemAbove extends OnDragAreaListener {
         if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
             ItemView itemView2 = (ItemView) event.getLocalState();
             if (itemView2 != itemView)
-                if (!itemView.hasItemAbove(index))
+                if (!itemView.hasItemAbove(index)) {
                     itemView.setItemAbove(index, itemView2);
+                    return true;
+                }
         }
-        return true;
+        return false;
     }
 
 

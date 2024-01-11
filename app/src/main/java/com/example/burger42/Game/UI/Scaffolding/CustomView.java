@@ -1,27 +1,25 @@
 package com.example.burger42.Game.UI.Scaffolding;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *
+ */
 public abstract class CustomView extends View {
 
     protected int referenceHeight;

@@ -9,13 +9,7 @@ import java.util.List;
 
 public class Recipe {
 
-    private List<List<Ingredient>> ingredients = new LinkedList<>();
-    private Time time;
-    public Recipe(){
-        //System.out.println("Test: " + GamePuppeteer.currentime.hour());
-        //time = new Time(GamePuppeteer.currentime.hour(),GamePuppeteer.currentime.minutes());
-    }
-
+    private final List<List<Ingredient>> ingredients = new LinkedList<>();
 
     public enum PlaceToEat {
         ONSITE, TOGO
@@ -25,12 +19,18 @@ public class Recipe {
         return ingredients;
     }
 
-    private PlaceToEat onSite = PlaceToEat.ONSITE;
+    private final PlaceToEat onSite = PlaceToEat.ONSITE;
 
-    private Time orderTakenTime = new Time(GamePuppeteer.currentime);
+    private Time orderTakenTime;
 
-    private Time timeToDeliver = new Time(15000);
+    private Time timeToDeliver = new Time(0, 15);
 
+    public Recipe(Time currentTime) {
+        orderTakenTime = new Time(currentTime);
+    }
+
+    public Recipe() {
+    }
 
     public PlaceToEat onSite() {
         return onSite;
@@ -43,13 +43,12 @@ public class Recipe {
     public Time timeToDeliver() {
         return timeToDeliver;
     }
-    public int deliveredOnTime(){
-        Time deliverytime = new Time(GamePuppeteer.currentime);
-        deliverytime.subTime(orderTakenTime);
+
+    public int restOfTheTime(Time currentime) {
+        Time deliverytime = new Time(timeToDeliver);
+        deliverytime.addTime(orderTakenTime);
+        deliverytime.subTime(currentime);
         return deliverytime.minutes();
-    }
-    public int calculateTip(){
-        return deliveredOnTime()*10;
     }
 
     public void addRecipe(Recipe recipe) {
