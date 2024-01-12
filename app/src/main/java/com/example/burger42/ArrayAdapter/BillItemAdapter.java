@@ -39,7 +39,7 @@ public class BillItemAdapter extends ArrayAdapter<BillItem> {
 
         if (currentItem != null) {
             TextView amountTextView = convertView.findViewById(R.id.billItem_amount);
-            amountTextView.setText(currentItem.orderNumber() + "." + getContext().getString(R.string.order));
+            amountTextView.setText(currentItem.orderNumber() + ". " + getContext().getString(R.string.order));
 
 
             TextView totalValueTextView = convertView.findViewById(R.id.billItem_totalValue);

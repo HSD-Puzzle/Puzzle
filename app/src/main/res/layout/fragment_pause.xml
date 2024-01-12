@@ -33,30 +33,21 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/pause_BackToGame"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:text="@string/back_to_work"
+            android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/pause_BackToGame"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/back_to_restaurant"
-                android:textSize="15sp" />
-
-            <Button
-                android:id="@+id/pause_BackToMainMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/leave_without_success"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/pause_BackToMainMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/leave_without_success"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

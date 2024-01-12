@@ -1,7 +1,5 @@
 package com.example.burger42.Item;
 
-import com.example.burger42.Game.Recipe;
-
 public class BillOrderItem {
     private String name;
     private int beforeStreak;

@@ -33,6 +33,7 @@ import com.example.burger42.Game.UI.ItemViews.OrderView;
 
 import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.BillOrderItem;
+import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -44,6 +45,14 @@ import java.util.Queue;
  * RestaurantFragment is the fragment of the game itself.
  */
 public abstract class RestaurantFragment extends ParentFragment {
+
+    /**
+     * The ids of the 4 background videos
+     */
+    private final static int[] backgroundVideo = {R.raw.background1, R.raw.background2, R.raw.background3, R.raw.background4};
+
+    private int currentlyPlayedVideo = 0;
+
     private TextView tipTextView;
 
     private TextView streakTextView;
@@ -232,7 +241,18 @@ public abstract class RestaurantFragment extends ParentFragment {
     private void videoSetup(ViewGroup container) {
         videoView = rootView.findViewById(R.id.restaurant_background);
         videoView.setLayoutParams(new RelativeLayout.LayoutParams(container.getHeight() * 6, container.getHeight()));
-        String videoPath = "android.resource://" + mainActivity.getPackageName() + "/" + R.raw.background;
+        setNextBackgroundVideoURI();
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                setNextBackgroundVideoURI();
+                videoView.start();
+            }
+        });
+    }
+
+    private void setNextBackgroundVideoURI() {
+        String videoPath = "android.resource://" + mainActivity.getPackageName() + "/" + backgroundVideo[currentlyPlayedVideo++];
         Uri uri = Uri.parse(videoPath);
         videoView.setVideoURI(uri);
     }
@@ -403,10 +423,57 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
 
+    StarItem[] starItems = {new StarItem() {
+        @Override
+        public boolean done() {
+            return true;
+        }
+
+        @Override
+        public String degreeOfSuccess() {
+            return "1/1";
+        }
+
+        @Override
+        public String title() {
+            return "Verkaufe einen Burger";
+        }
+    }, new StarItem() {
+        @Override
+        public boolean done() {
+            return false;
+        }
+
+        @Override
+        public String degreeOfSuccess() {
+            return "50/200";
+        }
+
+        @Override
+        public String title() {
+            return "Verdiene 200$";
+        }
+    }, new StarItem() {
+        @Override
+        public boolean done() {
+            return true;
+        }
+
+        @Override
+        public String degreeOfSuccess() {
+            return "1/1";
+        }
+
+        @Override
+        public String title() {
+            return "Verkaufe einen Burger";
+        }
+    }};
+
     //serve aufrufen
     public void timesUp(List<BillItem> list, int totalValue) {
         timeIsUp = true;
-        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, starItems), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
     /**

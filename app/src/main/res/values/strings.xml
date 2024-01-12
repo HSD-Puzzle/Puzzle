@@ -1,16 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">Burger42</string>
-    <string name="next_level">To the next level</string>
     <string name="level_bill">Level bill</string>
-    <string name="backToLevelSelection">Back to level selection</string>
+    <string name="backToLevelSelection">To level selection</string>
     <string name="tip">Tip</string>
     <string name="settings">Settings</string>
     <string name="quit">Quit</string>
     <string name="pause">Pause</string>
     <string name="restaurant">Restaurant</string>
-    <string name="back_to_restaurant">Back to the restaurant</string>
+    <string name="back_to_work">Back to work</string>
     <string name="leave_without_success">Leave without success</string>
-    <string name="waiting">Waiting...</string>
     <string name="onsite_or_togo">On site or to go:</string>
     <string name="togo">to take away</string>
     <string name="onsite">to eat on site</string>
@@ -21,9 +19,13 @@
     <string name="minutes">minutes</string>
     <string name="bottomburgerbun">Bottom Burger Bun</string>
     <string name="topburgerbun">Top Burger Bun</string>
-    <string name="burgerpatty">Burger Patty</string>
+    <string name="burgerpatty">Patty</string>
     <string name="salad">Salad</string>
     <string name="cheese">Cheese</string>
-    <string name="backToMainMenu">Back to Main Menu</string>
+    <string name="backToMainMenu">To Main Menu</string>
     <string name="item">Item</string>
+    <string name="burger">Burger</string>
+    <string name="levelSelection">Level selection</string>
+    <string name="musicVolume">Music volume:</string>
+    <string name="play">Play</string>
 </resources>

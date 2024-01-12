@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="next_level">Zum nächsten Level</string>
     <string name="level_bill">Level Abrechnung</string>
-    <string name="backToLevelSelection">Zurück zur Levelauswahl</string>
+    <string name="backToLevelSelection">Zur Levelauswahl</string>
     <string name="tip">Trinkgeld</string>
     <string name="settings">Einstellungen</string>
     <string name="quit">Verlassen</string>
     <string name="pause">Pause</string>
     <string name="restaurant">Restaurant</string>
-    <string name="back_to_restaurant">Zurück ins Restaurant</string>
+    <string name="back_to_work">Zurück zur Arbeit</string>
     <string name="leave_without_success">Ohne Erfolg beenden</string>
-    <string name="waiting">Warten...</string>
     <string name="onsite_or_togo">Hier oder ToGo:</string>
     <string name="togo">zum Mitnehmen</string>
     <string name="onsite">zum vor Ort essen</string>
@@ -24,6 +22,10 @@
     <string name="burgerpatty">Buletten</string>
     <string name="salad">Salat</string>
     <string name="cheese">Käse</string>
-    <string name="backToMainMenu">Zurück zum Hauptmenü</string>
+    <string name="backToMainMenu">Zum Hauptmenü</string>
     <string name="item">Teilbestellung</string>
+    <string name="burger">Burger</string>
+    <string name="levelSelection">Levelauswahl</string>
+    <string name="musicVolume">Musiklautstärke:</string>
+    <string name="play">Spielen</string>
 </resources>

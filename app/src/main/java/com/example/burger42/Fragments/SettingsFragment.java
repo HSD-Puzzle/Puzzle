@@ -1,9 +1,6 @@
 package com.example.burger42.Fragments;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,17 +9,15 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
-import com.example.burger42.Alarm.AlarmReceiver;
 import com.example.burger42.Audio.SoundController;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 import com.example.burger42.Audio.AudioController;
-import android.widget.SeekBar;
-import android.widget.Toast;
 
-public class SettingsFragment extends ParentFragment{
+import android.widget.SeekBar;
+
+public class SettingsFragment extends ParentFragment {
 
     AudioController audioController;
     private SoundController soundController;
@@ -30,7 +25,6 @@ public class SettingsFragment extends ParentFragment{
     private SeekBar audioSeekBar;
 
     /**
-     *
      * @param mainActivity MainActivity
      */
     public SettingsFragment(MainActivity mainActivity) {
@@ -43,15 +37,11 @@ public class SettingsFragment extends ParentFragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        Button backButton = (Button) view.findViewById(R.id.backToMain);
+        Button backButton = (Button) view.findViewById(R.id.settings_backButton);
         audioSeekBar = (SeekBar) view.findViewById(R.id.audioSeekBar);
         audioSeekBar.setProgress(audioController.volume());
-        Button playSound_0 = (Button) view.findViewById(R.id.playSound_0);
-        Button playSound_1 = (Button) view.findViewById(R.id.playSound_1);
-        Button sendNotification = (Button) view.findViewById(R.id.notification);
-
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,34 +62,14 @@ public class SettingsFragment extends ParentFragment{
                 System.out.println("onProgressChanged");
                 audioController.leftAndRightVolume(i);
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
-            }
-        });
-
-        playSound_0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                soundController.playSound_0();
-            }
-        });
-
-        playSound_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //soundController.loadSound_0(mainActivity);
-                soundController.playSound_1();
-            }
-        });
-
-        sendNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.alarmInTenSeconds();
             }
         });
 

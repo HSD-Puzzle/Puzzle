@@ -1,12 +1,15 @@
 package com.example.burger42.Fragments;
 
 import android.content.pm.ActivityInfo;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +19,7 @@ import androidx.annotation.Nullable;
 import com.example.burger42.ArrayAdapter.BillItemAdapter;
 import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.BillOrderItem;
+import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -27,12 +31,15 @@ public class BillFragment extends ParentFragment {
     private BillItemAdapter billItemAdapter;
     private int totalValue;
 
-    public List<BillItem> billItems;
+    private final List<BillItem> billItems;
 
-    public BillFragment(MainActivity mainActivity, List<BillItem> billItems, int totalValue) {
+    private final StarItem[] starItems;
+
+    public BillFragment(MainActivity mainActivity, List<BillItem> billItems, int totalValue, StarItem[] starItems) {
         super(mainActivity);
         this.billItems = billItems;
         this.totalValue = totalValue;
+        this.starItems = starItems;
     }
 
     @Nullable
@@ -61,6 +68,18 @@ public class BillFragment extends ParentFragment {
                 mainActivity.showFragment(new LevelSelectionFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
+
+        LinearLayout linearLayout = view.findViewById(R.id.bill_star_container);
+        for (StarItem x : starItems) {
+            View star = inflater.inflate(R.layout.bill_star_item, linearLayout, false);
+            TextView starTitle = star.findViewById(R.id.bill_star_item_headline);
+            starTitle.setText(x.title());
+            TextView degreeOfSuccess = star.findViewById(R.id.bill_star_item_degreeOfSuccess);
+            degreeOfSuccess.setText(x.degreeOfSuccess());
+            ImageView starIcon = star.findViewById(R.id.bill_star);
+            starIcon.setImageResource(x.done() ? R.drawable.twotone_star_24_filled : R.drawable.twotone_star_24);
+            linearLayout.addView(star);
+        }
         return view;
     }
 }

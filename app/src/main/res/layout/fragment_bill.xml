@@ -14,11 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_margin="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="@string/level_bill"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -67,17 +70,20 @@
                 android:layout_height="20sp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="5dp"
-                android:text="50€"
                 android:textAlignment="viewEnd" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/levelBill_Stars"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
+            <LinearLayout
+                android:id="@+id/bill_star_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
         </RelativeLayout>
 
 
@@ -86,7 +92,7 @@
     <Button
         android:id="@+id/levelBill_BackToLevelSelection"
         android:layout_width="wrap_content"
-        android:layout_height="50sp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
@@ -94,6 +100,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:text="@string/backToLevelSelection" />
+        android:text="@string/backToLevelSelection"
+        android:textSize="18sp" />
 
 </RelativeLayout>

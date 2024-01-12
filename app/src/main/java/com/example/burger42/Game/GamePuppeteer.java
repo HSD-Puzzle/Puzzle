@@ -7,6 +7,7 @@ import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.BillOrderItem;
+import com.example.burger42.R;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -69,7 +70,7 @@ public class GamePuppeteer {
                     @Override
                     public void tick(long timeSinceRegistration) {
                         System.out.println(timeSinceRegistration);
-                        currentime.setTimeInMilliSeconds(timeSinceRegistration * 120 + 28800000);
+                        currentime.setTimeInMilliSeconds(timeSinceRegistration * 60 + 28800000);
                         restaurantFragment.setTimeText(currentime);
                     }
 
@@ -77,7 +78,7 @@ public class GamePuppeteer {
                     public void finish() {
                         restaurantFragment.timesUp(billItemList, money);
                     }
-                }, 240000, 500);
+                }, 24000, 500);
             }
         }, 3300, 1000);
     }
@@ -86,8 +87,9 @@ public class GamePuppeteer {
      * Method that will be called, when an finished Burger is dragged on to the order or
      * the other way round. It calculates the Points per correct Burger
      * and adds or corrects the Streak.
+     *
      * @param order Recipe of the order
-     * @param item Recipe of the item or finished Burger
+     * @param item  Recipe of the item or finished Burger
      */
 
     public void serve(Recipe order, Recipe item) {
@@ -99,7 +101,7 @@ public class GamePuppeteer {
             if (item.list().contains(orderList)) {
                 item.list().remove(orderList);
                 int singleBurgerMoney = orderList.size() * 10;
-                list.add(new BillOrderItem("Burger", singleBurgerMoney, streak, true));
+                list.add(new BillOrderItem(restaurantFragment.getString(R.string.burger), singleBurgerMoney, streak, true));
                 newMoney += singleBurgerMoney * streak;
                 if (restOfTheTime > 0) {
                     streak = streak * 1.06f;
@@ -107,15 +109,16 @@ public class GamePuppeteer {
                     streak = streak * 1.02f;
                 }
             } else {
-                list.add(new BillOrderItem("Burger", 0, streak, false));
+                list.add(new BillOrderItem(restaurantFragment.getString(R.string.burger), 0, streak, false));
                 streak = 1.0f;
                 tip = 0;
             }
         }
-        list.add(new BillOrderItem("Tip", 0, streak, true));
-        money += tip * streak;
+        list.add(new BillOrderItem(restaurantFragment.getString(R.string.tip), tip, streak, true));
+        tip = (int) (tip * streak);
+        money += tip;
         money += newMoney;
-        billItemList.add(new BillItem(++amountOfRecipesServed, (newMoney + tip) * streak, list));
+        billItemList.add(new BillItem(++amountOfRecipesServed, (newMoney + tip), list));
         restaurantFragment.setMoneyText(money, newMoney, tip, streak);
     }
 

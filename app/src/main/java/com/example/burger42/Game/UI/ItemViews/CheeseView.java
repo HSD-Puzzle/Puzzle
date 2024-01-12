@@ -34,7 +34,7 @@ public class CheeseView extends IngredientView {
 
     @Override
     public String name() {
-        return "BurgerPatty";
+        return "Cheese";
     }
 
     @Override
