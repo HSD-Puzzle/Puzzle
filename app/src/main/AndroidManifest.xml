@@ -3,7 +3,6 @@
     package="com.example.burger42">
 
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/iconneu"

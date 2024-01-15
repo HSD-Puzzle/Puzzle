@@ -73,8 +73,6 @@ public class StoveCounterView extends CounterView {
                         x.roast();
                     }
                 }
-                System.out.println("HeadPlates" + rightHeadPlate + leftHeadPlate);
-
             }
         }, 250);
     }

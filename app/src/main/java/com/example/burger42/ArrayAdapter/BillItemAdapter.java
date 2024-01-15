@@ -5,17 +5,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Item.BillItem;
-import com.example.burger42.Item.BillOrderItem;
+import com.example.burger42.Item.BillDetailItem;
 import com.example.burger42.R;
 
 public class BillItemAdapter extends ArrayAdapter<BillItem> {
@@ -48,7 +46,7 @@ public class BillItemAdapter extends ArrayAdapter<BillItem> {
             LinearLayout linearLayout = convertView.findViewById(R.id.billItem_detaillist);
             linearLayout.removeAllViews();
             if (currentItem.isDetailView()) {
-                for (BillOrderItem x : currentItem.billOrderItems()) {
+                for (BillDetailItem x : currentItem.billOrderItems()) {
                     View view = LayoutInflater.from(context).inflate(R.layout.detailsbill_item, parent, false);
 
                     TextView name = view.findViewById(R.id.detailsbillItem_name);

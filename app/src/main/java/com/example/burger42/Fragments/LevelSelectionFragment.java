@@ -14,8 +14,9 @@ import android.widget.ListView;
 
 import com.example.burger42.ArrayAdapter.LevelDisplayItemAdapter;
 //import com.example.burger42.Game.UI.RestaurantLevel.RestaurantLevel1;
-import com.example.burger42.Game.UI.RestaurantFragmentLevel1;
-import com.example.burger42.Item.LevelDisplayItem;
+import com.example.burger42.Game.RestaurantFragmentLevel1;
+import com.example.burger42.Game.RestaurantFragmentLevel2;
+import com.example.burger42.Game.RestaurantFragmentLevel3;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -59,17 +60,15 @@ public class LevelSelectionFragment extends ParentFragment {
         levelDisplayItemAdapter = new LevelDisplayItemAdapter(mainActivity);
 
         listView.setAdapter(levelDisplayItemAdapter);
-        levelDisplayItemAdapter.add(new LevelDisplayItem(1, "Easy", 200, 3));
-        levelDisplayItemAdapter.add(new LevelDisplayItem(2, "Medium", 300, 3));
-        levelDisplayItemAdapter.add(new LevelDisplayItem(3, "Hard", 100, 3));
+        levelDisplayItemAdapter.add(new RestaurantFragmentLevel1(mainActivity));
+        levelDisplayItemAdapter.add(new RestaurantFragmentLevel2(mainActivity));
+        levelDisplayItemAdapter.add(new RestaurantFragmentLevel3(mainActivity));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mainActivity.showFragment(new RestaurantFragmentLevel1(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                mainActivity.showFragment(levelDisplayItemAdapter.getItem(i), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
             }
         });
         return view;
     }
-
-
 }

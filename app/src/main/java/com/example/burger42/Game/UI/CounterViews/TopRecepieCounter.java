@@ -83,7 +83,7 @@ public class TopRecepieCounter extends CounterView implements OrderSpawn {
         restaurantFragment.addItem(newOrder);
         if (drawed) {
             newOrder.setTranslationY(getHeight() * 0.37f);
-            newOrder.setTranslationX((float) (getX() + Math.random() * getWidth()));
+            newOrder.setTranslationX(getX() + getWidth() / 2);
         } else {
             notPlaced.add(newOrder);
         }

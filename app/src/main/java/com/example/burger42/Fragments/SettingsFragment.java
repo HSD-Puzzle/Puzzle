@@ -31,7 +31,6 @@ public class SettingsFragment extends ParentFragment {
         super(mainActivity);
         audioController = AudioController.getInstance(mainActivity, 0);
         audioController.startMusic();
-        soundController = new SoundController(mainActivity);
     }
 
     @Nullable

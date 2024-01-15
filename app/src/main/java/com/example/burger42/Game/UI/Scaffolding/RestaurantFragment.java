@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -29,10 +30,9 @@ import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
 import com.example.burger42.Game.Timer.GameThread;
-import com.example.burger42.Game.UI.ItemViews.OrderView;
+
 
 import com.example.burger42.Item.BillItem;
-import com.example.burger42.Item.BillOrderItem;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
@@ -252,9 +252,11 @@ public abstract class RestaurantFragment extends ParentFragment {
     }
 
     private void setNextBackgroundVideoURI() {
-        String videoPath = "android.resource://" + mainActivity.getPackageName() + "/" + backgroundVideo[currentlyPlayedVideo++];
-        Uri uri = Uri.parse(videoPath);
-        videoView.setVideoURI(uri);
+        if (currentlyPlayedVideo < backgroundVideo.length) {
+            String videoPath = "android.resource://" + mainActivity.getPackageName() + "/" + backgroundVideo[currentlyPlayedVideo++];
+            Uri uri = Uri.parse(videoPath);
+            videoView.setVideoURI(uri);
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -422,58 +424,10 @@ public abstract class RestaurantFragment extends ParentFragment {
         clockText.setText(time.timeAsText());
     }
 
-
-    StarItem[] starItems = {new StarItem() {
-        @Override
-        public boolean done() {
-            return true;
-        }
-
-        @Override
-        public String degreeOfSuccess() {
-            return "1/1";
-        }
-
-        @Override
-        public String title() {
-            return "Verkaufe einen Burger";
-        }
-    }, new StarItem() {
-        @Override
-        public boolean done() {
-            return false;
-        }
-
-        @Override
-        public String degreeOfSuccess() {
-            return "50/200";
-        }
-
-        @Override
-        public String title() {
-            return "Verdiene 200$";
-        }
-    }, new StarItem() {
-        @Override
-        public boolean done() {
-            return true;
-        }
-
-        @Override
-        public String degreeOfSuccess() {
-            return "1/1";
-        }
-
-        @Override
-        public String title() {
-            return "Verkaufe einen Burger";
-        }
-    }};
-
-    //serve aufrufen
     public void timesUp(List<BillItem> list, int totalValue) {
         timeIsUp = true;
-        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, starItems), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        //TODO StarList.
+        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, new StarItem[]{}), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
     /**
@@ -497,4 +451,20 @@ public abstract class RestaurantFragment extends ParentFragment {
      * @return an instance of the used GamePuppeteer
      */
     public abstract GamePuppeteer gamePuppeteer();
+
+    public void loadData() {
+
+    }
+
+    public void saveData() {
+
+    }
+
+    public int highScore() {
+        return 0;
+    }
+
+    public abstract String title();
+
+    public abstract int thumbnailId();
 }

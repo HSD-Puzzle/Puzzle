@@ -28,4 +28,11 @@
     <string name="levelSelection">Level selection</string>
     <string name="musicVolume">Music volume:</string>
     <string name="play">Play</string>
+    <string name="level1Title">First day at work</string>
+    <string name="level2Title">Tastes better already</string>
+    <string name="level3Title">The big dishwashing</string>
+    <string name="incomeStarTitle">"Earn a total of "</string>
+    <string name="streakStarTitle">"Achieve a streak multiplier of "</string>
+    <string name="alwaysTipStarTitle1">Each burger sold must bring in a tip. And at least</string>
+    <string name="alwaysTipStarTitle2">burgers must be sold.</string>
 </resources>

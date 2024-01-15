@@ -28,4 +28,11 @@
     <string name="levelSelection">Levelauswahl</string>
     <string name="musicVolume">Musiklautstärke:</string>
     <string name="play">Spielen</string>
+    <string name="level1Title">Erster Arbeitstag</string>
+    <string name="level2Title">Schmeckt schon besser</string>
+    <string name="level3Title">Der große Abwasch</string>
+    <string name="incomeStarTitle">"Verdienen Sie insgesamt "</string>
+    <string name="streakStarTitle">"Erreichen Sie einen Streak-Multiplikator von "</string>
+    <string name="alwaysTipStarTitle1">"Jeder verkaufte Burger muss ein Trinkgeld einbringen. Und es müssen mindestens "</string>
+    <string name="alwaysTipStarTitle2">" Burger verkauft werden."</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.example.burger42.Fragments;
 
 import android.content.pm.ActivityInfo;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +17,10 @@ import androidx.annotation.Nullable;
 
 import com.example.burger42.ArrayAdapter.BillItemAdapter;
 import com.example.burger42.Item.BillItem;
-import com.example.burger42.Item.BillOrderItem;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class BillFragment extends ParentFragment {
@@ -73,9 +70,9 @@ public class BillFragment extends ParentFragment {
         for (StarItem x : starItems) {
             View star = inflater.inflate(R.layout.bill_star_item, linearLayout, false);
             TextView starTitle = star.findViewById(R.id.bill_star_item_headline);
-            starTitle.setText(x.title());
+            starTitle.setText(x.title(mainActivity));
             TextView degreeOfSuccess = star.findViewById(R.id.bill_star_item_degreeOfSuccess);
-            degreeOfSuccess.setText(x.degreeOfSuccess());
+            degreeOfSuccess.setText(x.degreeOfSuccess(mainActivity));
             ImageView starIcon = star.findViewById(R.id.bill_star);
             starIcon.setImageResource(x.done() ? R.drawable.twotone_star_24_filled : R.drawable.twotone_star_24);
             linearLayout.addView(star);

@@ -5,22 +5,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Item.LevelDisplayItem;
+import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.R;
-
-import org.w3c.dom.Text;
 
 /**
  * Class for an Level Display Item Adapter, an Adapter which holds Information about Level Display
  * Items.
  */
-public class LevelDisplayItemAdapter extends ArrayAdapter<LevelDisplayItem> {
-    private Context context;
+public class LevelDisplayItemAdapter extends ArrayAdapter<RestaurantFragment> {
+    private final Context context;
 
     /**
      * Constructor for an Level Display Item Adapter.
@@ -43,12 +42,18 @@ public class LevelDisplayItemAdapter extends ArrayAdapter<LevelDisplayItem> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LevelDisplayItem currentItem = getItem(position);
+        RestaurantFragment currentItem = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.level_item, parent, false);
         }
-        TextView levelHighscoreTextView = (TextView) convertView.findViewById(R.id.levelHighscoreTextView);
-        levelHighscoreTextView.setText("Highscore: " + currentItem.highscore());
+        currentItem.loadData();
+        TextView levelHighscoreTextView = convertView.findViewById(R.id.levelHighscoreTextView);
+        levelHighscoreTextView.setText("Highscore: " + currentItem.highScore());
+        TextView title = convertView.findViewById(R.id.level_item_title);
+        title.setText(currentItem.title());
+        ImageView imageView = convertView.findViewById(R.id.level_item_thumbnail);
+        imageView.setImageResource(currentItem.thumbnailId());
+
 
         return convertView;
     }
