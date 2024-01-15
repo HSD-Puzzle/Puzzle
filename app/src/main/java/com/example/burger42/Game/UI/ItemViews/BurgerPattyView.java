@@ -8,7 +8,9 @@ import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.Scaffolding.DragAreaSetItemAbove;
 import com.example.burger42.Game.UI.Scaffolding.IngredientView;
+import com.example.burger42.Ingredients.BurgerPattyMedium;
 import com.example.burger42.Ingredients.BurgerPattyRare;
+import com.example.burger42.Ingredients.BurgerPattyRawOrBurned;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
@@ -32,7 +34,11 @@ public class BurgerPattyView extends IngredientView {
 
     @Override
     public Ingredient toIngredientWrapper() {
-        return new BurgerPattyRare();
+        if (currentRoastLevel == 1)
+            return new BurgerPattyRare();
+        if (currentRoastLevel == 2)
+            return new BurgerPattyMedium();
+        return new BurgerPattyRawOrBurned();
     }
 
     @Override

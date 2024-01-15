@@ -7,12 +7,13 @@ import android.view.MotionEvent;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.ItemViews.SaladView;
+import com.example.burger42.Game.UI.Scaffolding.BottomCounterItemSpawnCounterView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
-public class SaladCounterView extends CounterView {
+public class SaladCounterView extends BottomCounterItemSpawnCounterView {
 
     public SaladCounterView(Context context) {
         super(context);

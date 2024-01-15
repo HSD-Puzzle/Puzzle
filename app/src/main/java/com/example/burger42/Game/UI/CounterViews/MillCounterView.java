@@ -9,13 +9,13 @@ import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.ItemViews.PlateView;
 import com.example.burger42.Game.UI.ItemViews.SpongeView;
-import com.example.burger42.Game.UI.Scaffolding.CounterView;
+import com.example.burger42.Game.UI.Scaffolding.BottomCounterItemSpawnCounterView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.R;
 
-public class MillCounterView extends CounterView {
+public class MillCounterView extends BottomCounterItemSpawnCounterView {
 
     private enum state {
         CLEAN, DIRTY, EMPTY
@@ -157,12 +157,15 @@ public class MillCounterView extends CounterView {
 
     @Override
     protected void afterDraw() {
+        super.afterDraw();
         spongeView.setTranslationX(getX() + getCustomWidth() * 0.4f);
         spongeView.setTranslationY(getCustomHeight() * 1.26f);
     }
 
     @Override
     protected void onRestaurantBound(RestaurantFragment restaurantFragment) {
+        super.onRestaurantBound(restaurantFragment);
         restaurantFragment.addItem(spongeView);
     }
+
 }

@@ -144,7 +144,7 @@ public class GamePuppeteer {
         gameThread.addGameTimer(new GameTimer() {
             @Override
             public void tick(long timeSinceRegistration) {
-                currentime.setTimeInMilliSeconds(timeSinceRegistration * 60 + 28800000);
+                currentime.setTimeInMilliSeconds(timeSinceRegistration * 30 + 28800000);
                 restaurantFragment.setTimeText(currentime);
             }
 

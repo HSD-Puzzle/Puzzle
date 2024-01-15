@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.Timer.GameTimer;
 import com.example.burger42.Game.UI.ItemViews.BurgerPattyView;
+import com.example.burger42.Game.UI.Scaffolding.BottomCounterItemSpawnCounterView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
@@ -18,7 +19,7 @@ import com.example.burger42.R;
 import java.util.LinkedList;
 import java.util.List;
 
-public class StoveCounterView extends CounterView {
+public class StoveCounterView extends BottomCounterItemSpawnCounterView {
 
     private List<BurgerPattyView> leftHeadPlate;
     private List<BurgerPattyView> rightHeadPlate;

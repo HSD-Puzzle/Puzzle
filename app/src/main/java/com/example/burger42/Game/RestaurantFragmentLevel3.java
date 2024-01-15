@@ -3,7 +3,6 @@ package com.example.burger42.Game;
 import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.StarChalanges.CorrectOrdersStar;
 import com.example.burger42.Game.StarChalanges.IncomeStar;
-import com.example.burger42.Game.StarChalanges.StreakMultiplierStar;
 import com.example.burger42.Game.StarChalanges.TipStar;
 import com.example.burger42.Game.UI.CounterViews.BottomEndCounterView;
 import com.example.burger42.Game.UI.CounterViews.BottomStartCounterView;
@@ -14,14 +13,21 @@ import com.example.burger42.Game.UI.CounterViews.RawPattyCounterView;
 import com.example.burger42.Game.UI.CounterViews.SaladCounterView;
 import com.example.burger42.Game.UI.CounterViews.StoveCounterView;
 import com.example.burger42.Game.UI.CounterViews.TopEndCounterView;
-import com.example.burger42.Game.UI.CounterViews.TopRecepieCounter;
+import com.example.burger42.Game.UI.CounterViews.TopRecipeCounter;
 import com.example.burger42.Game.UI.CounterViews.TopStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.TrashCounter;
+import com.example.burger42.Game.UI.ItemViews.PlateView;
+import com.example.burger42.Game.UI.ItemViews.TabletView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
+import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RestaurantFragmentLevel3 extends RestaurantFragment {
     public RestaurantFragmentLevel3(MainActivity mainActivity) {
@@ -40,7 +46,7 @@ public class RestaurantFragmentLevel3 extends RestaurantFragment {
 
     @Override
     protected CounterView[] topCounter() {
-        return new CounterView[]{new TopStartCounterView(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopEndCounterView(mainActivity)};
+        return new CounterView[]{new TopStartCounterView(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopEndCounterView(mainActivity)};
     }
 
     @Override
@@ -61,5 +67,25 @@ public class RestaurantFragmentLevel3 extends RestaurantFragment {
     @Override
     protected String levelId() {
         return "level3";
+    }
+
+    @Override
+    protected Collection<ItemView> itemsToSpawnAtStart() {
+        List<ItemView> itemViews = new LinkedList<>();
+        PlateView dirtyPlateView = new PlateView(mainActivity, PlateView.state.DIRTY);
+        dirtyPlateView.setItemAbove(2, new PlateView(mainActivity, PlateView.state.DIRTY));
+        PlateView cleanPlateView = new PlateView(mainActivity, PlateView.state.CLEAN);
+        cleanPlateView.setItemAbove(2, new PlateView(mainActivity, PlateView.state.CLEAN));
+
+        TabletView tabletView = new TabletView(mainActivity);
+        itemViews.add(tabletView);
+        for (int i = 0; i < 5; i++) {
+            TabletView nextTabletView = new TabletView(mainActivity);
+            tabletView.setItemAbove(2, nextTabletView);
+            tabletView = nextTabletView;
+        }
+        itemViews.add(dirtyPlateView);
+        itemViews.add(cleanPlateView);
+        return itemViews;
     }
 }

@@ -18,18 +18,18 @@ import com.example.burger42.R;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class TopRecepieCounter extends CounterView implements OrderSpawn {
+public class TopRecipeCounter extends CounterView implements OrderSpawn {
 
     @Override
     protected void onRestaurantBound(RestaurantFragment restaurantFragment) {
         restaurantFragment.addOrderSpawn(this);
     }
 
-    public TopRecepieCounter(Context context) {
+    public TopRecipeCounter(Context context) {
         super(context);
     }
 
-    public TopRecepieCounter(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TopRecipeCounter(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -62,14 +62,14 @@ public class TopRecepieCounter extends CounterView implements OrderSpawn {
         return R.drawable.topcorner;
     }
 
-    private boolean drawed = false;
+    private boolean drawn = false;
 
     private Queue<ItemView> notPlaced = new LinkedList<>();
 
     @Override
     protected void afterDraw() {
         super.afterDraw();
-        drawed = true;
+        drawn = true;
         while (!notPlaced.isEmpty()) {
             ItemView itemView = notPlaced.poll();
             itemView.setTranslationY(getHeight() * 0.37f);
@@ -81,9 +81,9 @@ public class TopRecepieCounter extends CounterView implements OrderSpawn {
     public void spawnAndPlaceRecipe(Recipe recipe) {
         OrderView newOrder = new OrderView(getContext(), recipe, restaurantFragment);
         restaurantFragment.addItem(newOrder);
-        if (drawed) {
+        if (drawn) {
             newOrder.setTranslationY(getHeight() * 0.37f);
-            newOrder.setTranslationX(getX() + getWidth() / 2);
+            newOrder.setTranslationX((int) Math.max(getX() + getWidth() * Math.random() - newOrder.getCustomWidth() / 2f, 0));
         } else {
             notPlaced.add(newOrder);
         }

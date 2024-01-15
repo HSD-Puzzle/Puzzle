@@ -2,21 +2,18 @@ package com.example.burger42.Game;
 
 import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.StarChalanges.CorrectBurgerStar;
-import com.example.burger42.Game.StarChalanges.CorrectOrdersStar;
 import com.example.burger42.Game.StarChalanges.IncomeStar;
 import com.example.burger42.Game.StarChalanges.StreakMultiplierStar;
-import com.example.burger42.Game.StarChalanges.TipStar;
 import com.example.burger42.Game.UI.CounterViews.BottomEndCounterView;
 import com.example.burger42.Game.UI.CounterViews.BottomStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.BreadCounterView;
 import com.example.burger42.Game.UI.CounterViews.CheeseCounterView;
-import com.example.burger42.Game.UI.CounterViews.MillCounterView;
 import com.example.burger42.Game.UI.CounterViews.PlateCounterView;
 import com.example.burger42.Game.UI.CounterViews.RawPattyCounterView;
 import com.example.burger42.Game.UI.CounterViews.SaladCounterView;
 import com.example.burger42.Game.UI.CounterViews.StoveCounterView;
 import com.example.burger42.Game.UI.CounterViews.TopEndCounterView;
-import com.example.burger42.Game.UI.CounterViews.TopRecepieCounter;
+import com.example.burger42.Game.UI.CounterViews.TopRecipeCounter;
 import com.example.burger42.Game.UI.CounterViews.TopStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.TrashCounter;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
@@ -42,7 +39,7 @@ public class RestaurantFragmentLevel2 extends RestaurantFragment {
 
     @Override
     protected CounterView[] topCounter() {
-        return new CounterView[]{new TopStartCounterView(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopRecepieCounter(mainActivity), new TopEndCounterView(mainActivity)};
+        return new CounterView[]{new TopStartCounterView(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopRecipeCounter(mainActivity), new TopEndCounterView(mainActivity)};
     }
 
     @Override

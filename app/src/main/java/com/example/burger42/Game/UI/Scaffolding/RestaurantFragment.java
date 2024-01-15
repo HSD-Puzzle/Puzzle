@@ -31,11 +31,13 @@ import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
 import com.example.burger42.Game.Timer.GameThread;
+import com.example.burger42.Game.UI.ItemViews.PlateView;
 import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -83,6 +85,10 @@ public abstract class RestaurantFragment extends ParentFragment {
      * listOfOrderSpawns contains all locations where a recipe can be created graphically.
      */
     private final List<OrderSpawn> listOfOrderSpawns = new LinkedList<>();
+
+
+    private final List<BottomCounterItemSpawn> listOfItemSpawns = new LinkedList<>();
+
     /**
      * The view that blocks all vies above to be touched on.
      * This view contains the start countdown as well.
@@ -99,6 +105,9 @@ public abstract class RestaurantFragment extends ParentFragment {
      * When the graphic is created for the first time, all elements of the list are displayed.
      */
     private final Queue<Recipe> notSpawnedRecipes = new LinkedList<>();
+
+    private final Queue<ItemView> notPlacedItemViews = new LinkedList<>();
+
 
     /**
      * the gamePuppeteer, which controls the current level.
@@ -306,6 +315,14 @@ public abstract class RestaurantFragment extends ParentFragment {
         while (!notSpawnedRecipes.isEmpty()) {
             addRecipe(notSpawnedRecipes.poll());
         }
+        notPlacedItemViews.addAll(itemsToSpawnAtStart());
+        while (!notPlacedItemViews.isEmpty()) {
+            placeItemOnBottomCounter(notPlacedItemViews.poll());
+        }
+    }
+
+    protected Collection<ItemView> itemsToSpawnAtStart() {
+        return new LinkedList<>();
     }
 
     /**
@@ -483,6 +500,10 @@ public abstract class RestaurantFragment extends ParentFragment {
         listOfOrderSpawns.add(orderSpawn);
     }
 
+    public void addDirtyPlateSpawn(BottomCounterItemSpawn plateSpawn) {
+        listOfItemSpawns.add(plateSpawn);
+    }
+
     /**
      * adds a recipe as order on a random spawn
      *
@@ -501,7 +522,15 @@ public abstract class RestaurantFragment extends ParentFragment {
      * puts a new dirty plate on the counter
      */
     public void dirtyPlateBack() {
-        //TODO add dirty-plate
+        placeItemOnBottomCounter(new PlateView(mainActivity, PlateView.state.DIRTY));
+    }
+
+    private void placeItemOnBottomCounter(ItemView itemView) {
+        if (listOfItemSpawns.isEmpty()) {
+            notPlacedItemViews.add(itemView);
+        } else {
+            listOfItemSpawns.get((int) (Math.random() * listOfItemSpawns.size())).placeItemOnCounter(itemView);
+        }
     }
 
     /**

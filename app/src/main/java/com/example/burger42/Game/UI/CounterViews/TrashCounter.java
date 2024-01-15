@@ -8,13 +8,14 @@ import android.view.MotionEvent;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.ItemViews.CheeseView;
+import com.example.burger42.Game.UI.Scaffolding.BottomCounterItemSpawnCounterView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
-public class TrashCounter extends CounterView {
+public class TrashCounter extends BottomCounterItemSpawnCounterView {
 
     private boolean isOpen = false;
 

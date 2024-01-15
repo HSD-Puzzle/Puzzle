@@ -18,18 +18,7 @@ import com.example.burger42.R;
 
 import java.util.List;
 
-public class PlateView extends PayableItemView {
-
-    public enum state {
-        CLEAN, DIRTY
-    }
-
-    private state currentState;
-
-    public state getCurrentState() {
-        return currentState;
-    }
-
+public class TabletView extends PayableItemView {
     @Override
     protected List<ItemFilterTag> itemFilterTags() {
         List<ItemFilterTag> list = super.itemFilterTags();
@@ -45,46 +34,22 @@ public class PlateView extends PayableItemView {
         return recipe;
     }
 
-    public PlateView(Context context, state state) {
-        super(context);
-        setCurrentState(state);
-    }
-
-    public PlateView(Context context) {
+    public TabletView(Context context) {
         super(context);
     }
 
-    public PlateView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TabletView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
-    protected void beforeInit(Context context, @Nullable AttributeSet attrs) {
-        currentState = state.CLEAN;
-    }
-
-    public void setCurrentState(state currentState) {
-        this.currentState = currentState;
-        loadTexture();
-        invalidate();
-    }
-
-    @Override
     protected int drawableId() {
-        switch (currentState) {
-            case CLEAN:
-                return R.drawable.cleanplate;
-            case DIRTY:
-                return R.drawable.dirtyplate;
-            default:
-                return R.drawable.cleanplate;
-
-        }
+        return R.drawable.tablet;
     }
 
     @Override
     public String name() {
-        return "Plate";
+        return "Tablet";
     }
 
     @Override
@@ -92,14 +57,12 @@ public class PlateView extends PayableItemView {
         super.onInit(context, attrs);
         addOnDragAreaListener(new DragAreaSetItemAbove(this)
                 .setIndex(0).setRelativeRight(0.5f)
-                .addFilterTag(Ingredient)
-                .addFilterTag("Plate")
+                .addFilterTag(ItemFilterTag.CleanBase)
                 .setUseFilter(true));
         addOnDragAreaListener(new DragAreaSetItemAbove(this)
                 .setIndex(1)
                 .setRelativeLeft(0.5f)
-                .addFilterTag(Ingredient)
-                .addFilterTag("Plate")
+                .addFilterTag(ItemFilterTag.CleanBase)
                 .setUseFilter(true));
         addOnTouchAreaListener(new OnTouchAreaListener(1, 0, 0, 1) {
 
@@ -119,25 +82,25 @@ public class PlateView extends PayableItemView {
             return this;
         }
 
-        public DragAreaSetItemAbove(PlateView itemView) {
+        public DragAreaSetItemAbove(TabletView itemView) {
             super();
             this.itemView = itemView;
         }
 
         private int index = 0;
-        private final PlateView itemView;
+        private final TabletView itemView;
 
         @Override
         protected boolean onDrag(DragEvent event, boolean inArea) {
             if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
                 ItemView itemView2 = (ItemView) event.getLocalState();
                 if (itemView2 != itemView) {
-                    if (itemView2 instanceof PlateView) {
+                    if (itemView2 instanceof TabletView) {
                         if (itemView.hasNoItemAbove()) {
                             itemView.setItemAbove(2, itemView2);
                             return true;
                         }
-                    } else if (!itemView.hasItemAbove(index) && !itemView.hasItemAbove(2) && itemView.getCurrentState() == state.CLEAN) {
+                    } else if (!itemView.hasItemAbove(index) && !itemView.hasItemAbove(2)) {
                         itemView.setItemAbove(index, itemView2);
                         return true;
                     }
@@ -150,25 +113,17 @@ public class PlateView extends PayableItemView {
     @Override
     protected ItemAboveNode[] itemAboveSetUp() {
         return new ItemAboveNode[]{
-                new ItemAboveNode(-0.2f, 0.13f) {
+                new ItemAboveNode(-0.48f, 0.2f) {
                 },
-                new ItemAboveNode(0.2f, 0.04f) {
+                new ItemAboveNode(0.48f, 0.11f) {
                 },
-                new ItemAboveNode(0, 0.05f) {
+                new ItemAboveNode(0, 0.11f) {
                 }
         };
     }
 
     @Override
     protected float scaling() {
-        return 176f / 500f;
-    }
-
-    public boolean onlyPlatesAbove() {
-        if (hasNoItemAbove())
-            return true;
-        if (hasItemAbove(2))
-            return ((PlateView) getItemAbove(2)).onlyPlatesAbove();
-        return false;
+        return 299f / 500f;
     }
 }

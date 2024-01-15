@@ -7,12 +7,13 @@ import android.view.MotionEvent;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.ItemViews.BurgerPattyView;
+import com.example.burger42.Game.UI.Scaffolding.BottomCounterItemSpawnCounterView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
-public class RawPattyCounterView extends CounterView {
+public class RawPattyCounterView extends BottomCounterItemSpawnCounterView {
 
     public RawPattyCounterView(Context context) {
         super(context);

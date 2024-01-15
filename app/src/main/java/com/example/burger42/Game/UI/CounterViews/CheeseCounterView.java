@@ -8,12 +8,13 @@ import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.ItemViews.CheeseView;
 import com.example.burger42.Game.UI.ItemViews.SaladView;
+import com.example.burger42.Game.UI.Scaffolding.BottomCounterItemSpawnCounterView;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
-public class CheeseCounterView extends CounterView {
+public class CheeseCounterView extends BottomCounterItemSpawnCounterView {
 
     public CheeseCounterView(Context context) {
         super(context);
