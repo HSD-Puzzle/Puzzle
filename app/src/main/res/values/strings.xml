@@ -19,7 +19,7 @@
     <string name="minutes">minutes</string>
     <string name="bottomburgerbun">Bottom Burger Bun</string>
     <string name="topburgerbun">Top Burger Bun</string>
-    <string name="burgerpatty">Patty</string>
+    <string name="burgerpattyrare">Patty (rare)</string>
     <string name="salad">Salad</string>
     <string name="cheese">Cheese</string>
     <string name="backToMainMenu">To Main Menu</string>
@@ -38,4 +38,5 @@
     <string name="tipStarTitle">Receive a total tip of</string>
     <string name="correctBurgerStarTitle1">Sell</string>
     <string name="correctBurgerStarTitle2">correctly prepared burgers.</string>
+    <string name="burgerpattymedium">Patty (medium)</string>
 </resources>

@@ -19,7 +19,7 @@
     <string name="minutes">Minuten</string>
     <string name="bottomburgerbun">Unteres Burgerbrot</string>
     <string name="topburgerbun">Oberes Burgerbrot</string>
-    <string name="burgerpatty">Buletten</string>
+    <string name="burgerpattyrare">Buletten (Rare)</string>
     <string name="salad">Salat</string>
     <string name="cheese">Käse</string>
     <string name="backToMainMenu">Zum Hauptmenü</string>
@@ -38,4 +38,5 @@
     <string name="tipStarTitle">"Erhalte insgeammt ein Trinkgeld von "</string>
     <string name="correctBurgerStarTitle1">"Verkaufe "</string>
     <string name="correctBurgerStarTitle2">" korrekt zubereitete Burger."</string>
+    <string name="burgerpattymedium">Buletten (Medium)</string>
 </resources>

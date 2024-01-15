@@ -1,16 +1,14 @@
 package com.example.burger42.Game.UI.ItemViews;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 
 import androidx.annotation.Nullable;
 
-import com.example.burger42.Game.UI.CounterViews.StoveCounterView;
 import com.example.burger42.Game.UI.Scaffolding.DragAreaSetItemAbove;
 import com.example.burger42.Game.UI.Scaffolding.IngredientView;
-import com.example.burger42.Ingredients.BurgerPatty;
+import com.example.burger42.Ingredients.BurgerPattyRare;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
@@ -34,7 +32,7 @@ public class BurgerPattyView extends IngredientView {
 
     @Override
     public Ingredient toIngredientWrapper() {
-        return new BurgerPatty();
+        return new BurgerPattyRare();
     }
 
     @Override
