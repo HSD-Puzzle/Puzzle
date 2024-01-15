@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
+import com.example.burger42.Item.StarItem;
 import com.example.burger42.R;
 
 /**
@@ -52,6 +53,17 @@ public class LevelDisplayItemAdapter extends ArrayAdapter<RestaurantFragment> {
         TextView title = convertView.findViewById(R.id.level_item_title);
         title.setText(currentItem.title());
         ImageView imageView = convertView.findViewById(R.id.level_item_thumbnail);
+        ImageView[] stars = new ImageView[3];
+        stars[0] = convertView.findViewById(R.id.level_item_star1);
+        stars[1] = convertView.findViewById(R.id.level_item_star2);
+        stars[2] = convertView.findViewById(R.id.level_item_star3);
+        for (int i = 0; i < currentItem.starItems().length; i++) {
+            if (currentItem.starItems()[i].done()) {
+                stars[i].setImageResource(R.drawable.twotone_star_24_filled);
+            } else {
+                stars[i].setImageResource(R.drawable.twotone_star_24);
+            }
+        }
         imageView.setImageResource(currentItem.thumbnailId());
 
 

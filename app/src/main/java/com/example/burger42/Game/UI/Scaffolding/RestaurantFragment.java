@@ -577,6 +577,10 @@ public abstract class RestaurantFragment extends ParentFragment {
 
     public abstract int thumbnailId();
 
+    public StarItem[] starItems() {
+        return starItems;
+    }
+
     /**
      * creates the Level specific StarItems
      *
