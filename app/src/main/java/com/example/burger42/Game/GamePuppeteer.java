@@ -194,6 +194,8 @@ public class GamePuppeteer {
      */
     public void serve(Recipe order, Recipe item) {
         soundController.playSound_1();
+        if(generator.difficultyLevel() > 2)
+            restaurantFragment.dirtyPlateBack();
         boolean everyPieceOfOrderIsDone = true;
         List<BillDetailItem> list = new LinkedList<>();
         int newMoney = 0;
