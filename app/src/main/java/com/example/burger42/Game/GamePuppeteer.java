@@ -155,6 +155,8 @@ public class GamePuppeteer {
         }, 240000, 500);
     }
 
+    private int amountOfRecipesInWork = 0;
+
     /**
      * Once started, creates recipes at intervals throughout the game.
      */
@@ -162,15 +164,16 @@ public class GamePuppeteer {
         gameThread.addGameTimer(new GameTimer() {
             @Override
             public void tick(long timeSinceRegistration) {
-                //TODO generate fewer recipes when there are many recipes in circulation.
-                // Generate more recipes with a larger streak.
-                restaurantFragment.addRecipe(generator.createRecipe(currentime, currentStreak));
+                if (amountOfRecipesInWork < Math.random() * currentStreak * currentStreak) {
+                    amountOfRecipesInWork++;
+                    restaurantFragment.addRecipe(generator.createRecipe(currentime, currentStreak));
+                }
             }
 
             @Override
             public void finish() {
             }
-        }, 10000);
+        }, 1000);
     }
 
     /**
@@ -193,8 +196,9 @@ public class GamePuppeteer {
      * @param item  Recipe of the item or finished Burger
      */
     public void serve(Recipe order, Recipe item) {
+        amountOfRecipesInWork--;
         soundController.playSound_1();
-        if(generator.difficultyLevel() > 2)
+        if (generator.difficultyLevel() > 2)
             restaurantFragment.dirtyPlateBack();
         boolean everyPieceOfOrderIsDone = true;
         List<BillDetailItem> list = new LinkedList<>();
