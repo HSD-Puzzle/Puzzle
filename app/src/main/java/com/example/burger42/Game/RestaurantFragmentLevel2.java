@@ -1,6 +1,11 @@
 package com.example.burger42.Game;
 
 import com.example.burger42.Game.Generator.RecipeGenerator;
+import com.example.burger42.Game.StarChalanges.CorrectBurgerStar;
+import com.example.burger42.Game.StarChalanges.CorrectOrdersStar;
+import com.example.burger42.Game.StarChalanges.IncomeStar;
+import com.example.burger42.Game.StarChalanges.StreakMultiplierStar;
+import com.example.burger42.Game.StarChalanges.TipStar;
 import com.example.burger42.Game.UI.CounterViews.BottomEndCounterView;
 import com.example.burger42.Game.UI.CounterViews.BottomStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.BreadCounterView;
@@ -16,6 +21,7 @@ import com.example.burger42.Game.UI.CounterViews.TopStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.TrashCounter;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
+import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -26,7 +32,7 @@ public class RestaurantFragmentLevel2 extends RestaurantFragment {
 
     @Override
     public GamePuppeteer gamePuppeteer() {
-        return new GamePuppeteer(this, new RecipeGenerator(1));
+        return new GamePuppeteer(this, new RecipeGenerator(2));
     }
 
     @Override
@@ -47,5 +53,15 @@ public class RestaurantFragmentLevel2 extends RestaurantFragment {
     @Override
     public int thumbnailId() {
         return R.drawable.thumbnail2;
+    }
+
+    @Override
+    protected StarItem[] createStarItems() {
+        return new StarItem[]{new IncomeStar(600), new CorrectBurgerStar(10), new StreakMultiplierStar(1.4f)};
+    }
+
+    @Override
+    protected String levelId() {
+        return "level2";
     }
 }

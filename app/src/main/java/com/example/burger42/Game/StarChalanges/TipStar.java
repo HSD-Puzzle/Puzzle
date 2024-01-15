@@ -6,29 +6,29 @@ import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.R;
 
-public class IncomeStar extends BasicStarItem {
+public class TipStar extends BasicStarItem {
 
-    private int neededIncome = 0;
+    private int neededTip = 0;
 
-    private int incomeResult = -1;
+    private int tipResult = -1;
 
-    public IncomeStar(int neededIncome) {
-        this.neededIncome = neededIncome;
+    public TipStar(int neededTip) {
+        this.neededTip = neededTip;
     }
 
     @Override
     public String degreeOfSuccess(Context context) {
-        return incomeResult + "$/" + neededIncome + "$";
+        return tipResult + "$/" + neededTip + "$";
     }
 
     @Override
     public String title(Context context) {
-        return context.getString(R.string.incomeStarTitle) + neededIncome + "$.";
+        return context.getString(R.string.tipStarTitle) + neededTip + "$.";
     }
 
     @Override
     public void calculate(GamePuppeteer.GameResultStatistics statistics) {
-        incomeResult = statistics.income();
-        setIsDone(incomeResult >= neededIncome);
+        tipResult = statistics.amountOfTipValueReceived();
+        setIsDone(tipResult >= neededTip);
     }
 }

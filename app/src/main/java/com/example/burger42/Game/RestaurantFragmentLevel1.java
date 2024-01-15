@@ -1,15 +1,15 @@
 package com.example.burger42.Game;
 
-import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Generator.RecipeGenerator;
+import com.example.burger42.Game.StarChalanges.CorrectOrdersStar;
+import com.example.burger42.Game.StarChalanges.IncomeStar;
+import com.example.burger42.Game.StarChalanges.StreakMultiplierStar;
+import com.example.burger42.Game.StarChalanges.TipStar;
 import com.example.burger42.Game.UI.CounterViews.BottomEndCounterView;
 import com.example.burger42.Game.UI.CounterViews.BottomStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.BreadCounterView;
-import com.example.burger42.Game.UI.CounterViews.CheeseCounterView;
-import com.example.burger42.Game.UI.CounterViews.MillCounterView;
 import com.example.burger42.Game.UI.CounterViews.PlateCounterView;
 import com.example.burger42.Game.UI.CounterViews.RawPattyCounterView;
-import com.example.burger42.Game.UI.CounterViews.SaladCounterView;
 import com.example.burger42.Game.UI.CounterViews.StoveCounterView;
 import com.example.burger42.Game.UI.CounterViews.TopEndCounterView;
 import com.example.burger42.Game.UI.CounterViews.TopRecepieCounter;
@@ -17,6 +17,7 @@ import com.example.burger42.Game.UI.CounterViews.TopStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.TrashCounter;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
+import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
@@ -31,6 +32,11 @@ public class RestaurantFragmentLevel1 extends RestaurantFragment {
     }
 
     @Override
+    protected String levelId() {
+        return "level1";
+    }
+
+    @Override
     public String title() {
         return mainActivity.getString(R.string.level1Title);
     }
@@ -38,6 +44,11 @@ public class RestaurantFragmentLevel1 extends RestaurantFragment {
     @Override
     public int thumbnailId() {
         return R.drawable.thumbnail1;
+    }
+
+    @Override
+    protected StarItem[] createStarItems() {
+        return new StarItem[]{new IncomeStar(400), new TipStar(100), new StreakMultiplierStar(1.5f)};
     }
 
     @Override

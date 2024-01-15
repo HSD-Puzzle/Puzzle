@@ -33,6 +33,9 @@
     <string name="level3Title">Der große Abwasch</string>
     <string name="incomeStarTitle">"Verdienen Sie insgesamt "</string>
     <string name="streakStarTitle">"Erreichen Sie einen Streak-Multiplikator von "</string>
-    <string name="alwaysTipStarTitle1">"Jeder verkaufte Burger muss ein Trinkgeld einbringen. Und es müssen mindestens "</string>
-    <string name="alwaysTipStarTitle2">" Burger verkauft werden."</string>
+    <string name="correctOrdersStarTitle1">"Bearbeite "</string>
+    <string name="correctOrdersStarTitle2">" Bestellungen vollständig korrekt."</string>
+    <string name="tipStarTitle">"Erhalte insgeammt ein Trinkgeld von "</string>
+    <string name="correctBurgerStarTitle1">"Verkaufe "</string>
+    <string name="correctBurgerStarTitle2">" korrekt zubereitete Burger."</string>
 </resources>

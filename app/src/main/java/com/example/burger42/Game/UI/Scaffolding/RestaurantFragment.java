@@ -1,6 +1,8 @@
 package com.example.burger42.Game.UI.Scaffolding;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -15,7 +17,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -30,8 +31,6 @@ import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
 import com.example.burger42.Game.Timer.GameThread;
-
-
 import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
@@ -47,20 +46,42 @@ import java.util.Queue;
 public abstract class RestaurantFragment extends ParentFragment {
 
     /**
+     * the starItems used for this level.
+     */
+    private StarItem[] starItems;
+
+    /**
      * The ids of the 4 background videos
      */
     private final static int[] backgroundVideo = {R.raw.background1, R.raw.background2, R.raw.background3, R.raw.background4};
 
+    /**
+     * the video that is currently playing
+     */
     private int currentlyPlayedVideo = 0;
 
+    /**
+     * tipTextView is the view that displays the last tip earned.
+     */
     private TextView tipTextView;
 
+    /**
+     * streakTextView is the view that displays the current streak.
+     */
     private TextView streakTextView;
 
+    /**
+     * timeIsUp is true when the time has expired, i.e. the game is over.
+     */
     private boolean timeIsUp = false;
-
+    /**
+     * moneyEarnedTextView displays the new money earned from the last sale.
+     */
     private TextView moneyEarnedTextView;
 
+    /**
+     * listOfOrderSpawns contains all locations where a recipe can be created graphically.
+     */
     private final List<OrderSpawn> listOfOrderSpawns = new LinkedList<>();
     /**
      * The view that blocks all vies above to be touched on.
@@ -72,9 +93,16 @@ public abstract class RestaurantFragment extends ParentFragment {
      * videoStoppedAt stores the second where the background video is stopped.
      */
     private int videoStoppedAt;
-
+    /**
+     * notSpawnedRecipes contains all recipes that have not yet been created graphically.
+     * This can happen if the graphic basis is not yet available.
+     * When the graphic is created for the first time, all elements of the list are displayed.
+     */
     private final Queue<Recipe> notSpawnedRecipes = new LinkedList<>();
 
+    /**
+     * the gamePuppeteer, which controls the current level.
+     */
     private GamePuppeteer gamePuppeteer;
 
     /**
@@ -86,6 +114,9 @@ public abstract class RestaurantFragment extends ParentFragment {
      * The displayed amount of money.
      */
     private TextView moneyText;
+    /**
+     * the display of the time
+     */
     private TextView clockText;
     /**
      * True after the View is created and first setup.
@@ -107,7 +138,13 @@ public abstract class RestaurantFragment extends ParentFragment {
      * The ItemView contains all displayed items.
      */
     private FrameLayout itemRoot;
+    /**
+     * The container, which contains all the lower counter components.
+     */
     private LinearLayout bottomCounterContainer;
+    /**
+     * The container, which contains all the upper counter components.
+     */
     private LinearLayout topCounterContainer;
 
     /**
@@ -122,6 +159,7 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     public RestaurantFragment(MainActivity mainActivity) {
         super(mainActivity);
+        starItems = createStarItems();
     }
 
     /**
@@ -147,16 +185,26 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     public void removeItem(ItemView item) {
         if (items.remove(item) && itemRoot != null) {
-            removeItemViewToRoot(item);
+            removeItemViewFromRoot(item);
         }
     }
 
+    /**
+     * addItemViewToRoot adds the passed item to the ItemRoot object as a child in order to display the item graphically.
+     *
+     * @param item the item to be displayed
+     */
     private void addItemViewToRoot(ItemView item) {
         item.setLayoutParams(new FrameLayout.LayoutParams(referenceHeight, referenceHeight));
         itemRoot.addView(item);
     }
 
-    private void removeItemViewToRoot(ItemView item) {
+    /**
+     * removeItemViewFromRoot removes an item from the display as a separate item.
+     *
+     * @param item the item to be removed
+     */
+    private void removeItemViewFromRoot(ItemView item) {
         itemRoot.removeView(item);
     }
 
@@ -182,20 +230,33 @@ public abstract class RestaurantFragment extends ParentFragment {
      * @param container the container from onCreate
      */
     private void firstSetup(LayoutInflater inflater, ViewGroup container) {
+        //The view of the restaurant fragment itself is generated
         rootView = inflater.inflate(R.layout.fragment_restaurant, container, false);
+        //A reference size is determined, which is used to determine the size of all other objects.
         referenceHeight = container.getHeight() / 4;
+        //the gamePuppeteer is created, which acts as controller over the level after the start.
         gamePuppeteer = gamePuppeteer();
 
+        //The top navigation bar is set. The pause button and the various displays.
         topNavigationSetup();
+        //The touch blockade is discontinued. This includes the countdown and prevents entries before the actual game starts.
         touchBlockerSetup();
+        //The counter is created and set.
         counterSetup();
+        //the ItemRoot is set and all items from the queue are displayed.
         itemSetup();
+        //the background video is set.
         videoSetup(container);
+        //The game is started.
         gamePuppeteer.start();
     }
 
+    /**
+     * The top navigation bar is set.
+     * The pause button and the various displays.
+     */
     private void topNavigationSetup() {
-        Button pauseButton = (Button) rootView.findViewById(R.id.restaurant_pause);
+        Button pauseButton = rootView.findViewById(R.id.restaurant_pause);
         pauseButton.setOnClickListener(view -> pause());
         moneyText = rootView.findViewById(R.id.restaurant_money);
         clockText = rootView.findViewById(R.id.restaurant_clock);
@@ -204,9 +265,12 @@ public abstract class RestaurantFragment extends ParentFragment {
         moneyEarnedTextView = rootView.findViewById(R.id.restaurant_earnedmoney);
     }
 
+    /**
+     * The counter is created and set.
+     */
     private void counterSetup() {
-        bottomCounterContainer = ((LinearLayout) rootView.findViewById(R.id.restaurant_bottomCounterContainer));
-        topCounterContainer = ((LinearLayout) rootView.findViewById(R.id.restaurant_topCounterContainer));
+        bottomCounterContainer = rootView.findViewById(R.id.restaurant_bottomCounterContainer);
+        topCounterContainer = rootView.findViewById(R.id.restaurant_topCounterContainer);
         for (CounterView bottomCounter : bottomCounter()) {
             addBottomCounter(bottomCounter);
         }
@@ -215,8 +279,13 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
     }
 
+    /**
+     * the ItemRoot is set and all items from the queue are displayed.
+     */
     private void itemSetup() {
-        itemRoot = ((FrameLayout) rootView.findViewById(R.id.restaurant_root));
+        //itemRoot is bound
+        itemRoot = rootView.findViewById(R.id.restaurant_root);
+        //When an object is dragged, the actual object becomes invisible so that only the shadow is visible. And after dropping, the object becomes visible again.
         itemRoot.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
@@ -230,6 +299,7 @@ public abstract class RestaurantFragment extends ParentFragment {
                 return false;
             }
         });
+        //Items are displayed
         for (ItemView x : items) {
             addItemViewToRoot(x);
         }
@@ -238,10 +308,16 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
     }
 
+    /**
+     * the background video is set.
+     *
+     * @param container the container in which the video is displayed. Its dimensions are used to determine the size.
+     */
     private void videoSetup(ViewGroup container) {
         videoView = rootView.findViewById(R.id.restaurant_background);
         videoView.setLayoutParams(new RelativeLayout.LayoutParams(container.getHeight() * 6, container.getHeight()));
         setNextBackgroundVideoURI();
+        //After a video has been played, the next video is started.
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -251,6 +327,9 @@ public abstract class RestaurantFragment extends ParentFragment {
         });
     }
 
+    /**
+     * The Uri to the next background video is set if one is available.
+     */
     private void setNextBackgroundVideoURI() {
         if (currentlyPlayedVideo < backgroundVideo.length) {
             String videoPath = "android.resource://" + mainActivity.getPackageName() + "/" + backgroundVideo[currentlyPlayedVideo++];
@@ -318,12 +397,22 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     protected abstract CounterView[] topCounter();
 
+    /**
+     * adds a lower counter section to the container of all lower counter sections and sets it to the correct size.
+     *
+     * @param bottomCounter the added lower counter section.
+     */
     private void addBottomCounter(CounterView bottomCounter) {
         bottomCounter.setRestaurantFragment(this);
         bottomCounterContainer.addView(bottomCounter);
         bottomCounter.setLayoutParams(new LinearLayout.LayoutParams(-2, referenceHeight));
     }
 
+    /**
+     * adds an upper counter section to the container of all upper counter sections and sets it to the correct size.
+     *
+     * @param topCounter the upper counter section to be added.
+     */
     private void addTopCounter(CounterView topCounter) {
         topCounter.setRestaurantFragment(this);
         topCounterContainer.addView(topCounter);
@@ -424,10 +513,14 @@ public abstract class RestaurantFragment extends ParentFragment {
         clockText.setText(time.timeAsText());
     }
 
-    public void timesUp(List<BillItem> list, int totalValue) {
+    public void timesUp(List<BillItem> list, int totalValue, GamePuppeteer.GameResultStatistics statistics) {
         timeIsUp = true;
-        //TODO StarList.
-        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, new StarItem[]{}), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        for (StarItem x : starItems) {
+            x.calculate(statistics);
+        }
+        highScore = totalValue;
+        saveData();
+        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, starItems), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
     /**
@@ -453,18 +546,41 @@ public abstract class RestaurantFragment extends ParentFragment {
     public abstract GamePuppeteer gamePuppeteer();
 
     public void loadData() {
-
+        SharedPreferences preferences = mainActivity.getSharedPreferences(levelId(), Context.MODE_PRIVATE);
+        highScore = preferences.getInt("highscore", 0);
+        for (int i = 0; i < starItems.length; i++) {
+            starItems[i].setIsDone(preferences.getBoolean("star" + i, false));
+        }
     }
 
     public void saveData() {
-
+        SharedPreferences preferences = mainActivity.getSharedPreferences(levelId(), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        if (preferences.getInt("highscore", 0) < highScore)
+            editor.putInt("highscore", highScore);
+        for (int i = 0; i < starItems.length; i++) {
+            if (!preferences.getBoolean("star" + i, false))
+                editor.putBoolean("star" + i, starItems[i].done());
+        }
+        editor.apply();
     }
 
+    protected abstract String levelId();
+
+    private int highScore;
+
     public int highScore() {
-        return 0;
+        return highScore;
     }
 
     public abstract String title();
 
     public abstract int thumbnailId();
+
+    /**
+     * creates the Level specific StarItems
+     *
+     * @return the Level specific StarItems
+     */
+    protected abstract StarItem[] createStarItems();
 }

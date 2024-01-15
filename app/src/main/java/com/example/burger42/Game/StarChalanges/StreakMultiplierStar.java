@@ -6,7 +6,7 @@ import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.R;
 
-public class StreakMultiplierStar implements StarItem {
+public class StreakMultiplierStar extends BasicStarItem {
 
     private float neededStreak = 0;
 
@@ -16,10 +16,6 @@ public class StreakMultiplierStar implements StarItem {
         this.neededStreak = neededStreak;
     }
 
-    @Override
-    public boolean done() {
-        return streakResult >= neededStreak;
-    }
 
     @Override
     public String degreeOfSuccess(Context context) {
@@ -34,5 +30,6 @@ public class StreakMultiplierStar implements StarItem {
     @Override
     public void calculate(GamePuppeteer.GameResultStatistics statistics) {
         streakResult = statistics.largestStreakAchieved();
+        setIsDone(streakResult >= neededStreak);
     }
 }

@@ -33,6 +33,9 @@
     <string name="level3Title">The big dishwashing</string>
     <string name="incomeStarTitle">"Earn a total of "</string>
     <string name="streakStarTitle">"Achieve a streak multiplier of "</string>
-    <string name="alwaysTipStarTitle1">Each burger sold must bring in a tip. And at least</string>
-    <string name="alwaysTipStarTitle2">burgers must be sold.</string>
+    <string name="correctOrdersStarTitle1">Process</string>
+    <string name="correctOrdersStarTitle2">orders completely correctly.</string>
+    <string name="tipStarTitle">Receive a total tip of</string>
+    <string name="correctBurgerStarTitle1">Sell</string>
+    <string name="correctBurgerStarTitle2">correctly prepared burgers.</string>
 </resources>

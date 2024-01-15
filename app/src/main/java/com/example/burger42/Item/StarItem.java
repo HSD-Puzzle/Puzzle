@@ -16,6 +16,13 @@ public interface StarItem {
     boolean done();
 
     /**
+     * sets the Star always done.
+     *
+     * @param value the value to set.
+     */
+    void setIsDone(boolean value);
+
+    /**
      * degreeOfSuccess returns the degree of completion as String. E.g. 4/5.
      *
      * @param context the context to create the correct language String
@@ -34,7 +41,7 @@ public interface StarItem {
     String title(Context context);
 
     /**
-     * Calculates the degree of completion.
+     * Calculates the degree of completion and if it is done.
      *
      * @param statistics the statistics to read the game data.
      */

@@ -1,5 +1,6 @@
 package com.example.burger42.Game;
 
+import com.example.burger42.Audio.SoundController;
 import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.Timer.GameThread;
 import com.example.burger42.Game.Timer.GameTimer;
@@ -16,6 +17,7 @@ import java.util.List;
  * A Class which manages the Gameflow (Timers, Points) and generation of Orders.
  */
 public class GamePuppeteer {
+    SoundController soundController;
 
     private final GameThread gameThread;
     private RestaurantFragment restaurantFragment;
@@ -39,30 +41,58 @@ public class GamePuppeteer {
          */
         private int amountOfSuccessfulSoldBurger;
         /**
+         * amountOfCorrectOrders is the total amount of all successful done orders.
+         */
+        private int amountOfCorrectOrders;
+        /**
          * largestStreakAchieved is the value that the streak had at the highest point in time.
          */
         private float largestStreakAchieved;
         /**
-         * The number of orders for which tips were received.
+         * The sum of all tips received.
          */
-        private int numberOfTipsReceived;
-        /**
-         * The number of orders for which no tip was received
-         */
-        private int numberOfTipsLost;
+        private int amountOfTipValueReceived;
 
+        /**
+         * @return income is the money made during the whole match.
+         */
         public int income() {
             return income;
         }
 
+        /**
+         * @return largestStreakAchieved is the value that the streak had at the highest point in time.
+         */
         public float largestStreakAchieved() {
             return largestStreakAchieved;
         }
 
+        /**
+         * @return amountOfSuccessfulSoldBurger is the total amount of all successful sold burgers.
+         */
         public int amountOfSoldBurger() {
             return amountOfSuccessfulSoldBurger;
         }
+
+        /**
+         * @return amountOfCorrectOrders is the total amount of all successful done orders.
+         */
+        public int amountOfCorrectOrders() {
+            return amountOfCorrectOrders;
+        }
+
+        /**
+         * @return The sum of all tips received.
+         */
+        public int amountOfTipValueReceived() {
+            return amountOfTipValueReceived;
+        }
     }
+
+    /**
+     * The current statistics of this level
+     */
+    private GameResultStatistics currentStatistics = new GameResultStatistics();
 
     public GamePuppeteer(RestaurantFragment restaurantFragment, RecipeGenerator recipeGenerator) {
         this.restaurantFragment = restaurantFragment;
@@ -70,6 +100,7 @@ public class GamePuppeteer {
         currentime = new Time(8, 0);
         generator = recipeGenerator;
         gameThread = new GameThread(restaurantFragment.getActivity());
+        soundController = new SoundController(restaurantFragment.getContext());
     }
 
     /**
@@ -139,7 +170,7 @@ public class GamePuppeteer {
             @Override
             public void finish() {
             }
-        }, 1000);
+        }, 10000);
     }
 
     /**
@@ -149,7 +180,8 @@ public class GamePuppeteer {
     //TODO Fill statistics with data.
     private void timeIsDone() {
         gameThread.pause();
-        restaurantFragment.timesUp(billItemList, money);
+        currentStatistics.income = money;
+        restaurantFragment.timesUp(billItemList, money, currentStatistics);
     }
 
     /**
@@ -160,8 +192,9 @@ public class GamePuppeteer {
      * @param order Recipe of the order
      * @param item  Recipe of the item or finished Burger
      */
-    //TODO Fill statistics with data.
     public void serve(Recipe order, Recipe item) {
+        soundController.playSound_1();
+        boolean everyPieceOfOrderIsDone = true;
         List<BillDetailItem> list = new LinkedList<>();
         int newMoney = 0;
         int restOfTheTime = order.restOfTheTime(currentime);
@@ -170,6 +203,8 @@ public class GamePuppeteer {
             if (item.list().contains(orderList)) {
                 item.list().remove(orderList);
                 int singleBurgerMoney = orderList.size() * 10;
+                //statistics for star achievements
+                currentStatistics.amountOfSuccessfulSoldBurger++;
                 list.add(new BillDetailItem(restaurantFragment.getString(R.string.burger), singleBurgerMoney, currentStreak, true));
                 newMoney += singleBurgerMoney * currentStreak;
                 if (restOfTheTime > 0) {
@@ -181,10 +216,19 @@ public class GamePuppeteer {
                 list.add(new BillDetailItem(restaurantFragment.getString(R.string.burger), 0, currentStreak, false));
                 currentStreak = 1.0f;
                 tip = 0;
+                everyPieceOfOrderIsDone = false;
             }
+            //statistics achievements
+            if (currentStreak > currentStatistics.largestStreakAchieved)
+                currentStatistics.largestStreakAchieved = currentStreak;
         }
+        //statistics achievements
+        if (everyPieceOfOrderIsDone)
+            currentStatistics.amountOfCorrectOrders++;
         list.add(new BillDetailItem(restaurantFragment.getString(R.string.tip), tip, currentStreak, true));
         tip = (int) (tip * currentStreak);
+        //statistics achievements
+        currentStatistics.amountOfTipValueReceived += tip;
         money += tip;
         money += newMoney;
         billItemList.add(new BillItem(++amountOfRecipesServed, (newMoney + tip), list));
