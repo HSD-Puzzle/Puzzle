@@ -20,6 +20,10 @@ import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
+/**
+ * The specific settings for the {@link RestaurantFragment} of level1
+ * A detailed description of what a methode does can find in {@link RestaurantFragment}.
+ */
 public class RestaurantFragmentLevel1 extends RestaurantFragment {
     public RestaurantFragmentLevel1(MainActivity mainActivity) {
         super(mainActivity);

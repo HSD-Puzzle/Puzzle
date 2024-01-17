@@ -44,11 +44,26 @@ public class TrashCounter extends BottomCounterItemSpawnCounterView {
         addOnDragAreaListener(new OnDragAreaListener(0.7f, 0.2f, 0.05f, 0.95f) {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
-                //TODO Hover clear
-                //TODO Drop delete
+                if (isOpen && inArea && event.getAction() == DragEvent.ACTION_DROP) {
+                    ItemView view = (ItemView) event.getLocalState();
+                    view.removeFromParent();
+                    return true;
+                }
                 return false;
             }
-        });
+        }.setUseFilter(true).addFilterTag(ItemView.ItemFilterTag.Ingredient));
+
+        addOnDragAreaListener(new OnDragAreaListener(0.7f, 0.2f, 0.05f, 0.95f) {
+            @Override
+            protected boolean onDrag(DragEvent event, boolean inArea) {
+                if (isOpen && inArea && event.getAction() == DragEvent.ACTION_DRAG_LOCATION) {
+                    ItemView view = (ItemView) event.getLocalState();
+                    view.clearChildren();
+                    return true;
+                }
+                return false;
+            }
+        }.setUseFilter(true).addFilterTag(ItemView.ItemFilterTag.CleanBase));
     }
 
     private void setIsOpen(boolean value) {

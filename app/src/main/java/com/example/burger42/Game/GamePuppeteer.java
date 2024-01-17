@@ -4,6 +4,9 @@ import com.example.burger42.Audio.SoundController;
 import com.example.burger42.Game.Generator.RecipeGenerator;
 import com.example.burger42.Game.Timer.GameThread;
 import com.example.burger42.Game.Timer.GameTimer;
+import com.example.burger42.Game.UI.ItemViews.PlateView;
+import com.example.burger42.Game.UI.ItemViews.TabletView;
+import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.Item.BillItem;
@@ -198,8 +201,18 @@ public class GamePuppeteer {
     public void serve(Recipe order, Recipe item) {
         amountOfRecipesInWork--;
         soundController.playSound_1();
-        if (generator.difficultyLevel() > 2)
-            restaurantFragment.dirtyPlateBack();
+        if (generator.difficultyLevel() > 2) {
+            ItemView itemView;
+            if (item.list().size() > 2) {
+                itemView = new TabletView(restaurantFragment.getContext());
+                itemView.setItemAbove(0, new PlateView(restaurantFragment.getContext(), PlateView.state.DIRTY));
+                itemView.setItemAbove(1, new PlateView(restaurantFragment.getContext(), PlateView.state.DIRTY));
+            } else {
+                itemView = new PlateView(restaurantFragment.getContext(), PlateView.state.DIRTY);
+            }
+            restaurantFragment.placeItemOnBottomCounter(itemView);
+        }
+
         boolean everyPieceOfOrderIsDone = true;
         List<BillDetailItem> list = new LinkedList<>();
         int newMoney = 0;

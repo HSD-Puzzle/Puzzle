@@ -47,6 +47,6 @@ public abstract class BottomCounterItemSpawnCounterView extends CounterView impl
 
     @Override
     protected void onRestaurantBound(RestaurantFragment restaurantFragment) {
-        restaurantFragment.addDirtyPlateSpawn(this);
+        restaurantFragment.addBottomCounterItemSpawn(this);
     }
 }

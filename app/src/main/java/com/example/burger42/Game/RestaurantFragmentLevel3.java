@@ -29,6 +29,10 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The specific settings for the {@link RestaurantFragment} of level3
+ * A detailed description of what a methode does can find in {@link RestaurantFragment}.
+ */
 public class RestaurantFragmentLevel3 extends RestaurantFragment {
     public RestaurantFragmentLevel3(MainActivity mainActivity) {
         super(mainActivity);
@@ -61,7 +65,7 @@ public class RestaurantFragmentLevel3 extends RestaurantFragment {
 
     @Override
     protected StarItem[] createStarItems() {
-        return new StarItem[]{new IncomeStar(1400), new CorrectOrdersStar(8), new TipStar(500)};
+        return new StarItem[]{new IncomeStar(1400), new CorrectOrdersStar(6), new TipStar(500)};
     }
 
     @Override

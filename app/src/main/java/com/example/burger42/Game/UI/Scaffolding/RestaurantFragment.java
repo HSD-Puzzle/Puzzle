@@ -86,7 +86,9 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     private final List<OrderSpawn> listOfOrderSpawns = new LinkedList<>();
 
-
+    /**
+     * listOfOrderSpawns contains all locations where an Item can be placed on the counter.
+     */
     private final List<BottomCounterItemSpawn> listOfItemSpawns = new LinkedList<>();
 
     /**
@@ -106,6 +108,9 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     private final Queue<Recipe> notSpawnedRecipes = new LinkedList<>();
 
+    /**
+     * Items that are added before first setup
+     */
     private final Queue<ItemView> notPlacedItemViews = new LinkedList<>();
 
 
@@ -321,6 +326,9 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
     }
 
+    /**
+     * @return List of items that should already be placed at the beginning.
+     */
     protected Collection<ItemView> itemsToSpawnAtStart() {
         return new LinkedList<>();
     }
@@ -401,7 +409,6 @@ public abstract class RestaurantFragment extends ParentFragment {
 
     /**
      * bottomCounter returns all counter elements, that will bie displayed at the bottom of the restaurant.
-     * s
      *
      * @return a array of bottom counters
      */
@@ -500,8 +507,13 @@ public abstract class RestaurantFragment extends ParentFragment {
         listOfOrderSpawns.add(orderSpawn);
     }
 
-    public void addDirtyPlateSpawn(BottomCounterItemSpawn plateSpawn) {
-        listOfItemSpawns.add(plateSpawn);
+    /**
+     * addBottomCounterItemSpawn adds a possible spawn position for ItemViews
+     *
+     * @param spawn the spawn position for Items.
+     */
+    public void addBottomCounterItemSpawn(BottomCounterItemSpawn spawn) {
+        listOfItemSpawns.add(spawn);
     }
 
     /**
@@ -518,14 +530,8 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
     }
 
-    /**
-     * puts a new dirty plate on the counter
-     */
-    public void dirtyPlateBack() {
-        placeItemOnBottomCounter(new PlateView(mainActivity, PlateView.state.DIRTY));
-    }
-
-    private void placeItemOnBottomCounter(ItemView itemView) {
+    //TODO JavaDoc
+    public void placeItemOnBottomCounter(ItemView itemView) {
         if (listOfItemSpawns.isEmpty()) {
             notPlacedItemViews.add(itemView);
         } else {
@@ -542,6 +548,7 @@ public abstract class RestaurantFragment extends ParentFragment {
         clockText.setText(time.timeAsText());
     }
 
+    //TODO JavaDoc
     public void timesUp(List<BillItem> list, int totalValue, GamePuppeteer.GameResultStatistics statistics) {
         timeIsUp = true;
         for (StarItem x : starItems) {
@@ -574,6 +581,7 @@ public abstract class RestaurantFragment extends ParentFragment {
      */
     public abstract GamePuppeteer gamePuppeteer();
 
+    //TODO JavaDoc
     public void loadData() {
         SharedPreferences preferences = mainActivity.getSharedPreferences(levelId(), Context.MODE_PRIVATE);
         highScore = preferences.getInt("highscore", 0);
@@ -582,6 +590,7 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
     }
 
+    //TODO JavaDoc
     public void saveData() {
         SharedPreferences preferences = mainActivity.getSharedPreferences(levelId(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -594,18 +603,28 @@ public abstract class RestaurantFragment extends ParentFragment {
         editor.apply();
     }
 
+    //TODO JavaDoc
     protected abstract String levelId();
 
+    //TODO JavaDoc
     private int highScore;
 
+    //TODO JavaDoc
     public int highScore() {
         return highScore;
     }
 
+    //TODO JavaDoc
     public abstract String title();
 
+    //TODO JavaDoc
     public abstract int thumbnailId();
 
+    //TODO
+
+    /**
+     * @return
+     */
     public StarItem[] starItems() {
         return starItems;
     }

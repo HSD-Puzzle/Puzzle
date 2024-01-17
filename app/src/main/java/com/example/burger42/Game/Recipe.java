@@ -23,10 +23,11 @@ public class Recipe {
 
     private Time orderTakenTime;
 
-    private Time timeToDeliver = new Time(0, 15);
+    private Time timeToDeliver;
 
-    public Recipe(Time currentTime) {
+    public Recipe(Time currentTime, Time timeToDeliver) {
         orderTakenTime = new Time(currentTime);
+        this.timeToDeliver = timeToDeliver;
     }
 
     public Recipe() {

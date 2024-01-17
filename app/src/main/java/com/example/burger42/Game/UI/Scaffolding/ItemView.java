@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -294,8 +295,12 @@ public abstract class ItemView extends CustomView implements DragFilter {
         }
     }
 
+    private DragShadow dragShadow;
+
     public DragShadow dragShadow(int referenceHeight) {
-        return new DragShadow(referenceHeight);
+        if (dragShadow == null)
+            dragShadow = new DragShadow(referenceHeight);
+        return dragShadow;
     }
 
     public class DragShadow extends DragShadowBuilder {
@@ -309,6 +314,13 @@ public abstract class ItemView extends CustomView implements DragFilter {
         public void onDrawShadow(Canvas canvas) {
             drawItemOnCanvas(canvas, 0, 0, referenceHeight, canvas.getWidth(), canvas.getHeight());
         }
+
+        public void shadowInvalidate() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                updateDragShadow(this);
+            }
+        }
+
 
         @Override
         public void onProvideShadowMetrics(Point shadowSize, Point shadowTouchPoint) {
@@ -330,5 +342,13 @@ public abstract class ItemView extends CustomView implements DragFilter {
         }
         result += ")";
         return result;
+    }
+
+    public void clearChildren() {
+        for (ItemAboveNode x : itemsAboveNode) {
+            x.setItemAbove(null);
+        }
+        if (dragShadow != null)
+            dragShadow.shadowInvalidate();
     }
 }
