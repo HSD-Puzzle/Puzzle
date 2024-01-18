@@ -10,9 +10,21 @@ import com.example.burger42.R;
 
 public class SoundController {
 
+    /**
+     *
+     */
     private SoundPool soundPool;
+    /**
+     *
+     */
     private Context context;
+    /**
+     *
+     */
     private int soundId_0;
+    /**
+     *
+     */
     private int soundId_1;
 
     /**
@@ -42,12 +54,15 @@ public class SoundController {
     }
 
     /**
-     * Play the loaded sound.
+     * Play the loaded sound with id 0.
      */
     public void playSound_0() {
         soundPool.play(soundId_0, 1.0f, 1, 1, 0, 1.0f);
     }
 
+    /**
+     * Play the loaded sound with id 1
+     */
     public void playSound_1() {
         soundPool.play(soundId_1, 1.0f, 1, 1, 0, 1.0f);
     }

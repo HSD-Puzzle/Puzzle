@@ -1,20 +1,20 @@
 package com.example.burger42;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.example.burger42.Alarm.AlarmReceiver;
-import com.example.burger42.Fragments.BillFragment;
-import com.example.burger42.Fragments.LevelSelectionFragment;
 import com.example.burger42.Fragments.ParentFragment;
-import com.example.burger42.Fragments.SettingsFragment;
 import com.example.burger42.Fragments.StartFragment;
 import com.example.burger42.Audio.AudioController;
 
@@ -22,10 +22,19 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     *
+     */
     private AudioController audioController;
-
+    /**
+     *
+     */
     private ParentFragment currentlyShownFragment;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +43,23 @@ public class MainActivity extends AppCompatActivity {
         showFragment(new StartFragment(this), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         audioController = AudioController.getInstance(this, 0);
         audioController.startMusic();
+        dailyAlarm();
     }
 
+    /**
+     *
+     * @param fragment
+     * @param requestedOrientation
+     */
     public void showFragment(ParentFragment fragment, int requestedOrientation) {
         currentlyShownFragment = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         setRequestedOrientation(requestedOrientation);
     }
 
+    /**
+     * close the App and release all resources
+     */
     public void closeApp() {
         if (audioController.musicIsPlaying()) {
             audioController.stopMusic();
@@ -50,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         if (currentlyShownFragment != null)
@@ -58,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
     }
 
+    /**
+     * pauses the music when tabbing out of the app
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -66,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * continue to play the music when opening the app again
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -74,37 +101,67 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void alarmInTenSeconds() {
+    /**
+     * sets a daily alarm at a spezific time. Works when the app is running or sleeping
+     */
+    public void dailyAlarm() {
         System.out.println("alarm");
         Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-/**
- long time = System.currentTimeMillis();
- long triggerTime = System.currentTimeMillis() + (30 * 60 * 1000);
- System.out.println("Millisekunden:" + triggerTime);
- alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
- */
 
-// Setzen Sie die Alarmzeit auf 09:00 Uhr
-        int alarmHour = 23;
-        int alarmMinute = 8;
+        int alarmHour = 14;
+        int alarmMinute = 45;
 
-        // Kalenderobjekt erstellen und auf die gewünschte Uhrzeit setzen
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, alarmHour);
         calendar.set(Calendar.MINUTE, alarmMinute);
 
-        // Wenn die gewünschte Zeit bereits vergangen ist, setzen Sie den Alarm auf den nächsten Tag
         if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
         }
 
-        // Setzen Sie den Alarm mit RTC_WAKEUP, um das Gerät aufzuwecken, wenn es im Schlaf ist
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendingIntent);
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+    }
+
+    /**
+     * shows a Dialag to valuate the App or not
+     * @param v View
+     */
+    public void showAlertDialog(View v){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(getString(R.string.app_name));
+        alert.setMessage(getString(R.string.app_valuation));
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            /**
+             *
+             * @param dialogInterface
+             * @param i
+             */
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://play.google.com/store/games?device=windows&gl=DE&utm_source=emea_Med&utm_medium=hasem&utm_content=Sep2020&utm_campaign=Evergreen&pcampaignid=MKT-EDR-emea-de-1707522-Med-hasem-py-Evergreen-Sep2020-Text_Search_BKWS%7CONSEM_kwid_43700008794262693&gclid=CjwKCAiA75itBhA6EiwAkho9e6eE5S8_e9jRdwGN6PqOq9y9o-pEAxNwGTyy16VyIq2WrYAipfh2OBoCjRQQAvD_BwE&gclsrc=aw.ds"));
+                startActivity(intent);
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            /**
+             *
+             * @param dialogInterface
+             * @param i
+             */
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, "Thank you for your Feedback!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alert.create().show();
     }
 
 }

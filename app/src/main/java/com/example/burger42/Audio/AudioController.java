@@ -8,14 +8,41 @@ import com.example.burger42.R;
 
 public class AudioController {
 
-    private static final String PREFERENCE_NAME = "MyPrefs";
+    /**
+     *
+     */
+    private static final String PREFERENCE_NAME = "audioPref";
+    /**
+     *
+     */
     private static final String AUDIO_PROGRESS_KEY = "audioProgress";
+    /**
+     * variable for 
+     */
     private SharedPreferences preferences;
+    /**
+     * variable for the volume
+     */
     private int volume;
+    /**
+     *
+     */
     private int musicId;
+    /**
+     * variable for the media player
+     */
     MediaPlayer mediaPlayer;
+    /**
+     * context of the activity
+     */
     Context context;
+    /**
+     *
+     */
     boolean musicIsPlaying;
+    /**
+     *
+     */
     private static AudioController INSTANCE;
 
 
@@ -56,7 +83,10 @@ public class AudioController {
         return INSTANCE;
     }
 
-
+    /**
+     * Changes the Music to another track
+     * @param musicId to switch to another track
+     */
     public void playThisTrack(int musicId){
         if (mediaPlayer != null && this.musicId != musicId) {
             mediaPlayer.stop();
@@ -131,14 +161,5 @@ public class AudioController {
     public int volume(){
         return volume;
     }
-
-    public int getSoundId() {
-        return musicId;
-    }
-
-    public void setSoundId(int soundId){
-        this.musicId = soundId;
-    }
-
 
 }
