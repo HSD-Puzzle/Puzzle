@@ -17,14 +17,10 @@ import com.example.burger42.Alarm.AlarmReceiver;
 import com.example.burger42.Fragments.SuperFragment;
 import com.example.burger42.Fragments.StartFragment;
 import com.example.burger42.Audio.AudioController;
+import com.example.burger42.Fragments.SuperFragment;
 
 import java.util.Calendar;
 
-
-/**
- * This activity is created when the app is started.
- * The entire game is located within this activity
- */
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -37,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private SuperFragment currentlyShownFragment;
 
     /**
-     * This methode is called at the time of creating this activity.
-     *
+     * Method called when the activity is first created. Performs initialization operations for the activity,
+     * such as setting the layout, displaying the StartFragment, initializing the AudioController,
+     * and starting the background music. This method is automatically called when the activity is created.
      * @param savedInstanceState
      */
     @Override
@@ -76,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is called up when the back button on the device is pressed.
-     * This method then calls the following method of the currently displayed fragment.
+     *
      */
     @Override
     public void onBackPressed() {
@@ -136,10 +132,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * shows a Dialag to valuate the App or not
-     *
      * @param v View
      */
-    public void showAlertDialog(View v) {
+    public void showAlertDialog(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.app_name));
         alert.setMessage(getString(R.string.app_valuation));

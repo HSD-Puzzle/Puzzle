@@ -6,18 +6,21 @@ import android.media.MediaPlayer;
 
 import com.example.burger42.R;
 
+/**
+ * controlls the audio
+ */
 public class AudioController {
 
     /**
-     *
+     * name for the preference
      */
     private static final String PREFERENCE_NAME = "audioPref";
     /**
-     *
+     * key for the progress for the audio
      */
     private static final String AUDIO_PROGRESS_KEY = "audioProgress";
     /**
-     * variable for 
+     * variable for the shared preferences
      */
     private SharedPreferences preferences;
     /**
@@ -25,7 +28,7 @@ public class AudioController {
      */
     private int volume;
     /**
-     *
+     * id for the music
      */
     private int musicId;
     /**
@@ -37,11 +40,11 @@ public class AudioController {
      */
     Context context;
     /**
-     *
+     * boolean for checking if music is playing
      */
     boolean musicIsPlaying;
     /**
-     *
+     * instance of the audio controller
      */
     private static AudioController INSTANCE;
 
@@ -137,6 +140,9 @@ public class AudioController {
         }
     }
 
+    /**
+     * pauses the music
+     */
     public void onPause() {
         mediaPlayer.pause();
     }

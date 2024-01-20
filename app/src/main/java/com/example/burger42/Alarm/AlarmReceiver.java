@@ -20,9 +20,14 @@ import com.example.burger42.R;
 public class AlarmReceiver extends BroadcastReceiver {
 
     /**
+     * main activity
+     */
+    MainActivity mainActivity;
+
+    /**
      * Receive the Broadcastmessage and calls the Method to send a Notification
      * @param context of the Activity
-     * @param intent
+     * @param intent The intent containing information about the broadcast event
      */
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -51,8 +56,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "android")
                 .setSmallIcon(R.drawable.fastfood_asset)
-                .setContentTitle("Neue Nachricht")
-                .setContentText("Komm zurück Burger braten")
+                .setContentTitle(mainActivity.getString(R.string.notification_title))
+                .setContentText(mainActivity.getString(R.string.notification_text))
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)

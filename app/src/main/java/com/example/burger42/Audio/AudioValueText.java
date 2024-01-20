@@ -3,6 +3,9 @@ package com.example.burger42.Audio;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * value to set for the text
+ */
 public class AudioValueText {
 
     /**
@@ -10,15 +13,15 @@ public class AudioValueText {
      */
     Context context;
     /**
-     *
+     * name for the preference
      */
     private static final String PREFERENCE_NAME = "audioPref";
     /**
-     *
+     * key for the progress of the audio
      */
     private static final String AUDIO_PROGRESS_KEY = "audioValueProgress";
     /**
-     * variable for
+     * variable for the preferences
      */
     private SharedPreferences preferences;
     /**
@@ -27,7 +30,8 @@ public class AudioValueText {
     private int audioValue;
 
     /**
-     *
+     * constructor for the text
+     * load the shared preferences
      * @param context
      */
     public AudioValueText(Context context){
@@ -37,7 +41,7 @@ public class AudioValueText {
     }
 
     /**
-     *
+     * saves the data
      * @param value
      */
     public void saveData(int value){
@@ -48,8 +52,8 @@ public class AudioValueText {
     }
 
     /**
-     *
-     * @return
+     * returns the value for the text
+     * @return int value for text
      */
     public int getAudioValue(){
         return audioValue;

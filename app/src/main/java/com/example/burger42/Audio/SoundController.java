@@ -8,28 +8,31 @@ import android.os.Build;
 
 import com.example.burger42.R;
 
+/**
+ * controller for the sound
+ */
 public class SoundController {
 
     /**
-     *
+     * Manages a collection of sound resources, providing methods to play, pause, and stop sounds
      */
     private SoundPool soundPool;
     /**
-     *
+     * Context of the activity
      */
     private Context context;
     /**
-     *
+     * id for the sound 0
      */
     private int soundId_0;
     /**
-     *
+     * id for the sound 1
      */
     private int soundId_1;
 
     /**
      * Constructor for SoundController.
-     *
+     * initialise the sound
      * @param context The application context.
      */
     public SoundController(Context context) {

@@ -41,4 +41,6 @@
     <string name="burgerpattymedium">Patty (medium)</string>
     <string name="app_valuation">Do you like this App?</string>
     <string name="new_highscore">New Highscore!!!</string>
+    <string name="notification_title">New message from the boss</string>
+    <string name="notification_text">Come back to work!</string>
 </resources>

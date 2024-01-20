@@ -41,4 +41,6 @@
     <string name="burgerpattymedium">Buletten (Medium)</string>
     <string name="app_valuation">Gefällt dir die App?</string>
     <string name="new_highscore">Neuer Highscore!!!</string>
+    <string name="notification_title">Neue Nachricht vom Chef</string>
+    <string name="notification_text">Komm zurück zur Arbeit!</string>
 </resources>

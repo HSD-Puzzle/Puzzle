@@ -1,6 +1,7 @@
 package com.example.burger42.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Audio.AudioValueText;
+import com.example.burger42.Audio.SoundController;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 import com.example.burger42.Audio.AudioController;
@@ -20,20 +22,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 /**
- *
+ * manages alle the settings for the app
  */
 public class SettingsFragment extends SuperFragment {
 
     /**
-     *
+     * controller for the audio
      */
     AudioController audioController;
     /**
-     *
+     * value from 0-100 for the audio volume
      */
     AudioValueText audioValueText;
     /**
-     *
+     * seekbar for the audio
      */
     private SeekBar audioSeekBar;
     /**
@@ -52,13 +54,15 @@ public class SettingsFragment extends SuperFragment {
     }
 
     /**
-     * @param inflater           The LayoutInflater object that can be used to inflate
-     *                           any views in the fragment,
-     * @param container          If non-null, this is the parent view that the fragment's
-     *                           UI should be attached to.  The fragment should not add the view itself,
-     *                           but this can be used to generate the LayoutParams of the view.
+     * Create View
+     * @param inflater The LayoutInflater object that can be used to inflate
+     * any views in the fragment,
+     * @param container If non-null, this is the parent view that the fragment's
+     * UI should be attached to.  The fragment should not add the view itself,
+     * but this can be used to generate the LayoutParams of the view.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     *                           from a previous saved state as given here.
+     * from a previous saved state as given here.
+     *
      * @return
      */
     @Nullable
@@ -72,7 +76,7 @@ public class SettingsFragment extends SuperFragment {
         audioSeekBar = (SeekBar) view.findViewById(R.id.audioSeekBar);
         audioSeekBar.setProgress(audioController.volume());
         TextView textView = (TextView) view.findViewById(R.id.volumeValue);
-        textView.setText("" + audioValueText.getAudioValue() + "%");
+        textView.setText(""+ audioValueText.getAudioValue() + "%");
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +87,7 @@ public class SettingsFragment extends SuperFragment {
 
         audioSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             /**
-             *
+             * changes the seekbar based on the progress the user set
              * @param seekBar seekbar
              * @param i value from 0-100
              * @param b ...
@@ -96,7 +100,7 @@ public class SettingsFragment extends SuperFragment {
             }
 
             /**
-             *
+             * not in use, override methode
              * @param seekBar
              */
             @Override
@@ -116,12 +120,5 @@ public class SettingsFragment extends SuperFragment {
         return view;
     }
 
-    /**
-     * onBackPressed is called by the MainActivity if this fragment is the currently displayed fragment and the back button of the device is pressed.
-     * The methode switches from the SettingsFragment to the StartFragment.
-     */
-    @Override
-    public void onBackPressed() {
-        mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-    }
+
 }
