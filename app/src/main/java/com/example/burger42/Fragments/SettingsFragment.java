@@ -22,7 +22,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 /**
- * 
+ *
  */
 public class SettingsFragment extends ParentFragment {
 
@@ -54,15 +54,13 @@ public class SettingsFragment extends ParentFragment {
     }
 
     /**
-     *
-     * @param inflater The LayoutInflater object that can be used to inflate
-     * any views in the fragment,
-     * @param container If non-null, this is the parent view that the fragment's
-     * UI should be attached to.  The fragment should not add the view itself,
-     * but this can be used to generate the LayoutParams of the view.
+     * @param inflater           The LayoutInflater object that can be used to inflate
+     *                           any views in the fragment,
+     * @param container          If non-null, this is the parent view that the fragment's
+     *                           UI should be attached to.  The fragment should not add the view itself,
+     *                           but this can be used to generate the LayoutParams of the view.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
-     *
+     *                           from a previous saved state as given here.
      * @return
      */
     @Nullable
@@ -76,7 +74,7 @@ public class SettingsFragment extends ParentFragment {
         audioSeekBar = (SeekBar) view.findViewById(R.id.audioSeekBar);
         audioSeekBar.setProgress(audioController.volume());
         TextView textView = (TextView) view.findViewById(R.id.volumeValue);
-        textView.setText(""+ audioValueText.getAudioValue() + "%");
+        textView.setText("" + audioValueText.getAudioValue() + "%");
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,5 +118,8 @@ public class SettingsFragment extends ParentFragment {
         return view;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    }
 }

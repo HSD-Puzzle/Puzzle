@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.Recipe;
+import com.example.burger42.Game.Time;
 import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
@@ -32,7 +33,7 @@ public class OrderView extends ItemView {
 
     private int currentPage = 0;
 
-    private Recipe recipeToShow = new Recipe();
+    private Recipe recipeToShow = new Recipe(new Time(8, 12), new Time(0, 15));
 
     private RestaurantFragment restaurantFragment;
 

@@ -47,7 +47,11 @@ public class StartFragment extends ParentFragment {
                 mainActivity.closeApp();
             }
         });
-
         return view;
+    }
+
+    @Override
+    public void onBackPressed() {
+        mainActivity.closeApp();
     }
 }

@@ -30,7 +30,7 @@ public class RecipeGenerator {
      * @return a new, random Recipe.
      */
     public Recipe createRecipe(Time currentTime, float streak) {
-        Time timeToDeliver = new Time(0, 6 - difficultyLevel);
+        Time timeToDeliver = new Time(0, 5 - difficultyLevel);
         int amountOfIngredients = 0;
         Recipe recipe = new Recipe(currentTime, timeToDeliver);
         for (int i = 0; i < recipeLengthController(); i++) {
@@ -56,7 +56,7 @@ public class RecipeGenerator {
             recipe.list().add(list);
             amountOfIngredients += 3;
         }
-        timeToDeliver.addTime(new Time(0, (int) (amountOfIngredients * Math.min(1, 5f - streak))));
+        timeToDeliver.addTime(new Time(0, (int) (amountOfIngredients * Math.max(1, 3f - streak))));
         return recipe;
     }
 

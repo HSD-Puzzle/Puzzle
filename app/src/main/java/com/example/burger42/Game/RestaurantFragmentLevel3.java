@@ -9,6 +9,7 @@ import com.example.burger42.Game.UI.CounterViews.BottomStartCounterView;
 import com.example.burger42.Game.UI.CounterViews.BreadCounterView;
 import com.example.burger42.Game.UI.CounterViews.CheeseCounterView;
 import com.example.burger42.Game.UI.CounterViews.MillCounterView;
+import com.example.burger42.Game.UI.CounterViews.PlateCounterView;
 import com.example.burger42.Game.UI.CounterViews.RawPattyCounterView;
 import com.example.burger42.Game.UI.CounterViews.SaladCounterView;
 import com.example.burger42.Game.UI.CounterViews.StoveCounterView;
@@ -45,7 +46,7 @@ public class RestaurantFragmentLevel3 extends RestaurantFragment {
 
     @Override
     protected CounterView[] bottomCounter() {
-        return new CounterView[]{new BottomStartCounterView(mainActivity), new MillCounterView(mainActivity), new TrashCounter(mainActivity), new BreadCounterView(mainActivity), new SaladCounterView(mainActivity), new CheeseCounterView(mainActivity), new StoveCounterView(mainActivity), new RawPattyCounterView(mainActivity), new BottomEndCounterView(mainActivity)};
+        return new CounterView[]{new BottomStartCounterView(mainActivity), new TrashCounter(mainActivity), new MillCounterView(mainActivity), new PlateCounterView(mainActivity, 2), new BreadCounterView(mainActivity), new SaladCounterView(mainActivity), new CheeseCounterView(mainActivity), new StoveCounterView(mainActivity), new RawPattyCounterView(mainActivity), new BottomEndCounterView(mainActivity)};
     }
 
     @Override
@@ -65,7 +66,7 @@ public class RestaurantFragmentLevel3 extends RestaurantFragment {
 
     @Override
     protected StarItem[] createStarItems() {
-        return new StarItem[]{new IncomeStar(1400), new CorrectOrdersStar(6), new TipStar(500)};
+        return new StarItem[]{new IncomeStar(1000), new CorrectOrdersStar(6), new TipStar(500)};
     }
 
     @Override
@@ -78,8 +79,6 @@ public class RestaurantFragmentLevel3 extends RestaurantFragment {
         List<ItemView> itemViews = new LinkedList<>();
         PlateView dirtyPlateView = new PlateView(mainActivity, PlateView.state.DIRTY);
         dirtyPlateView.setItemAbove(2, new PlateView(mainActivity, PlateView.state.DIRTY));
-        PlateView cleanPlateView = new PlateView(mainActivity, PlateView.state.CLEAN);
-        cleanPlateView.setItemAbove(2, new PlateView(mainActivity, PlateView.state.CLEAN));
 
         TabletView tabletView = new TabletView(mainActivity);
         itemViews.add(tabletView);
@@ -89,7 +88,6 @@ public class RestaurantFragmentLevel3 extends RestaurantFragment {
             tabletView = nextTabletView;
         }
         itemViews.add(dirtyPlateView);
-        itemViews.add(cleanPlateView);
         return itemViews;
     }
 }

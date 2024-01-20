@@ -79,4 +79,9 @@ public class BillFragment extends ParentFragment {
         }
         return view;
     }
+
+    @Override
+    public void onBackPressed() {
+        mainActivity.showFragment(new LevelSelectionFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+    }
 }

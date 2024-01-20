@@ -58,7 +58,7 @@ public class RestaurantFragmentLevel2 extends RestaurantFragment {
 
     @Override
     protected StarItem[] createStarItems() {
-        return new StarItem[]{new IncomeStar(1200), new CorrectBurgerStar(10), new StreakMultiplierStar(1.8f)};
+        return new StarItem[]{new IncomeStar(800), new CorrectBurgerStar(10), new StreakMultiplierStar(1.8f)};
     }
 
     @Override
