@@ -26,6 +26,18 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/levelBill_Highscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="35dp"
+        android:rotation="-8"
+        android:text="@string/new_highscore"
+        android:textColor="#ff0000"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
     <View
         android:id="@+id/levelBill_Separator"
         android:layout_width="match_parent"

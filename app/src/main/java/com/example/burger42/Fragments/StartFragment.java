@@ -13,11 +13,28 @@ import androidx.annotation.Nullable;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 
-public class StartFragment extends ParentFragment {
+/**
+ * This fragment is the start screen of the game.
+ */
+public class StartFragment extends SuperFragment {
+
+    /**
+     * @param mainActivity the mainActivity, that shows this fragment
+     */
     public StartFragment(MainActivity mainActivity) {
         super(mainActivity);
     }
 
+    /**
+     * @param inflater           The LayoutInflater object that can be used to inflate
+     *                           any views in the fragment,
+     * @param container          If non-null, this is the parent view that the fragment's
+     *                           UI should be attached to.  The fragment should not add the view itself,
+     *                           but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state as given here.
+     * @return the View to display this Fragment.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +67,10 @@ public class StartFragment extends ParentFragment {
         return view;
     }
 
+    /**
+     * onBackPressed is called by the MainActivity if this fragment is the currently displayed fragment and the back button of the device is pressed.
+     * The methode closes the App.
+     */
     @Override
     public void onBackPressed() {
         mainActivity.closeApp();

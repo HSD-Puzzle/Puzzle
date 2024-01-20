@@ -4,14 +4,12 @@ package com.example.burger42.Game.UI.Scaffolding;
 import android.content.ClipData;
 
 /**
- * //TODO aktualisieren
- * every counter that allows to spawn {@link com.example.burger42.Game.UI.ItemViews.PlateView}.
+ * every counter that allows to spawn an ItemView on it.
  * This interface has to be registered at the {@link RestaurantFragment}
  */
 public interface BottomCounterItemSpawn {
     /**
-     * //TODO aktualisieren
-     * spawns an {@link com.example.burger42.Game.UI.ItemViews.PlateView} on this Counter.
+     * spawns an ItemView on this counter.
      */
     void placeItemOnCounter(ItemView itemView);
 }

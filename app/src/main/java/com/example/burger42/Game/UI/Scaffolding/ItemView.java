@@ -22,6 +22,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * An special CustomView, that adds the ability to drag this item and layers multiple above each other.
+ */
 public abstract class ItemView extends CustomView implements DragFilter {
 
     public enum ItemFilterTag {

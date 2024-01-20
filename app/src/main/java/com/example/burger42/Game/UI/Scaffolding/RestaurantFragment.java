@@ -25,13 +25,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Fragments.BillFragment;
-import com.example.burger42.Fragments.ParentFragment;
+import com.example.burger42.Fragments.SuperFragment;
 import com.example.burger42.Fragments.PauseFragment;
 import com.example.burger42.Game.GamePuppeteer;
 import com.example.burger42.Game.Recipe;
 import com.example.burger42.Game.Time;
 import com.example.burger42.Game.Timer.GameThread;
-import com.example.burger42.Game.UI.ItemViews.PlateView;
 import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.StarItem;
 import com.example.burger42.MainActivity;
@@ -45,7 +44,7 @@ import java.util.Queue;
 /**
  * RestaurantFragment is the fragment of the game itself.
  */
-public abstract class RestaurantFragment extends ParentFragment {
+public abstract class RestaurantFragment extends SuperFragment {
 
     /**
      * the starItems used for this level.
@@ -556,8 +555,10 @@ public abstract class RestaurantFragment extends ParentFragment {
         }
         highScore = totalValue;
         saveData();
-        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, starItems), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, starItems, isNewHighscore), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
+
+    private boolean isNewHighscore;
 
     /**
      * tells the gamePuppeteer to serve an Item
@@ -594,8 +595,10 @@ public abstract class RestaurantFragment extends ParentFragment {
     public void saveData() {
         SharedPreferences preferences = mainActivity.getSharedPreferences(levelId(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        if (preferences.getInt("highscore", 0) < highScore)
+        if (preferences.getInt("highscore", 0) < highScore) {
             editor.putInt("highscore", highScore);
+            isNewHighscore = true;
+        }
         for (int i = 0; i < starItems.length; i++) {
             if (!preferences.getBoolean("star" + i, false))
                 editor.putBoolean("star" + i, starItems[i].done());

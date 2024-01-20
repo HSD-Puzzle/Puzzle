@@ -8,6 +8,9 @@ import androidx.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * This class adds the ability for itemViews to appear on the CounterView class.
+ */
 public abstract class BottomCounterItemSpawnCounterView extends CounterView implements BottomCounterItemSpawn {
     public BottomCounterItemSpawnCounterView(Context context) {
         super(context);
@@ -17,9 +20,15 @@ public abstract class BottomCounterItemSpawnCounterView extends CounterView impl
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * true if the draw method has been called at least once.
+     */
     private boolean drawn = false;
 
-    private Queue<ItemView> notPlaced = new LinkedList<>();
+    /**
+     * a list with all items that could not be placed yet, because this view has not yet been displayed.
+     */
+    private final Queue<ItemView> notPlaced = new LinkedList<>();
 
 
     @Override

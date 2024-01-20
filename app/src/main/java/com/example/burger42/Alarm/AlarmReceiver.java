@@ -11,8 +11,6 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.burger42.Fragments.ParentFragment;
-import com.example.burger42.Fragments.StartFragment;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 

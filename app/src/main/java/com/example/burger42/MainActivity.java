@@ -14,12 +14,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.burger42.Alarm.AlarmReceiver;
-import com.example.burger42.Fragments.ParentFragment;
+import com.example.burger42.Fragments.SuperFragment;
 import com.example.burger42.Fragments.StartFragment;
 import com.example.burger42.Audio.AudioController;
 
 import java.util.Calendar;
 
+
+/**
+ * This activity is created when the app is started.
+ * The entire game is located within this activity
+ */
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -27,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private AudioController audioController;
     /**
-     *
+     * The fragment that is currently displayed.
      */
-    private ParentFragment currentlyShownFragment;
+    private SuperFragment currentlyShownFragment;
 
     /**
+     * This methode is called at the time of creating this activity.
      *
      * @param savedInstanceState
      */
@@ -47,11 +53,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * this methode changes the fragment to show.
      *
-     * @param fragment
-     * @param requestedOrientation
+     * @param fragment             the fragment to show
+     * @param requestedOrientation the orientation of the device to show this fragment.
      */
-    public void showFragment(ParentFragment fragment, int requestedOrientation) {
+    public void showFragment(SuperFragment fragment, int requestedOrientation) {
         currentlyShownFragment = fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         setRequestedOrientation(requestedOrientation);
@@ -69,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * This method is called up when the back button on the device is pressed.
+     * This method then calls the following method of the currently displayed fragment.
      */
     @Override
     public void onBackPressed() {
@@ -105,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
      * sets a daily alarm at a spezific time. Works when the app is running or sleeping
      */
     public void dailyAlarm() {
-        System.out.println("alarm");
         Intent intent = new Intent(MainActivity.this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
@@ -129,9 +136,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * shows a Dialag to valuate the App or not
+     *
      * @param v View
      */
-    public void showAlertDialog(View v){
+    public void showAlertDialog(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.app_name));
         alert.setMessage(getString(R.string.app_valuation));

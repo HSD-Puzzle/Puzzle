@@ -20,8 +20,7 @@ import java.util.List;
  * A Class which manages the Gameflow (Timers, Points) and generation of Orders.
  */
 public class GamePuppeteer {
-    SoundController soundController;
-
+    private SoundController soundController;
     private final GameThread gameThread;
     private RestaurantFragment restaurantFragment;
     private RecipeGenerator generator;

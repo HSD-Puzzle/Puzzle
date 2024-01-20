@@ -1,7 +1,6 @@
 package com.example.burger42.Fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Audio.AudioValueText;
-import com.example.burger42.Audio.SoundController;
 import com.example.burger42.MainActivity;
 import com.example.burger42.R;
 import com.example.burger42.Audio.AudioController;
@@ -24,7 +22,7 @@ import android.widget.TextView;
 /**
  *
  */
-public class SettingsFragment extends ParentFragment {
+public class SettingsFragment extends SuperFragment {
 
     /**
      *
@@ -118,6 +116,10 @@ public class SettingsFragment extends ParentFragment {
         return view;
     }
 
+    /**
+     * onBackPressed is called by the MainActivity if this fragment is the currently displayed fragment and the back button of the device is pressed.
+     * The methode switches from the SettingsFragment to the StartFragment.
+     */
     @Override
     public void onBackPressed() {
         mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);

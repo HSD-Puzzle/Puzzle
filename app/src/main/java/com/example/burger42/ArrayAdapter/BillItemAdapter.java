@@ -16,14 +16,31 @@ import com.example.burger42.Item.BillItem;
 import com.example.burger42.Item.BillDetailItem;
 import com.example.burger42.R;
 
+/**
+ * The BillItemAdapter is an adapter class, that is used to convert a list of BillItem in a view, that shows the information of the BillItems.
+ */
 public class BillItemAdapter extends ArrayAdapter<BillItem> {
+    /**
+     * This context contains information about this application, that is needed to get Text in the correct language.
+     */
     private final Context context;
 
+    /**
+     * @param context this context contains information about this application, that is needed to get Text in the correct language.
+     */
     public BillItemAdapter(@NonNull Context context) {
         super(context, 0);
         this.context = context;
     }
 
+    /**
+     * Method to create and setup the individual items of this list.
+     *
+     * @param position    an index for the Item which gets accessed.
+     * @param convertView the accessed View which gets converted during the process.
+     * @param parent      the parent ViewGroup.
+     * @return the converted view
+     */
     @SuppressLint("SetTextI18n")
     @NonNull
     @Override

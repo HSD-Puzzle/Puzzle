@@ -24,7 +24,7 @@ import com.example.burger42.R;
  * A Fragment to represent the Level Selection Menu.
  */
 
-public class LevelSelectionFragment extends ParentFragment {
+public class LevelSelectionFragment extends SuperFragment {
 
     private View view;
     private ListView listView;
@@ -72,6 +72,10 @@ public class LevelSelectionFragment extends ParentFragment {
         return view;
     }
 
+    /**
+     * onBackPressed is called by the MainActivity if this fragment is the currently displayed fragment and the back button of the device is pressed.
+     * The methode switches from the LevelSelectionFragment to the StartFragment.
+     */
     @Override
     public void onBackPressed() {
         mainActivity.showFragment(new StartFragment(mainActivity), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
