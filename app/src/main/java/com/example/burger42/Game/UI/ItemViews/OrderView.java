@@ -24,19 +24,44 @@ import com.example.burger42.R;
 
 import java.util.List;
 
+/**
+ * The graphical representation of the order
+ */
 public class OrderView extends ItemView {
 
+    /**
+     * The image of the arrow to the next page
+     */
     private Bitmap nextPage;
+    /**
+     * the aspect ratio of the arrow to the next page
+     */
     private float ratioNextPage;
+    /**
+     * The image of the arrow to the last page
+     */
     private Bitmap lastPage;
+    /**
+     * the aspect ratio of the arrow to the last page
+     */
     private float ratioLastPage;
-
+    /**
+     * the currently shown page number
+     */
     private int currentPage = 0;
-
+    /**
+     * The Recipe, that this order shows
+     */
     private Recipe recipeToShow = new Recipe(new Time(8, 12), new Time(0, 15));
-
+    /**
+     * the restaurant fragment, where the done order needs to be served
+     */
     private RestaurantFragment restaurantFragment;
 
+    /**
+     * @param recipe             the Recipe, that this order shows
+     * @param restaurantFragment the restaurant fragment, where the done order needs to be served
+     */
     public OrderView(Context context, Recipe recipe, RestaurantFragment restaurantFragment) {
         super(context);
         this.recipeToShow = recipe;
@@ -56,6 +81,12 @@ public class OrderView extends ItemView {
         return super.itemFilterTags();
     }
 
+    /**
+     * the textures of the arrows will be loaded
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void beforeInit(Context context, @Nullable AttributeSet attrs) {
         super.beforeInit(context, attrs);
@@ -65,9 +96,17 @@ public class OrderView extends ItemView {
         ratioLastPage = (float) lastPage.getWidth() / (float) lastPage.getHeight();
     }
 
+    /**
+     * adds listeners, that allows switching between the pages
+     * and adds a listener, that serves an order, if an payable will dragged on it.
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
+        // next page
         addOnTouchAreaListener(new OnTouchAreaListener() {
             @Override
             protected boolean onTouch(MotionEvent event) {
@@ -80,6 +119,7 @@ public class OrderView extends ItemView {
             }
         }.setRelativeTop(0.15f).setRelativeLeft(0.8f));
 
+        //last page
         addOnTouchAreaListener(new OnTouchAreaListener() {
             @Override
             protected boolean onTouch(MotionEvent event) {
@@ -92,6 +132,7 @@ public class OrderView extends ItemView {
             }
         }.setRelativeTop(0.15f).setRelativeRight(0.2f));
 
+        //serve
         addOnDragAreaListener(new OnDragAreaListener() {
             @Override
             protected boolean onDrag(DragEvent event, boolean inArea) {
@@ -104,6 +145,11 @@ public class OrderView extends ItemView {
         }.addFilterTag(ItemFilterTag.Payable).setUseFilter(true));
     }
 
+    /**
+     * serves this order with the given payable
+     *
+     * @param payableView the item that should be served
+     */
     public void serve(PayableItemView payableView) {
         restaurantFragment.serve(recipeToShow, payableView.createRecipe());
         payableView.removeFromParent();
@@ -126,12 +172,31 @@ public class OrderView extends ItemView {
         return "Order";
     }
 
+    /**
+     * draws the background image and the currently active page an a canvas
+     *
+     * @param canvas          the canvas to draw the view on.
+     * @param xOffset         the x offset where to draw the view on the canvas.
+     * @param yOffset         the y offset where to draw the view on the canvas.
+     * @param referenceHeight the referenceheight used to draw the items the correct size.
+     * @param width           the width of the view size
+     * @param height          the height of the view size
+     */
     @Override
     protected void drawItemOnCanvas(Canvas canvas, float xOffset, float yOffset, int referenceHeight, int width, int height) {
         super.drawItemOnCanvas(canvas, xOffset, yOffset, referenceHeight, width, height);
         drawPage(canvas, width, height);
     }
 
+    /**
+     * draws the arrows on the canvas
+     *
+     * @param canvas the canvas to draw on
+     * @param width  the width of the canvas
+     * @param height the height of the canvas
+     * @param last   true if the last arrow should be drawn
+     * @param next   true if the next arrow should be drawn
+     */
     private void drawArrowsOnCanvas(Canvas canvas, int width, int height, boolean last, boolean next) {
         float arrowMargin = height / 40f;
         int size = height / 8;
@@ -146,6 +211,13 @@ public class OrderView extends ItemView {
         }
     }
 
+    /**
+     * draws the first page of the order
+     *
+     * @param canvas the canvas to draw on
+     * @param width  the width of the canvas
+     * @param height the height of the canvas
+     */
     private void drawFirstPage(Canvas canvas, int width, int height) {
         Paint paint = new Paint();
         paint.setColor(0xFF000000);
@@ -194,6 +266,13 @@ public class OrderView extends ItemView {
         }
     }
 
+    /**
+     * draws the page information on the canvas
+     *
+     * @param canvas the canvas to draw on
+     * @param width  the width of the canvas
+     * @param height the height of the canvas
+     */
     private void drawPage(Canvas canvas, int width, int height) {
         if (currentPage == 0)
             drawFirstPage(canvas, width, height);

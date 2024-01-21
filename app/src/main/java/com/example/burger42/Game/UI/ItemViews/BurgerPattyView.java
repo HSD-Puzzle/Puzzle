@@ -16,12 +16,29 @@ import com.example.burger42.R;
 
 import java.util.List;
 
+/**
+ * The graphical representation of the burger patty
+ */
 public class BurgerPattyView extends IngredientView {
 
+    /**
+     * the level of roast (0 = raw, 1 = rare, 2 = medium, 4 = burned)
+     */
     private int currentRoastLevel = 0;
+    /**
+     * the amount of how often the stove had roasted this patty
+     */
     private int currentRoastTimes = 0;
+    /**
+     * the steps, when to change to the next roast level.
+     * the needed roast time for the specific roast level
+     */
     private static final int[] roastLevelSteps = {8, 16, 22};
 
+    /**
+     * the list from the head plate where the patty is on.
+     * null if it currently on no head plate
+     */
     private List<BurgerPattyView> currentlyUsedHeadPlate;
 
     public BurgerPattyView(Context context) {
@@ -55,10 +72,12 @@ public class BurgerPattyView extends IngredientView {
         }
     }
 
+    /**
+     * adds a time roasted and reloads the texture if it reached a new roast level.
+     */
     public void roast() {
         currentRoastTimes++;
         if (roastLevelSteps.length > currentRoastLevel && roastLevelSteps[currentRoastLevel] < currentRoastTimes) {
-            System.out.println("NextStep");
             currentRoastLevel++;
             loadTexture();
             invalidate();
@@ -70,6 +89,12 @@ public class BurgerPattyView extends IngredientView {
         return "BurgerPatty";
     }
 
+    /**
+     * adds a listener, that forbids placing items above the burger, while it is on the stove
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
@@ -103,6 +128,11 @@ public class BurgerPattyView extends IngredientView {
         }
     }
 
+    /**
+     * places the patty on a head plate
+     *
+     * @param currentlyUsedHeadPlate the list from the head plate, where it is laced on
+     */
     public void putOnHeadPlate(List<BurgerPattyView> currentlyUsedHeadPlate) {
         this.currentlyUsedHeadPlate = currentlyUsedHeadPlate;
     }

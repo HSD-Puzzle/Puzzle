@@ -13,6 +13,9 @@ import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
+/**
+ * The implementation of the start Counter View
+ */
 public class BottomStartCounterView extends CounterView {
 
     public BottomStartCounterView(Context context) {

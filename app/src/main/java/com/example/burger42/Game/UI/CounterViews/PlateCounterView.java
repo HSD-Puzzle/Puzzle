@@ -8,27 +8,36 @@ import android.view.MotionEvent;
 import androidx.annotation.Nullable;
 
 import com.example.burger42.Game.UI.ItemViews.PlateView;
-import com.example.burger42.Game.UI.ItemViews.SaladView;
 import com.example.burger42.Game.UI.Scaffolding.BottomCounterItemSpawnCounterView;
-import com.example.burger42.Game.UI.Scaffolding.CounterView;
-import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
+/**
+ * The implementation of the plate stack counter view
+ */
 public class PlateCounterView extends BottomCounterItemSpawnCounterView {
 
+    /**
+     * the amount of plates currently on the stack
+     */
     private int plateCounter = 0;
 
+    /**
+     * the PlateView of the new created plate
+     */
     private PlateView newPlate = null;
 
     public PlateCounterView(Context context) {
         super(context);
     }
 
-    public PlateCounterView(Context context, int plateCounter) {
+    /**
+     * @param plateCount the amount of plates that are here at the beginning
+     */
+    public PlateCounterView(Context context, int plateCount) {
         super(context);
-        this.plateCounter = plateCounter;
+        this.plateCounter = plateCount;
         loadTexture();
     }
 
@@ -36,6 +45,12 @@ public class PlateCounterView extends BottomCounterItemSpawnCounterView {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * adds listeners to drag and drop pates on this and from this
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
@@ -60,7 +75,7 @@ public class PlateCounterView extends BottomCounterItemSpawnCounterView {
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (inArea && event.getAction() == DragEvent.ACTION_DROP) {
                     PlateView plateView = (PlateView) event.getLocalState();
-                    if (plateView.hasNoItemAbove() && plateView.getCurrentState() == PlateView.state.CLEAN) {
+                    if (plateView.hasNoItemAbove() && plateView.currentState() == PlateView.state.CLEAN) {
                         plateView.removeFromParent();
                         plateCounter++;
                         loadTexture();

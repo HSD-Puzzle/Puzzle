@@ -11,6 +11,9 @@ import com.example.burger42.Ingredients.BottomBurgerBun;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
+/**
+ * The graphical representation of the bottom bread
+ */
 public class BottomBreadView extends IngredientView {
 
     public BottomBreadView(Context context) {

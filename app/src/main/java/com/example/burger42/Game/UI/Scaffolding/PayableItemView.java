@@ -73,7 +73,7 @@ public abstract class PayableItemView extends ItemView {
     public Recipe createRecipe(int itemAboveIndex) {
         Recipe recipe = new Recipe();
         if (hasItemAbove(itemAboveIndex)) {
-            ItemView itemView = getItemAbove(itemAboveIndex);
+            ItemView itemView = itemAbove(itemAboveIndex);
             if (itemView.hasAtLeastOneEqualFilterTag(new BasicDragFilter().addFilterTag(ItemFilterTag.Ingredient.name()))) {
                 IngredientView item = (IngredientView) itemView;
                 List<Ingredient> list = new LinkedList<>();

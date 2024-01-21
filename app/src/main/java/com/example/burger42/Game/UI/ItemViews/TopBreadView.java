@@ -10,6 +10,9 @@ import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.Ingredients.TopBurgerBun;
 import com.example.burger42.R;
 
+/**
+ * The graphical representation of the top bread
+ */
 public class TopBreadView extends IngredientView {
 
     public TopBreadView(Context context) {

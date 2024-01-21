@@ -8,6 +8,9 @@ import androidx.annotation.Nullable;
 import com.example.burger42.Game.UI.Scaffolding.CounterView;
 import com.example.burger42.R;
 
+/**
+ * The implementation of the end Counter View
+ */
 public class BottomEndCounterView extends CounterView {
 
     public BottomEndCounterView(Context context) {

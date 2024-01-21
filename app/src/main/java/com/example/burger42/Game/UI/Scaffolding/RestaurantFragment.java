@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -339,6 +341,9 @@ public abstract class RestaurantFragment extends SuperFragment {
      */
     private void videoSetup(ViewGroup container) {
         videoView = rootView.findViewById(R.id.restaurant_background);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            videoView.setAudioFocusRequest(AudioManager.AUDIOFOCUS_NONE);
+        }
         videoView.setLayoutParams(new RelativeLayout.LayoutParams(container.getHeight() * 6, container.getHeight()));
         setNextBackgroundVideoURI();
         //After a video has been played, the next video is started.
@@ -547,17 +552,29 @@ public abstract class RestaurantFragment extends SuperFragment {
         clockText.setText(time.timeAsText());
     }
 
-    //TODO JavaDoc
-    public void timesUp(List<BillItem> list, int totalValue, GamePuppeteer.GameResultStatistics statistics) {
+    /**
+     * timesUp will be triggered after finishing the level.
+     *
+     * @param billItems  the information of every served order
+     * @param totalValue the total value earned during the game. The score.
+     * @param statistics statistics of the game, that will be used for the stars.
+     */
+    public void timesUp(List<BillItem> billItems, int totalValue, GamePuppeteer.GameResultStatistics statistics) {
         timeIsUp = true;
         for (StarItem x : starItems) {
             x.calculate(statistics);
         }
+        if (totalValue > highScore) {
+            isNewHighscore = true;
+        }
         highScore = totalValue;
         saveData();
-        mainActivity.showFragment(new BillFragment(mainActivity, list, totalValue, starItems, isNewHighscore), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        mainActivity.showFragment(new BillFragment(mainActivity, billItems, totalValue, starItems, isNewHighscore), ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
+    /**
+     * true if this run of the level is a new highscore.
+     */
     private boolean isNewHighscore;
 
     /**
@@ -582,7 +599,10 @@ public abstract class RestaurantFragment extends SuperFragment {
      */
     public abstract GamePuppeteer gamePuppeteer();
 
-    //TODO JavaDoc
+    /**
+     * loadData loads all saved data.
+     * It loads the highscore and the stars.
+     */
     public void loadData() {
         SharedPreferences preferences = mainActivity.getSharedPreferences(levelId(), Context.MODE_PRIVATE);
         highScore = preferences.getInt("highscore", 0);
@@ -591,13 +611,15 @@ public abstract class RestaurantFragment extends SuperFragment {
         }
     }
 
-    //TODO JavaDoc
+    /**
+     * It saves the data of this specific run.
+     * It stores the Highscore if it is new and the stars if they are done.
+     */
     public void saveData() {
         SharedPreferences preferences = mainActivity.getSharedPreferences(levelId(), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         if (preferences.getInt("highscore", 0) < highScore) {
             editor.putInt("highscore", highScore);
-            isNewHighscore = true;
         }
         for (int i = 0; i < starItems.length; i++) {
             if (!preferences.getBoolean("star" + i, false))
@@ -606,27 +628,38 @@ public abstract class RestaurantFragment extends SuperFragment {
         editor.apply();
     }
 
-    //TODO JavaDoc
+    /**
+     * a id that is for every level different, to distinguish  the saved data from each other.
+     *
+     * @return the id
+     */
     protected abstract String levelId();
 
-    //TODO JavaDoc
+    /**
+     * As long as the level is not played the highscore and after the run the score from this run.
+     */
     private int highScore;
 
-    //TODO JavaDoc
+    /**
+     * @return As long as the level is not played the highscore and after the run the score from this run.
+     */
     public int highScore() {
         return highScore;
     }
 
-    //TODO JavaDoc
+    /**
+     * @return the title of this level to show in the level selection
+     */
     public abstract String title();
 
-    //TODO JavaDoc
+    /**
+     * @return the id of the drawable used in the preview in the level selection
+     */
     public abstract int thumbnailId();
 
-    //TODO
 
     /**
-     * @return
+     * @return the star items used for this level.
      */
     public StarItem[] starItems() {
         return starItems;

@@ -15,8 +15,14 @@ import com.example.burger42.Game.UI.Scaffolding.OnDragAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
+/**
+ * The implementation of the trash counter view, that allows items to be thrown away
+ */
 public class TrashCounter extends BottomCounterItemSpawnCounterView {
 
+    /**
+     * the status off the trash bin open(true) or closed(false)
+     */
     private boolean isOpen = false;
 
     public TrashCounter(Context context) {
@@ -27,6 +33,14 @@ public class TrashCounter extends BottomCounterItemSpawnCounterView {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * adds a Listener, that allows to open and close the trash bin
+     * and adds a Listener, that clean the plates and tablets
+     * and adds a Listener, that removes dropped items
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
@@ -66,6 +80,11 @@ public class TrashCounter extends BottomCounterItemSpawnCounterView {
         }.setUseFilter(true).addFilterTag(ItemView.ItemFilterTag.CleanBase));
     }
 
+    /**
+     * set the trash-bin open or closed and redraws it.
+     *
+     * @param value true if the trash-bin should be open else false.
+     */
     private void setIsOpen(boolean value) {
         isOpen = value;
         loadTexture();

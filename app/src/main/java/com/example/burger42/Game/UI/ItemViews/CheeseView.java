@@ -11,6 +11,9 @@ import com.example.burger42.Ingredients.Chesse;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
+/**
+ * The graphical representation of the cheese
+ */
 public class CheeseView extends IngredientView {
 
     public CheeseView(Context context) {

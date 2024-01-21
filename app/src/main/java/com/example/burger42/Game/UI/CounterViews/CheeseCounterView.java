@@ -14,6 +14,9 @@ import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
+/**
+ * The implementation of the cheese counter view
+ */
 public class CheeseCounterView extends BottomCounterItemSpawnCounterView {
 
     public CheeseCounterView(Context context) {
@@ -24,6 +27,12 @@ public class CheeseCounterView extends BottomCounterItemSpawnCounterView {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * adds a listener to summon a CheeseView
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);

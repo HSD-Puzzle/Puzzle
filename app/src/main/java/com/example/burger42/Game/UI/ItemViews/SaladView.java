@@ -12,6 +12,9 @@ import com.example.burger42.Ingredients.BurgerSalad;
 import com.example.burger42.Ingredients.Ingredient;
 import com.example.burger42.R;
 
+/**
+ * The graphical representation of the salad
+ */
 public class SaladView extends IngredientView {
 
     public SaladView(Context context) {

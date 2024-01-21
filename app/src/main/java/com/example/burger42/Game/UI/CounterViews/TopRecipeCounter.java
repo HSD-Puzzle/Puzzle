@@ -18,6 +18,9 @@ import com.example.burger42.R;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * The counter where Recipes can spawn and placed on
+ */
 public class TopRecipeCounter extends CounterView implements OrderSpawn {
 
     @Override
@@ -33,6 +36,12 @@ public class TopRecipeCounter extends CounterView implements OrderSpawn {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * adds a Listener to place recipes on this counter
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         addOnDragAreaListener(new OnDragAreaListener() {
@@ -62,10 +71,19 @@ public class TopRecipeCounter extends CounterView implements OrderSpawn {
         return R.drawable.topcorner;
     }
 
+    /**
+     * true if this was already drawn
+     */
     private boolean drawn = false;
 
-    private Queue<ItemView> notPlaced = new LinkedList<>();
+    /**
+     * a Queue that contains all not spawned recipes
+     */
+    private final Queue<ItemView> notPlaced = new LinkedList<>();
 
+    /**
+     * places all not drawn recipes
+     */
     @Override
     protected void afterDraw() {
         super.afterDraw();
@@ -77,6 +95,11 @@ public class TopRecipeCounter extends CounterView implements OrderSpawn {
         }
     }
 
+    /**
+     * spawns all recipes as OrderViews or adds them to Queue that will be spawned when possible
+     *
+     * @param recipe the {@link Recipe} the {@link com.example.burger42.Game.UI.ItemViews.OrderView} should base on.
+     */
     @Override
     public void spawnAndPlaceRecipe(Recipe recipe) {
         OrderView newOrder = new OrderView(getContext(), recipe, restaurantFragment);

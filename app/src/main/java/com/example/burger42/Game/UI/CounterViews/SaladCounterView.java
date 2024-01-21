@@ -13,6 +13,9 @@ import com.example.burger42.Game.UI.Scaffolding.ItemView;
 import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.R;
 
+/**
+ * The implementation of the salad counter view, that gives the SaladView
+ */
 public class SaladCounterView extends BottomCounterItemSpawnCounterView {
 
     public SaladCounterView(Context context) {
@@ -23,6 +26,12 @@ public class SaladCounterView extends BottomCounterItemSpawnCounterView {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * adds a listener, that summons a SaladView, by clicking on it
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);

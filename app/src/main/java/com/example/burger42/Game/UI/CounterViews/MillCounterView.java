@@ -15,14 +15,29 @@ import com.example.burger42.Game.UI.Scaffolding.OnTouchAreaListener;
 import com.example.burger42.Game.UI.Scaffolding.RestaurantFragment;
 import com.example.burger42.R;
 
+/**
+ * The implementation of the mill counter view
+ */
 public class MillCounterView extends BottomCounterItemSpawnCounterView {
 
+    /**
+     * the states the mill can have
+     */
     private enum state {
         CLEAN, DIRTY, EMPTY
     }
 
-    private state lastCurrentState;
+    /**
+     * the last State the view had
+     */
+    private state lastState;
+    /**
+     * The new created plate after the last touch
+     */
     private PlateView newPlate;
+    /**
+     * the state this currently have
+     */
     private state currentState;
 
     public MillCounterView(Context context) {
@@ -33,11 +48,24 @@ public class MillCounterView extends BottomCounterItemSpawnCounterView {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * sets the current state to dirty to start with a dirty plate in the mill
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void beforeInit(Context context, @Nullable AttributeSet attrs) {
         this.currentState = state.DIRTY;
     }
 
+    /**
+     * adds the listeners to drag plates in and out the mill
+     * and listeners to place items on the drip tray
+     *
+     * @param context the context of this app, can be used to load the correct language
+     * @param attrs   the AttributeSet that is used in xml
+     */
     @Override
     protected void onInit(Context context, @Nullable AttributeSet attrs) {
         super.onInit(context, attrs);
@@ -56,7 +84,7 @@ public class MillCounterView extends BottomCounterItemSpawnCounterView {
                         setCurrentState(state.EMPTY);
                     } else if (currentState == state.EMPTY) return false;
                     if (!drag(newPlate)) {
-                        setCurrentState(lastCurrentState);
+                        setCurrentState(lastState);
                         newPlate.removeFromParent();
                         newPlate = null;
                     }
@@ -72,7 +100,7 @@ public class MillCounterView extends BottomCounterItemSpawnCounterView {
             protected boolean onDrag(DragEvent event, boolean inArea) {
                 if (event.getAction() == DragEvent.ACTION_DRAG_ENDED && event.getLocalState() == newPlate) {
                     if (!event.getResult()) {
-                        setCurrentState(lastCurrentState);
+                        setCurrentState(lastState);
                         newPlate.removeFromParent();
                     }
                     newPlate = null;
@@ -90,7 +118,7 @@ public class MillCounterView extends BottomCounterItemSpawnCounterView {
                         PlateView plateView = (PlateView) event.getLocalState();
                         if (currentState == state.EMPTY && plateView.hasNoItemAbove()) {
                             plateView.removeFromParent();
-                            switch (plateView.getCurrentState()) {
+                            switch (plateView.currentState()) {
                                 case DIRTY:
                                     setCurrentState(state.DIRTY);
                                     break;
@@ -131,8 +159,13 @@ public class MillCounterView extends BottomCounterItemSpawnCounterView {
         }.setUseFilter(true).addFilterTag("Plate"));
     }
 
+    /**
+     * sets the current state and redraws this view to show it graphically
+     *
+     * @param currentState the new state
+     */
     public void setCurrentState(state currentState) {
-        lastCurrentState = this.currentState;
+        lastState = this.currentState;
         this.currentState = currentState;
         loadTexture();
         invalidate();
@@ -153,8 +186,14 @@ public class MillCounterView extends BottomCounterItemSpawnCounterView {
         }
     }
 
+    /**
+     * The sponge that can be used to clean plates
+     */
     private SpongeView spongeView;
 
+    /**
+     * after this is drawn the position of the sponge can be calculated and set.
+     */
     @Override
     protected void afterDraw() {
         super.afterDraw();
@@ -162,6 +201,11 @@ public class MillCounterView extends BottomCounterItemSpawnCounterView {
         spongeView.setTranslationY(getCustomHeight() * 1.26f);
     }
 
+    /**
+     * the sponge can be created and placed in the restaurant
+     *
+     * @param restaurantFragment the bound restaurant fragment.
+     */
     @Override
     protected void onRestaurantBound(RestaurantFragment restaurantFragment) {
         super.onRestaurantBound(restaurantFragment);

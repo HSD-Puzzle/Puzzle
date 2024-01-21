@@ -9,6 +9,10 @@ import com.example.burger42.Ingredients.Ingredient;
 
 import java.util.List;
 
+/**
+ * a specific item view for ingredients, that adds the ability to convert them into a recipe
+ * and converts the ui into the domain
+ */
 public abstract class IngredientView extends ItemView {
     public IngredientView(Context context) {
         super(context);
@@ -25,12 +29,22 @@ public abstract class IngredientView extends ItemView {
         return list;
     }
 
+    /**
+     * adds this ingredient to the list.
+     *
+     * @param list the list to add this ingredient to
+     */
     public void addToList(List<Ingredient> list) {
         list.add(toIngredientWrapper());
         if (hasItemAbove(0)) {
-            ((IngredientView) getItemAbove(0)).addToList(list);
+            ((IngredientView) itemAbove(0)).addToList(list);
         }
     }
 
+    /**
+     * an adapter methode that creates from the ui the domain
+     *
+     * @return the ingredient this is.
+     */
     public abstract Ingredient toIngredientWrapper();
 }

@@ -11,6 +11,9 @@ import com.example.burger42.R;
 
 import java.util.List;
 
+/**
+ * The graphical representation of the sponge
+ */
 public class SpongeView extends ItemView {
 
     @Override
