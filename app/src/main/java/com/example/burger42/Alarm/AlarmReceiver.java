@@ -26,8 +26,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     /**
      * Receive the Broadcastmessage and calls the Method to send a Notification
+     *
      * @param context of the Activity
-     * @param intent The intent containing information about the broadcast event
+     * @param intent  The intent containing information about the broadcast event
      */
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,9 +37,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     /**
      * create a Channel and sends a notification with a message
+     *
      * @param context of the Activity
      */
-    public void sendNotifications(Context context){
+    public void sendNotifications(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Notification Alarm";
             String description = "Channel for Alarm Manager";
@@ -52,7 +54,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "android")
                 .setSmallIcon(R.drawable.fastfood_asset)
