@@ -18,12 +18,6 @@ import com.example.burger42.R;
  * This class receives a Broadcastmesssage and sends a notification
  */
 public class AlarmReceiver extends BroadcastReceiver {
-
-    /**
-     * main activity
-     */
-    MainActivity mainActivity;
-
     /**
      * Receive the Broadcastmessage and calls the Method to send a Notification
      *
@@ -58,8 +52,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "android")
                 .setSmallIcon(R.drawable.fastfood_asset)
-                .setContentTitle(mainActivity.getString(R.string.notification_title))
-                .setContentText(mainActivity.getString(R.string.notification_text))
+                .setContentTitle(context.getString(R.string.notification_title))
+                .setContentText(context.getString(R.string.notification_text))
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
@@ -67,6 +61,5 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat mNotification = NotificationManagerCompat.from(context);
         mNotification.notify(1, mBuilder.build());
-
     }
 }

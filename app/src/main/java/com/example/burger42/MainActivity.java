@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
      * Method called when the activity is first created. Performs initialization operations for the activity,
      * such as setting the layout, displaying the StartFragment, initializing the AudioController,
      * and starting the background music. This method is automatically called when the activity is created.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -132,9 +133,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * shows a Dialag to valuate the App or not
+     *
      * @param v View
      */
-    public void showAlertDialog(View v){
+    public void showAlertDialog(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(getString(R.string.app_name));
         alert.setMessage(getString(R.string.app_valuation));
